@@ -1,0 +1,964 @@
+
+<style>
+{% if request.page_type == 'product' %}{% if section.settings.collection_main != blank %}{% else %}#promo_active-{{ section.id }} {display:none}{% endif %}{% endif %}
+:root {
+--home_pr_border-color: {{ settings.home_pr_border-color }};
+--home_pr_border2-color: {{ settings.home_pr_border2-color }};      
+--home_pr_border_hover-color: {{ settings.home_pr_border_hover-color }};
+--home_pr_border_hover2-color: {{ settings.home_pr_border_hover2-color }};  
+--home_pr_border_hover3-color: {{ settings.home_pr_border_hover3-color }};  
+
+--promo_background_color: {{ section.settings.promo_background_color }};
+--promo_active_color: {{ section.settings.promo_active_color }};  
+--promo_cont_header_color: {{ section.settings.promo_cont_header_color }};   
+--promo_cont_color: {{ section.settings.promo_cont_color }};   
+
+  --margin-top-bs:{{ section.settings.margin-top }}px; 
+  --margin-bottom-bs:{{ section.settings.margin-bottom }}px;
+  
+}   
+#promo_active-{{ section.id }} {
+    {% if section.settings.promo_device == '2' %} display:none; {% endif %}
+    width: 100%;
+    margin-left: auto;   
+    margin-right: auto;
+    margin-top: var(--margin-top-bs);
+  margin-bottom: var(--margin-bottom-bs);
+}
+
+@media (min-width:800px) {
+  #promo_active-{{ section.id }} {
+  padding: 0 var(--desktop-container-gutter);
+    max-width: 1640px;
+  }
+}
+
+  
+{% if section.settings.promo_full_width == false %}.promo_block-{{ section.id }} {margin: 0 50px;}{% endif %}
+.promo_block_center-{{ section.id }} {
+    max-width: {% if section.settings.promo_full_width == false %}{{section.settings.promo_max_width | append: 'px'}}{% else %}100%{% endif %};
+    max-height: 100%;
+    margin: 0px auto;
+    
+    border-radius: {% if section.settings.promo_full_width == false %}var(--bordas-cardini){% else %}var(--bordas-cardini){% endif %};
+    overflow: hidden;
+    {% if section.settings.promo_active_shadow == true %}
+    box-shadow: 0 4px 13px -8px #000000;
+    -webkit-box-shadow: 0 4px 13px -8px #000000;
+    -moz-box-shadow: 0 4px 13px -8px #000000;  
+    {% endif %}
+}  
+
+@media (min-width:1000px) {
+  .promo_block_center-{{ section.id }} {
+    {% if section.settings.promo_active_border == true %} border: 1px solid var(--promo_active_color);{% endif %}
+  }
+}
+  
+.promo_top-{{ section.id }} {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    background: var(--promo_background_color);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    align-items: center;
+}
+.promo_header-{{ section.id }} {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  line-height: 1.5rem;
+  gap: 5px;
+}  
+  
+@media (max-width:460px) {
+
+.promo_header-{{ section.id }} {
+        display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    line-height: 1.2rem;
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+} 
+
+  
+  .promo_header-{{ section.id }} {justify-content: space-around;}  
+}
+.promo_header-{{ section.id }} .block_header-{{ section.id }} {
+    font-size: 20px;
+    margin-bottom:0px;
+ 
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--promo_cont_header_color);  
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    align-items: flex-start;
+    grid-column: span 3 / auto;
+}  
+  
+#promo_active-{{ section.id }} .promo-inner.pr {
+    background: #fff;
+    border: 0 !important;
+    border-radius: var(--bordas-cardini);
+    padding: 10px;
+    margin: 0 5px;
+}    
+#promo_active-{{ section.id }} .promo-inner.pr:before {
+    content: "";
+    background-image: linear-gradient(0deg, var(--home_pr_border-color), var(--home_pr_border2-color));
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    border-radius: var(--bordas-cardini); 
+    z-index: -1;
+} 
+#promo_active-{{ section.id }} .promo-inner:hover:before {    
+  content:"";
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  background: var(--promo_active_color);    
+}  
+.top_promo-{{ section.id }} {
+    display: flex;
+    margin: 0 0 10px 0;
+    justify-content: space-between;
+    align-items: center;
+}
+/* #promo_active-{{ section.id }} .pr_wr_dcimg {  
+    border: 1px solid var(--promo_active_color);
+    border-radius: 6px;
+    box-shadow: 0px 0px 20px -13px black;
+} */
+.promo_unit-{{ section.id }} {
+    display: flex;
+    padding: 5px;
+    font-size: 9px;
+    color: var(--promo_active_color);
+    line-height: 13px;
+    border: 1px solid;
+    border-radius: var(--bordas-cardini);
+    align-items: center;
+    flex-wrap: wrap;
+}  
+.promo_unit-{{ section.id }} span {
+    margin: 0 5px;
+    font-weight: 900;
+    font-size: 14px;
+}  
+#promo_active-{{ section.id }} .promo_info-{{ section.id }} .price{
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    font-size: 22px;
+    font-weight: 800;  
+}  
+.promo_info-{{ section.id }} del {
+    font-size: 14px;
+    font-weight: 400;   
+}  
+.promo_info-{{ section.id }} ins, .promo_info-{{ section.id }} .price, #promo_active-{{ section.id }} .flickity-viewport .parcela2, #promo_active-{{ section.id }} .chp:hover {color: var(--promo_active_color);}  
+#promo_active-{{ section.id }} .nt_label {background: var(--promo_active_color);} 
+  
+@media (max-width:768px){  
+#promo_active-{{ section.id }} {
+    {% if section.settings.promo_device == '2' %} display:block !important; {% endif %}
+}    
+    
+.promo_block-{{ section.id }} {margin: 0;}
+.promo_block_center-{{ section.id }} {
+  border-radius: 0;
+  box-shadow: 0px 0px 9px -5px;
+}  
+.promo_unit-{{ section.id }} {
+    padding: 0;
+    font-size: 8px;
+    border: 0;
+ }      
+}   
+  
+/* Configurações do contador */
+  
+.kVhuSD-{{ section.id }} {
+    flex-shrink: 0;
+    height: 2.25rem;
+    margin-top: 12px;
+    width: 100%;
+}
+  
+.cQfIhU-{{ section.id }} {display: none;}  
+  
+#promo_active-{{ section.id }} .col-lg-15:hover .cQfIhU-{{ section.id }} {display: flex;}
+  
+.keGPiK-{{ section.id }} {
+     display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 2.25rem;
+    width: 100%;
+    margin: 20px 0 0 0;
+}  
+.keGPiK-{{ section.id }} button {
+    border: 0;
+    border-radius: 0 0 var(--bordas-cardini) var(--bordas-cardini);
+    color: {{ section.settings.pr_text_button_color }} !important;
+}  
+.keGPiK-{{ section.id }} button svg, .keGPiK-{{ section.id }} button path {
+    fill: {{ section.settings.pr_text_button_color }} !important;
+}    
+.cbTHpf-{{ section.id }} {    
+    font-size: 0.75rem;
+    line-height: 1.125rem;
+    font-weight: 700;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    background: var(--promo_cont_color);    
+}       
+.cbTHpf-{{ section.id }}:hover {background: var(--promo_cont_color);}        
+.cbTHpf-{{ section.id }} > svg, .cbTHpf-{{ section.id }} > div {margin-right: 0.5rem;}  
+.cbTHpf-{{ section.id }} > svg > path {fill: rgb(255, 255, 255);}   
+{% if section.settings.show_but_on == false %}#promo_active-{{ section.id }} .product-item:hover .offerProductFooter-{{ section.id }} {display: none;} {% endif %}
+.buy_promo-{{ section.id }} {display: none;}   
+#promo_active-{{ section.id }} .product-item:hover .buy_promo-{{ section.id }} {
+    font-size: 15px;
+    line-height: 1.125rem;
+    font-weight: 700;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    background: var(--promo_cont_color);
+    border-radius: var(--borda-bot-qnt);
+}  
+
+
+.buy_promo_on-{{ section.id }} {
+    font-size: 16px;
+    line-height: 42px;
+    font-weight: 700;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+    height: 42px;
+    margin: 7px 0 0 0;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    background: var(--promo_cont_color);
+    border-radius: var(--bordas-cardini);
+    border: 0;
+}    
+.buy_promo_on-{{ section.id }}:hover {
+    background: var(--promo_cont_color);
+}      
+.IconCart_promo-{{ section.id }} {margin: 0 7px 0 0}  
+.buy_promo-{{ section.id }} > svg > path, .buy_promo_on-{{ section.id }} > svg > path  {
+    fill: rgb(255, 255, 255);
+}  
+.eyAEVE-{{ section.id }} {    
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background: rgb(255, 255, 255);
+    box-shadow: var(--promo_cont_color) 0px 0px 0px 1px inset;
+    -webkit-box-shadow: var(--promo_cont_color) 0px 0px 0px 1px inset;
+    -moz-box-shadow: var(--promo_cont_color) 0px 0px 0px 1px inset; 
+    border-radius: var(--borda-bot-qnt);
+    overflow: hidden;      
+}  
+.dJDCfE-{{ section.id }} {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-shrink: 0;
+    height: 100%;
+    background: var(--promo_cont_color);
+    width: 4.125rem;
+}  
+.kAtFBN-{{ section.id }} {
+    font-size: 0.625rem;
+    line-height: 1.0rem;
+    font-weight: 400;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background: transparent;
+    color: var(--promo_cont_color);
+}    
+.kAtFBN-{{ section.id }} div span {
+    display: block;
+    font-size: 13px;
+    line-height: 10px;
+    font-weight: 700;
+    color: var(--promo_cont_color);
+}  
+.igWKZA-{{ section.id }} {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+  
+}
+.igWKZA-{{ section.id }} span {
+    font-weight: 700;
+    line-height: 1rem;
+    color: var(--promo_cont_header_color);
+    text-transform: uppercase;
+}    
+.promo_header_crono-{{ section.id }} svg path {fill: var(--promo_cont_header_color);}  
+.promo_crono-{{ section.id }} {
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    -webkit-box-align: center;
+    align-items: center;
+    grid-column: span 6 / auto;
+    flex-wrap: wrap;
+}  
+.promo_header_crono-{{ section.id }} {
+    {%  if section.settings.hide_time_code == true %}display: none;{% else %}display: flex;{% endif %}
+    align-items: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--promo_cont_header_color);
+}  
+.timer-dias-{{ section.id }} { 
+    background: #ffffff;
+    display: flex;
+    padding: 3px;
+    border-radius:var(--bordas-cardini);
+    align-items: center;  
+}
+.timer_dias-{{ section.id }} { 
+    display: flex;
+    margin: 0 5px 0 10px;
+    padding: 4px;
+    border: 1px solid;
+    border-radius: var(--bordas-cardini);
+    align-items: center; 
+}  
+{% if section.settings.hide_time_day == true %}  
+.timer-dias-{{ section.id }}, .timer_dias-{{ section.id }} { 
+    display: none !important;
+}
+{% endif %}
+  
+/* styles for timer */
+.timer {
+    display: block;
+    margin: -2px 0 0 0;
+}  
+.timer--expired-{{ section.id }} {
+    display: none;
+  }
+.timer__title-{{ section.id }} {
+    @extend .paragraph;
+    text-align: center;
+}
+.timer-display-{{ section.id }} {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    align-items: center;
+}  
+.timer-block-{{ section.id }} {  
+    position: relative;
+    padding: 0 4px;  
+}  
+
+.timer-block-{{ section.id }}:not(:last-child):after {  
+    content: ":";
+    position: absolute;
+    right: -3px;
+    top: 0;  
+} 
+
+.timer-block2-{{ section.id }}:not(:last-child):after {  
+    content: ":";
+    position: absolute;
+    right: -3px;
+    top: 2px;  
+} 
+  
+.timer-block__num-{{ section.id }},
+.timer-block__unit-{{ section.id }} {
+    display: block;
+    text-align: center;
+}     
+#contador_home-{{ section.id }} {  
+  display: block;  
+  position: relative;
+  width: auto;
+  margin: -20px 0 10px 0;
+  z-index: 10;  
+}
+.product-image:hover .pr_atc {
+    pointer-events: auto;
+    -webkit-transform: translateY(0) translateZ(0);
+    transform: translateY(0) translateZ(0);
+}  
+@media (max-width: 1250px) {   
+.kAtFBN-{{ section.id }} {font-size: 12px;}
+.kAtFBN-{{ section.id }} div span {
+    margin: 2px 0 0 0px;
+    font-size: 12px;
+}
+.timer_dias-{{ section.id }} {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}  
+.timer-dias-{{ section.id }} {padding: 0;}  
+.timer-block-{{ section.id }} {padding: 0 1px 0 3px;}  
+
+.promo_header_crono-{{ section.id }} {font-size: 14px;} 
+
+ #promo_active-{{ section.id }} > div > div > div > div > div > div > svg{
+  width: 16px !important;}
+ 
+}
+</style>
+
+<div id="fim_data-{{ section.id }}"> 
+<section id="promo_active-{{ section.id }}" class="section" data-section-id="{{ section.id }}" data-section-type="featured-collection" data-section-settings='{{ section_settings }}'>
+  <div class="promo_block-{{ section.id }}">
+    <div class="promo_block_center-{{ section.id }}">
+      
+   <div class="promo_top-{{ section.id }}">
+    <div class="promo_header-{{ section.id }}">
+      <h1 class="block_header-{{ section.id }}">
+        {{ section.settings.title_sec }}
+      </h1>
+
+{%  if section.settings.hide_time_code == false %}      
+      <div class="promo_crono-{{ section.id }}">        
+         <div class="promo_header_crono-{{ section.id }}"> 
+           
+            <span class="end_time_mb-{{ section.id }}">{{ section.settings.contador_info1 }}</span> 
+              <svg style="margin: -3px 6px 0 9px;" width="22" height="24" viewBox="0 0 22 24" xmlns="https://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.30852 1.94579H13.8024C13.9049 1.94579 13.9888 1.8663 13.9888 1.76913V0.176913C13.9888 0.0797498 13.9049 0 13.8024 0H8.30852C8.20597 0 8.12207 0.0797498 8.12207 0.176913V1.76913C8.12207 1.8663 8.20597 1.94579 8.30852 1.94579ZM0 13.5768C0 19.3238 4.93453 23.9993 11 23.9993C17.0655 23.9993 22 19.3238 22 13.5768C22 7.83001 17.0655 3.1543 11 3.1543C4.93453 3.1543 0 7.83001 0 13.5768ZM2.3466 13.5768C2.3466 9.05604 6.22849 5.37795 11 5.37795C15.7715 5.37795 19.6534 9.05604 19.6534 13.5768C19.6534 18.0978 15.7715 21.7759 11 21.7759C6.22849 21.7759 2.3466 18.0978 2.3466 13.5768ZM9.99573 13.571C9.86644 13.7848 9.83157 14.0197 9.87842 14.2352C9.93502 14.4956 10.1113 14.7275 10.3854 14.8579C10.8865 15.0964 11.5243 14.9064 11.8103 14.434L14.1204 10.6152C14.4061 10.1428 14.2318 9.56692 13.7305 9.3283C13.2297 9.09004 12.5919 9.27995 12.3062 9.7523L9.99573 13.571ZM20.5757 6.16097L18.5687 4.49657C18.5136 4.45089 18.508 4.37064 18.5562 4.3184L19.3468 3.46285C19.395 3.41061 19.4797 3.40531 19.5348 3.45099L21.5418 5.11514C21.597 5.16107 21.6026 5.24107 21.5543 5.29331L20.7638 6.14911C20.7153 6.20135 20.6309 6.20665 20.5757 6.16097Z" fill="#fff" height="24"></path></svg>
+           
+            <div class="igWKZA-{{ section.id }}">
+
+                  <span id="codedata_count_home-{{ section.id }}">
+                  
+                  <div class="timer">  
+                  <div class="timer-display-{{ section.id }}">
+                  <div class="timer_dias-{{ section.id }}">
+                  <span class="timer-block__num-{{ section.id }} days-home-{{ section.id }}">00</span><span class="timer-diass-{{ section.id }}">D</span>
+                  </div>
+                  <div class="timer-block-{{ section.id }}">
+                  <span class="timer-block__num-{{ section.id }} hours-home-{{ section.id }}">00</span>
+                  </div>
+                  <div class="timer-block-{{ section.id }}">
+                  <span class="timer-block__num-{{ section.id }} minutes-home-{{ section.id }}">00</span>
+                  </div>
+                  <div class="timer-block-{{ section.id }}">
+                  <span class="timer-block__num-{{ section.id }} seconds-home-{{ section.id }}">00</span>
+                  </div>
+                  </div>
+                  </div>
+                  
+                  </span>
+
+           </div>          
+         </div>
+      
+      </div>
+  {% endif %} 
+    </div>
+  </div> 
+
+
+{%- capture section_settings -%}
+{
+  "stackable": {% if section.settings.layout == 'vertical' and section.settings.stack_products == false %}false{% else %}true{% endif %},
+  "layout": {{ section.settings.layout | json }}
+}
+      
+{%- endcapture -%}
+<section class="section" style="margin:0 !important" data-section-id="{{ section.id }}" data-section-type="featured-collection" data-section-settings='{{ section_settings }}'>
+  {%- assign collection = section.settings.collection -%}
+
+
+  <div style="padding:10px;" class="container {% if section.settings.layout != 'vertical' or section.settings.stack_products %}container--flush{% endif %}">
+    {%- capture product_list -%}
+      <div class="product-list product-list--{{ section.settings.layout }} {% if section.settings.stack_products %}product-list--stackable{% elsif section.settings.layout == 'vertical' %}product-list--scrollable{% endif %}">
+        {%- assign use_placeholder = true -%}
+
+        {%- if collection == blank -%}
+          {%- assign products = (1..section.settings.products_count) -%}
+        {%- else -%}
+          {%- assign products = collection.products -%}
+          {%- assign use_placeholder = false -%}
+        {%- endif -%}
+
+        {%- for product in products limit: section.settings.products_count -%}
+          {%- if section.settings.layout == 'vertical' -%}
+            {%- assign products_per_row = section.settings.products_count | at_most: 6 -%}
+
+            {%- if section.settings.stack_products -%}
+              {%- capture grid_classes -%}1/2 1/4--lap 1/{{ products_per_row | minus: 1 }}--desk 1/{{ products_per_row }}--wide{%- endcapture -%}
+            {%- else -%}
+              {%- capture grid_classes -%}1/4--lap 1/{{ products_per_row | minus: 1 }}--desk 1/{{ products_per_row }}--wide{%- endcapture -%}
+            {%- endif -%}
+
+            {%- if use_placeholder -%}
+              {%- include 'product-item-placeholder', product: product, grid_classes: grid_classes, show_add_to_cart: section.settings.show_quick_buy -%}
+            {%- else -%}
+              {%- include 'product-item-promo', product: product, grid_classes: grid_classes, show_add_to_cart: section.settings.show_quick_buy -%}
+            {%- endif -%}
+          {%- elsif section.settings.layout == 'horizontal' -%}
+            {%- if use_placeholder -%}
+              {%- include 'product-item-placeholder', product: product, horizontal: true, grid_classes: '1/2--tablet 1/3--lap-and-up', show_add_to_cart: false -%}
+            {%- else -%}
+              {%- include 'product-item-promo', product: product, horizontal: true, grid_classes: '1/2--tablet 1/3--lap-and-up', show_add_to_cart: false -%}
+            {%- endif -%}
+          {%- else -%}
+            {%- assign mod = forloop.index0 | modulo: 3 -%}
+
+            {%- if mod == 0 -%}
+              <div class="product-list__column product-list__column--highlight">
+            {%- elsif mod == 1 -%}
+              <div class="product-list__column {% if forloop.last %}product-list__column--shrink{% endif %}">
+            {%- endif -%}
+
+            {%- if mod == 0 -%}
+              {%- if use_placeholder -%}
+                {%- include 'product-item-placeholder', product: product, show_add_to_cart: false -%}
+              {%- else -%}
+                {%- include 'product-item-promo', product: product, show_add_to_cart: false -%}
+              {%- endif -%}
+            {%- else -%}
+              {%- if use_placeholder -%}
+                {%- include 'product-item-placeholder', product: product, horizontal: true, show_add_to_cart: false -%}
+              {%- else -%}
+                {%- include 'product-item-promo', product: product, horizontal: true, show_add_to_cart: false -%}
+              {%- endif -%}
+            {%- endif -%}
+
+            {%- if mod == 0 or mod == 2 or forloop.last -%}
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endcapture -%}
+
+    {%- if section.settings.layout == 'vertical' and section.settings.stack_products == false -%}
+      <div class="scroller">
+        <div class="scroller__inner">
+          {{ product_list }}
+        </div>
+      </div>
+    {%- else -%}
+      {{ product_list }}
+    {%- endif -%}
+  </div>
+
+ 
+  {%- comment -%}
+  --------------------------------------------------------------------------------------
+  QUICK VIEW CONTAINER
+  --------------------------------------------------------------------------------------
+  {%- endcomment -%}
+
+  <div id="modal-quick-view-{{ section.id }}" class="modal" aria-hidden="true">
+    <div class="modal__dialog modal__dialog--stretch" role="dialog">
+      <button class="modal__close link" data-action="close-modal" title="{{ 'general.accessibility.close' | t | escape }}">
+        {%- render 'icon', icon: 'close' -%}
+      </button>
+
+      <div class="modal__loader">
+        {%- render 'icon', icon: 'search-loader' -%}
+      </div>
+
+      <div class="modal__inner"></div>
+    </div>
+  </div>
+
+ 
+</section>
+
+
+      
+
+    </div>
+  </div>
+</section>
+</div>
+
+{% if section.settings.hide_time_code == false %}
+  
+<script type="text/javascript">
+window.addEventListener('load', function (){
+  var date = new Date("{{section.settings.contador_info1_data}} {{section.settings.contador_info2_data}}");
+                     
+    var _second = 1000;
+    var _minute = _second * 60; 
+    var _hour = _minute * 60; 
+    var _day = _hour * 24;
+    var timer;
+
+    function showRemaining() {
+        var now = new Date();
+        var distance = date - now;
+    
+    var loop_contador = {{section.settings.loop_contador}};
+    
+    if(loop_contador == false) {
+
+        if (distance < 0) {
+
+            clearInterval(timer);
+          document.getElementById('codedata_count_home-{{ section.id }}').innerHTML = '{{section.settings.contador_end_text}}';
+          
+          var hide_in_fim = {{ section.settings.hide_in_fim }};
+          
+          if(hide_in_fim == true) {
+            document.getElementById('fim_data-{{ section.id }}').style.display="none";
+          
+          }
+
+            return;
+        }
+      
+    } else {
+    
+        setInterval(function time(){
+          var distance = date;
+          if (now > distance) { // check current time is getter then add one day
+            distance.setDate(distance.getDate() + 1);
+          }
+        });
+      
+    }
+
+        var days = Math.floor(distance / _day);
+        var hours = Math.floor((distance % _day) / _hour);
+        var minutes = Math.floor((distance % _hour) / _minute);
+        var seconds = Math.floor((distance % _minute) / _second);
+
+        var valor_day = "0" + days;
+        var valor_hours = "0" + hours;
+        var valor_minutes = "0" + minutes;
+        var valor_seconds = "0" + seconds;
+      
+        var valor2_day = days;    
+        var valor2_hours = hours;  
+        var valor2_minutes = minutes;  
+        var valor2_seconds = seconds;  
+      
+      if(days<10){
+        document.querySelectorAll(".days-home-{{ section.id }}").forEach((d) => { d.innerHTML = valor_day; });
+        } else {         
+        document.querySelectorAll(".days-home-{{ section.id }}").forEach((d) => { d.innerHTML = valor2_day; });  
+        }
+      if(hours<10){
+        document.querySelectorAll(".hours-home-{{ section.id }}").forEach((h) => { h.innerHTML = valor_hours; });
+        } else {         
+        document.querySelectorAll(".hours-home-{{ section.id }}").forEach((h) => { h.innerHTML = valor2_hours; });  
+        }
+      if(minutes<10){
+        document.querySelectorAll(".minutes-home-{{ section.id }}").forEach((m) => { m.innerHTML = valor_minutes; });
+        } else {         
+        document.querySelectorAll(".minutes-home-{{ section.id }}").forEach((m) => { m.innerHTML = valor2_minutes; });  
+        }
+      if(seconds<10){
+        document.querySelectorAll(".seconds-home-{{ section.id }}").forEach((s) => { s.innerHTML = valor_seconds; });
+        } else {         
+        document.querySelectorAll(".seconds-home-{{ section.id }}").forEach((s) => { s.innerHTML = valor2_seconds; });  
+        }      
+
+    }
+
+    timer = setInterval(showRemaining, -1000);
+});
+</script>
+{% endif %}  
+
+
+  
+{% schema %}
+  {
+    "name": "Ofertas Limitadas",
+    "settings": [        
+      {
+      "type": "collection",
+      "id": "collection",
+      "label": "Coleção"
+    },
+
+    {
+      "type": "range",
+      "id": "products_count",
+      "label": "Produtos à mostrar..",
+      "min": 4,
+      "max": 50,
+      "step": 1,
+      "default": 12
+    },
+         {
+        "type": "range",
+        "id": "margin-top",
+        "label": "Margem superior",
+        "info": "Margem superior da seção",
+        "min": -50,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "default": 30
+      },
+      {
+        "type": "range",
+        "id": "margin-bottom",
+        "label": "Margem inferior",
+        "info": "Margem inferior da seção",
+        "min": -50,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "default": 50
+      },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout da grade de produtos",
+      "options": [
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        },
+        {
+          "value": "collage",
+          "label": "Colagem"
+        }
+      ],
+      "default": "vertical"
+    },
+    {
+      "type": "checkbox",
+      "id": "stack_products",
+      "label": "Empilhar produtos",
+      "info": "Apenas aplicavel para o layout vertical",
+      "default": false
+    },
+       
+      {
+        "type": "range",
+        "id": "promo_max_width",
+        "min": 500,
+        "max": 1640,
+        "step": 20,
+        "unit": "px",
+        "label": "Largura máxima da seção",
+        "default": 1200
+      },  
+      {
+        "type": "checkbox",
+        "id": "promo_full_width",
+        "label": "Usar largura total?",
+        "info": "Coloque a seção em 100%",
+        "default": false
+      },        
+        
+      
+      {
+        "type": "color",
+        "id": "promo_active_color",
+        "label": "Cores gerais",
+        "default": "#1ab794"
+      },
+      {
+        "type": "checkbox",
+        "id": "promo_active_border",
+        "label": "Usar borda?",
+        "info": "Marque para colocar uma borda na seção. APLICÁVEL APENAS NO DESKTOP",
+        "default": false
+      },   
+      {
+        "type": "checkbox",
+        "id": "promo_active_shadow",
+        "label": "Usar sombra?",
+        "info": "Marque para colocar efeito sombra na seção (APLICÁVEL APENAS NO DESKTOP).",
+        "default": true
+      },    
+           
+      {
+        "type": "header",
+        "content": "Cabeçalho da seção"
+      },      
+      {
+        "type": "text",
+        "id": "title_sec",
+        "label": "Nome da seção",
+        "default": "OFERTAS DE BLACK FRIDAY"
+      },   
+      {
+        "type": "color",
+        "id": "promo_background_color",
+        "label": "Cor de fundo do cabeçalho",
+        "default": "#1AB794"
+      },         
+      {
+        "type": "color",
+        "id": "promo_cont_header_color",
+        "label": "Cores do texto no cabeçalho",
+        "default": "#fff"
+      },      
+      {
+        "type": "header",
+        "content": "Contador Regressivo"
+      },
+      {
+        "type": "checkbox",
+        "id": "hide_time_code",
+        "label": "Não usar contagem regressiva?",
+        "info": "Marque para remover à contagem regressiva de cima e de baixo.",
+        "default": false
+      },         
+      {
+        "type": "color",
+        "id": "promo_cont_color",
+        "label": "Cor do contador em baixo",
+        "default": "#1ab794"
+      },
+      {
+        "type": "text",
+        "id": "contador_info1",
+        "label": "Texto do fim do prazo",
+        "default": "TERMINA EM:"
+      },
+      {
+        "type": "text",
+        "id": "contador_info1_data",
+        "label": "Data para o fim do desconto:",
+        "info": "Coloque no formato americano mês/dia/ano",
+        "default": "01/12/2022"
+      },
+        {
+        "type": "text",
+        "id": "contador_info2_data",
+        "label": "Hora para o fim do desconto:",
+        "info": "ATENÇÃO, UTILIZE O FORMATO AMERICANO DE HORÁRIO: 00:00 AM ATÉ 12:00 AM (manhã) E 01:00 PM ATÉ 11:59 PM (tarde e noite)",
+        "default": "00:00 AM"
+      },
+      {
+        "type": "checkbox",
+        "id": "hide_time_day",
+        "label": "Remover dias do contador?",
+        "info": "Marque para tirar os dias do contador e deixar só as horas/min/seg.",
+        "default": false
+      }, 
+      {
+        "type": "checkbox",
+        "id": "loop_contador",
+        "label": "Usar em loop?",
+        "info": "Ignore a data/texto definido e deixe sempre 1 dia, ao terminar o prazo o contador começa de novo. PARA USAR ESSA FUNÇÃO COLOQUE A DATA PARA O FIM DO DESCONTO COMO QUALQUER DATA ANTERIOR AO DIA EM QUE ESTÁ CONFIGURANDO",
+        "default": true
+      },
+        {
+        "type": "text",
+        "id": "contador_end_text",
+        "label": "Texto ao terminar o tempo:",
+        "info": "Defina um texto para ser mostrado ao finalizar o tempo.",
+        "default": "SÓ HOJE!"
+      },
+        {
+        "type": "text",
+        "id": "pr_text_button",
+        "label": "Produto com variante",
+        "info": "Texto do botão ao passar o mouse nos produto com variante",  
+        "default": "VER PRODUTO"
+      },      
+        {
+        "type": "text",
+        "id": "pr_text_button_buy",
+        "label": "Produto sem variante",
+        "info": "Texto do botão ao passar o mouse nos produto sem variante",  
+        "default": "COMPRAR"
+      },   
+      {
+        "type": "color",
+        "id": "pr_text_button_color",
+        "label": "Cor do texto/ícone no botão",
+        "default": "#fff"
+      },      
+        {
+      "type": "checkbox",
+      "id": "show_quick_buy",
+      "label": "Mostrar botão de compra rápida",
+      "default": false,
+      "info": "Disponível apenas no layout vertical. Deixe ativado para mostrar o contador na parte inferior, mesmo se não for deixar o botão sempre ativo nas configurações abaixo"
+    },
+        {
+        "type": "checkbox",
+        "id": "show_but_on",
+        "label": "Sempre mostrar botão?",
+        "info": "Deixe o botão sempre ativo, desmarcado só aparece ao passar o mouse no produto.",
+        "default": false
+      },        
+        {
+        "type": "checkbox",
+        "id": "hide_in_fim",
+        "label": "Ocultar ao finalizar?",
+        "info": "Marque aqui para quando chegar em '0' toda a seção ficar oculta.",
+        "default": false
+      }
+    ],
+    "presets": [
+      {
+        "name": "Ofertas Limitadas",
+        "category": "Collection"
+      }
+    ]
+  }
+{% endschema %}

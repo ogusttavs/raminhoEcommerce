@@ -1,0 +1,85 @@
+{%- case section.settings.text_width -%}
+  {%- when 'narrow' -%}
+    {%- assign container_classes = 'container container--narrow' -%}
+
+  {%- when 'regular' -%}
+    {%- assign container_classes = 'container container--medium' -%}
+
+  {%- when 'wide' -%}
+    {%- assign container_classes = 'container' -%}
+{%- endcase -%}
+
+<section class="section section--text-centered" data-section-id="{{ section.id }}" data-section-type="rich-text">
+  <div class="{{ container_classes }}">
+    {%- if section.settings.title != blank -%}
+      <h2 class="heading h1">{{ section.settings.title | escape }}</h2>
+    {%- endif -%}
+
+    <div class="rte">
+      {{ section.settings.content }}
+
+      {%- if section.settings.button_link != blank and section.settings.button_text != blank -%}
+        <a href="{{ section.settings.button_link }}" class="button button--primary">{{ section.settings.button_text | escape }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Texto formatado",
+  "settings": [
+    {
+      "type": "select",
+      "id": "text_width",
+      "label": "Largura do texto",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "Estreito"
+        },
+        {
+          "value": "regular",
+          "label": "Regular"
+        },
+        {
+          "value": "wide",
+          "label": "Largo"
+        }
+      ],
+      "default": "narrow"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Seu título"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Texto",
+      "default": "<p>Use este texto para compartilhar informações sobre sua marca com seus clientes.<br>Descreva um produto, compartilhe anúncios ou dê as boas-vindas aos clientes em sua loja.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texto do botão",
+      "default": "Nossos produtos"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link do botão",
+      "default": "/collections/all"
+    }
+  ],
+  "presets": [
+    {
+      "category": "Texto",
+      "name": "Texto formatado",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

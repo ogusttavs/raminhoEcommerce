@@ -1,0 +1,25 @@
+# 📜 LOG-001 — Registro Geral de Ações (Action Logs)
+
+| Metadado | Detalhe |
+|---|---|
+| **Nº do Documento** | LOG-001 |
+| **Versão** | 1.0 |
+| **Data de criação** | 26/02/2026 |
+
+> **Propósito:** Registrar cronologicamente **todas** as modificações de arquitetura, configurações, alterações no código e execuções no Shopify, com Data, Hora, e o "Por Quê".
+
+---
+
+## 🕒 Histórico de Execução (Sprints)
+
+### [Pré-Sprint] — Fase de Estudos e Planejamento
+- **[26/02/2026 - 16:30]** Criação do Estudo de Persona (DOC-001) e Identidade Visual (DOC-002).
+- **[26/02/2026 - 17:00]** Auditoria do tema atual Vision (DOC-003). Identificadas falhas críticas: bloqueadores de UX, imagens de IA, assets pesados.
+- **[26/02/2026 - 17:30]** *Mudança de Escopo Crítica:* Cliente solicitou nível "Apple/Disney" de UX. Aprovado build customizado 100% em Liquid; tema Vision foi descartado como base (DOC-004 e DOC-005 atualizados para v2.0).
+- **[26/02/2026 - 17:40]** Especificação da Feature "Venda por Grama / Unidade" elaborada (DOC-010) e validada compatibilidade com plano Shopify Basic (uso de *Variants*).
+- **[26/02/2026 - 17:55]** Criação de 4 Novas Propostas de Logotipo (Rebranding) + Versões Dark Mode. Geração e validação de "Heritage Logo" no documento DOC-012.
+- **[26/02/2026 - 18:15]** Criação da pasta "Documentos de Aplicacao". Mapeado Fluxo de Engenharia (Best Practices) no DOC-000 e inicialização deste LOG-001.
+
+---
+
+*(Os próximos logs deverão ser registrados imediatamente após cada commit/ação na Sprint).*

@@ -1,0 +1,916 @@
+{%- capture section_settings -%}
+{
+  "showShippingEstimator": {% if cart.item_count == 0 %}false{% else %}{{ section.settings.show_shipping_estimator | json }}{% endif %}
+}
+{%- endcapture -%}
+
+<section data-section-id="{{ section.id }}" data-section-type="cart" data-section-settings='{{ section_settings }}' data-item-count="{{ cart.item_count }}">
+  {%- if cart.item_count == 0 -%}
+    <div class="container">
+      <div class="empty-state">
+        <div class="empty-state__icon">
+          {%- render 'icon', icon: 'big-cart' -%}
+        </div>
+
+        <p class="empty-state__heading heading h1">{{ 'cart.general.empty' | t }}</p>
+
+        {%- if settings.cart_show_free_shipping_threshold -%}
+          {%- assign threshold_in_cents = settings.cart_free_shipping_threshold | times: 100 -%}
+          {%- capture remaining_amount -%}<span>{{ cart.total_price | minus: threshold_in_cents | abs | money }}</span>{%- endcapture -%}
+          <p class="empty-state__description">{{ 'cart.general.free_shipping_remaining_html' | t: remaining_amount: remaining_amount }}</p>
+        {%- endif -%}
+
+        <div class="empty-state__button-container">
+          <a href="{{ settings.cart_empty_button_link | default: routes.root_url }}" class="empty-state__button button button--primary">{{ 'cart.general.empty_button' | t }}</a>
+        </div>
+      </div>
+    </div>
+  {%- else -%}
+    <div class="container">
+      <header class="page__header page__header--stack">
+        
+
+        
+      </header>
+    </div>
+
+    <div class="cart-wrapper">
+      <div class="cart-wrapper__inner">
+        <div class="cart-wrapper__inner-inner">
+          <div class="container container--flush">
+            {%- comment -%}
+            --------------------------------------------------------------------------------------
+            LINE ITEMS
+            --------------------------------------------------------------------------------------
+            {%- endcomment -%}
+
+            <div class="card">
+              <div class="table-wrapper" style="padding: 0 !important;">
+
+                <div class="linhacarrinho">
+                
+                <div class="titulo-carrinho-vision">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.864 16.455c-.858-3.432-1.287-5.147-.386-6.301C4.378 9 6.148 9 9.685 9h4.63c3.538 0 5.306 0 6.207 1.154c.901 1.153.472 2.87-.386 6.301c-.546 2.183-.818 3.274-1.632 3.91c-.814.635-1.939.635-4.189.635h-4.63c-2.25 0-3.375 0-4.189-.635c-.814-.636-1.087-1.727-1.632-3.91Z"></path><path d="m19.5 9.5l-.71-2.605c-.274-1.005-.411-1.507-.692-1.886A2.5 2.5 0 0 0 17 4.172C16.56 4 16.04 4 15 4M4.5 9.5l.71-2.605c.274-1.005.411-1.507.692-1.886A2.5 2.5 0 0 1 7 4.172C7.44 4 7.96 4 9 4"></path><path d="M9 4a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M8 13v4m8-4v4m-4-4v4"></path></g></svg>
+<div class="carrinhovision">
+<span class="carrinhovision_titulo" >{{ 'cart.general.title' | t }}</span>
+<span class="carrinhovision_sub" >Confira seus produtos</span>
+</div>
+  
+    </div>
+                </div>
+                
+<style>
+  .titulo-carrinho-vision {
+    display: flex;
+    align-items: center;
+    padding: 15px 15px 15px 25px;
+    color: #595959;
+    line-height: 1.5;
+}
+  .titulo-carrinho-vision .carrinhovision {
+    display: flex;
+    margin: 0 0 0 10px;
+    flex-direction: column;
+}
+  .titulo-carrinho-vision .carrinhovision_titulo {
+    font-size: 20px;
+    font-weight: 600;
+}
+  .titulo-carrinho-vision .carrinhovision_sub {
+    font-size: 13px;
+}
+  .linhacarrinho {
+    border-bottom: 1px solid #e7e7e7;
+    margin-bottom: 20px;
+}
+  </style>
+                
+                
+                
+                
+                
+                <table class="line-item-table table table--loose">
+                  <thead class="hidden-phone">
+                   <tr>
+                      <th>{{ 'customer.order.product' | t }}</th>
+                      <th class="table__cell--center">{{ 'customer.order.quantity' | t }}</th>
+                      <th class="table__cell--right">{{ 'customer.order.total' | t }}</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {%- assign gift_wrap_product = all_products[section.settings.gift_wrap_product] -%}
+
+                    {%- for line_item in cart.items -%}
+                      <tr class="line-item line-item--stack">
+                        <td class="line-item__product-info">
+                          <div class="line-item__product-info-wrapper">
+                            <div class="line-item__image-wrapper">
+                              {%- comment -%}For vertical images we force to contain them on a square ratio to avoid growing too large{%- endcomment -%}
+
+                              {%- if line_item.image.aspect_ratio < 1 -%}
+                                <div class="aspect-ratio aspect-ratio--square">
+                                  <img src="{{ line_item.image | img_url: '180x' }}" alt="{{ line_item.image.alt | escape }}">
+                                </div>
+                              {%- else -%}
+                                <div class="aspect-ratio" style="padding-bottom: {{ 100.0 | divided_by: line_item.image.aspect_ratio }}%">
+                                  <img src="{{ line_item.image | img_url: '180x' }}" alt="{{ line_item.image.alt | escape }}">
+                                </div>
+                              {%- endif -%}
+                            </div>
+
+                            <div class="line-item__meta">
+                              {%- if settings.show_vendor and gift_wrap_product.handle != line_item.product.handle -%}
+                                {%- assign vendor_handle = line_item.product.vendor | handle -%}
+                                {%- assign collection_for_vendor = collections[vendor_handle] -%}
+
+                                {%- unless collection_for_vendor.empty? -%}
+                                  <a class="line-item__vendor link" href="{{ collection_for_vendor.url }}">{{ line_item.product.vendor }}</a>
+                                  {%- else -%}
+                                  <a class="line-item__vendor link" href="{{ line_item.product.vendor | url_for_vendor }}">{{ line_item.product.vendor }}</a>
+                                {%- endunless -%}
+                              {%- endif -%}
+
+                              {%- if gift_wrap_product.handle == line_item.product.handle -%}
+                                <span class="line-item__title text--strong">{{ line_item.title }}</span>
+                              {%- else -%}
+                                <a href="{{ line_item.url }}" class="line-item__title link text--strong">{{ line_item.title }}</a>
+                              {%- endif -%}
+
+                              {%- if line_item.selling_plan_allocation -%}
+                                <p class="line-item__plan-allocation">{{ line_item.selling_plan_allocation.selling_plan.name }}</p>
+                              {%- endif -%}
+
+                              {%- unless line_item.properties == blank -%}
+                                <ul class="line-item__property-list" role="list">
+                                  {%- for property in line_item.properties -%}
+                                    {%- assign first_character_in_key = property.first | truncate: 1, '' -%}
+
+                                    {%- if property.last == blank or first_character_in_key == '_' -%}
+                                      {%- continue -%}
+                                    {%- endif -%}
+
+                                    <li class="line-item__property">{{ property.first }}: {{ property.last }}</li>
+                                  {%- endfor -%}
+                                </ul>
+                              {%- endunless -%}
+
+                              <div class="line-item__price-list">
+                                {%- if line_item.original_price > line_item.final_price -%}
+                                  {%- if line_item.final_price == 0 -%}
+                                    <span class="line-item__price line-item__price--highlight">{{ 'cart.general.free' | t }}</span>
+                                  {%- else -%}
+                                    <span class="line-item__price line-item__price--highlight">{{ line_item.final_price | money }}</span>
+                                  {%- endif -%}
+
+                                  <span class="line-item__price line-item__price--compare">{{ line_item.original_price | money }}</span>
+                                {%- elsif line_item.variant.compare_at_price > line_item.variant.price -%}
+                                  {%- if line_item.final_price == 0 -%}
+                                    <span class="line-item__price line-item__price--highlight">{{ 'cart.general.free' | t }}</span>
+                                  {%- else -%}
+                                    <span class="line-item__price line-item__price--highlight">{{ line_item.final_price | money }}</span>
+                                  {%- endif -%}
+
+                                  <span class="line-item__price line-item__price--compare">{{ line_item.variant.compare_at_price | money }}</span>
+                                {%- else -%}
+                                  {%- if line_item.final_price == 0 -%}
+                                    <span class="line-item__price">{{ 'cart.general.free' | t }}</span>
+                                  {%- else -%}
+                                    <span class="line-item__price">{{ line_item.final_price | money }}</span>
+                                  {%- endif -%}
+                                {%- endif -%}
+                              </div>
+
+                              {%- if line_item.unit_price_measurement -%}
+                                <div class="line-item__price-info">
+                                  <div class="unit-price-measurement">
+                                    <span class="unit-price-measurement__price">{{ line_item.unit_price | money }}</span>
+                                    <span class="unit-price-measurement__separator">/ </span>
+
+                                    {%- if line_item.unit_price_measurement.reference_value != 1 -%}
+                                      <span class="unit-price-measurement__reference-value">{{ line_item.unit_price_measurement.reference_value }}</span>
+                                    {%- endif -%}
+
+                                    <span class="unit-price-measurement__reference-unit">{{ line_item.unit_price_measurement.reference_unit }}</span>
+                                  </div>
+                                </div>
+                              {%- endif -%}
+
+                              {%- if line_item.line_level_discount_allocations != blank -%}
+                                <ul class="line-item__discount-list" role="list">
+                                  {%- for discount_allocation in line_item.line_level_discount_allocations -%}
+                                    <li class="line-item__discount">
+                                      {%- render 'icon', icon: 'sale' -%}{{ discount_allocation.discount_application.title }} (-{{ discount_allocation.amount | money }})
+                                    </li>
+                                  {%- endfor -%}
+                                </ul>
+                              {%- endif -%}
+
+                              <div class="line-item__quantity hidden-tablet-and-up">
+                                {%- comment -%}If the product has the tag "__gift", we remove the price{%- endcomment -%}
+
+                                {%- unless line_item.product.tags contains '__gift' -%}
+                                  <div class="quantity-selector">
+                                    {%- assign allow_to_add_more = true -%}
+
+                                    {%- if line_item.variant.inventory_management and line_item.variant.inventory_policy == 'deny' and line_item.quantity == line_item.variant.inventory_quantity -%}
+                                      {%- assign allow_to_add_more = false -%}
+                                    {%- endif -%}
+
+                                    <button type="button" class="quantity-selector__button" data-action="decrease-quantity" data-href="{{ routes.cart_change_url }}?quantity={{ line_item.quantity | minus: 1 }}&line={{ forloop.index }}" data-quantity="{{ line_item.quantity | minus: 1 }}" data-line="{{ forloop.index }}" aria-label="{{ 'cart.items.decrease_quantity' | t }}" title="{{ 'cart.items.decrease_quantity' | t }}">{% render 'icon', icon: 'minus' %}</button>
+                                    <input aria-label="{{ 'product.form.quantity' | t }}" class="quantity-selector__value" inputmode="numeric" data-current-value="{{ line_item.quantity }}" data-line="{{ forloop.index }}" value="{{ line_item.quantity }}" size="{{ line_item.quantity | append: '' | size | at_least: 2 }}">
+                                    <button type="button" class="quantity-selector__button" data-action="increase-quantity" data-href="{{ routes.cart_change_url }}?quantity={{ line_item.quantity | plus: 1 }}&line={{ forloop.index }}" data-quantity="{{ line_item.quantity | plus: 1 }}" data-line="{{ forloop.index }}" {% if allow_to_add_more %}aria-label="{{ 'cart.items.increase_quantity' | t }}" title="{{ 'cart.items.increase_quantity' | t }}"{% else %}disabled="disabled" aria-label="{{ 'cart.items.no_more_stock' | t }}" data-tooltip="{{ 'cart.items.no_more_stock' | t }}" data-tooltip-position="bottom-left"{% endif %}>{% render 'icon', icon: 'plus' %}</button>
+                                  </div>
+                                {%- else -%}
+                                  <span>{{ line_item.quantity }}</span>
+                                {% endunless -%}
+
+                                <a href="{{ routes.cart_change_url }}?quantity=0&line={{ forloop.index }}" data-action="decrease-quantity" data-quantity="0" data-line="{{ forloop.index }}" class="line-item__quantity-remove link">{{ 'cart.items.remove' | t }}</a>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+
+                        <td class="line-item__quantity table__cell--center hidden-phone">
+                          {%- comment -%}If the product has the tag "__gift", we remove the price{%- endcomment -%}
+
+                          {%- unless line_item.product.tags contains '__gift' -%}
+                               <div class="quantity-selector">
+                              {%- assign allow_to_add_more = true -%}
+
+                              {%- if line_item.variant.inventory_management and line_item.variant.inventory_policy == 'deny' and line_item.quantity == line_item.variant.inventory_quantity -%}
+                                {%- assign allow_to_add_more = false -%}
+                              {%- endif -%}
+
+                              <button type="button" class="quantity-selector__button" data-action="decrease-quantity" data-href="{{ routes.cart_change_url }}?quantity={{ line_item.quantity | minus: 1 }}&line={{ forloop.index }}" data-quantity="{{ line_item.quantity | minus: 1 }}" data-line="{{ forloop.index }}" aria-label="{{ 'cart.items.decrease_quantity' | t }}" title="{{ 'cart.items.decrease_quantity' | t }}">{% render 'icon', icon: 'minus' %}</button>
+                              <input aria-label="{{ 'product.form.quantity' | t }}" class="quantity-selector__value" inputmode="numeric" data-current-value="{{ line_item.quantity }}" data-line="{{ forloop.index }}" value="{{ line_item.quantity }}" size="{{ line_item.quantity | append: '' | size | at_least: 2 }}">
+                              <button type="button" class="quantity-selector__button" data-action="increase-quantity" data-href="{{ routes.cart_change_url }}?quantity={{ line_item.quantity | plus: 1 }}&line={{ forloop.index }}" data-quantity="{{ line_item.quantity | plus: 1 }}" data-line="{{ forloop.index }}" {% if allow_to_add_more %}aria-label="{{ 'cart.items.increase_quantity' | t }}" title="{{ 'cart.items.increase_quantity' | t }}"{% else %}disabled="disabled" aria-label="{{ 'cart.items.no_more_stock' | t }}" data-tooltip="{{ 'cart.items.no_more_stock' | t }}" data-tooltip-position="bottom-left"{% endif %}>{% render 'icon', icon: 'plus' %}</button>
+                            </div>
+                          {%- else -%}
+                            <span>{{ line_item.quantity }}</span>
+                          {%- endunless -%}
+
+                          <a href="{{ routes.cart_change_url }}?quantity=0&line={{ forloop.index }}" data-action="decrease-quantity" data-quantity="0" data-line="{{ forloop.index }}" class="line-item__quantity-remove link">{{ 'cart.items.remove' | t }}</a>
+                        </td>
+
+                        <td class="line-item__line-price table__cell--right hidden-phone" style="min-width:150px !important">
+                          {%- if line_item.final_line_price == 0 -%}
+                            {{- 'cart.general.free' | t -}}
+                          {%- else -%}
+                            <span>{{ line_item.final_line_price | money }}</span>
+                          {%- endif -%}
+                        </td>
+                      </tr>
+                    {%- endfor -%}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {%- comment -%}
+            --------------------------------------------------------------------------------------
+            GIFT WRAP
+            --------------------------------------------------------------------------------------
+            {%- endcomment -%}
+
+            {%- assign gift_wrap_product = all_products[section.settings.gift_wrap_product] -%}
+
+            {%- unless gift_wrap_product.empty? or gift_wrap_product.available == false -%}
+              {%- comment -%}We also have to do another check to make sure the gift wrap product is not already in the cart{%- endcomment -%}
+
+              {%- assign gift_wrap_in_cart = false -%}
+
+              {%- for line_item in cart.items -%}
+                {%- if line_item.product_id == gift_wrap_product.id -%}
+                  {%- assign gift_wrap_in_cart = true -%}
+                  {%- break -%}
+                {%- endif -%}
+              {%- endfor -%}
+
+              {%- unless gift_wrap_in_cart -%}
+                <div class="card">
+                  <div class="gift-wrap">
+                    <div class="gift-wrap__left">
+                      <span class="gift-wrap__icon">{% render 'icon', icon: 'bi-gift-wrap' %}</span>
+
+                      <p class="gift-wrap__text">
+                        <span class="text--strong">{{ section.settings.gift_wrap_text | escape }}</span>
+
+                        {%- if gift_wrap_product.price == 0 -%}
+                          <span>{{ 'cart.general.free' | t }}</span>
+                        {%- else -%}
+                          {%- capture gift_wrap_product_price -%}<span>{{ gift_wrap_product.price | money }}</span>{%- endcapture -%}
+                          <span>{{ 'cart.gift_wrap.price_html' | t: price: gift_wrap_product_price }}</span>
+                        {%- endif -%}
+                      </p>
+                    </div>
+
+                    {%- form 'product', gift_wrap_product, class: 'gift-wrap__form' -%}
+                      <input type="hidden" name="quantity" value="1">
+                      <input type="hidden" name="id" data-sku="{{ gift_wrap_product.first_available_variant.sku }}" value="{{ gift_wrap_product.first_available_variant.id }}">
+
+                      <button type="submit" class="button button--secondary" data-action="add-to-cart">{{ section.settings.gift_wrap_button | escape }}</button>
+                    {%- endform -%}
+                  </div>
+                </div>
+              {%- endunless -%}
+            {%- endunless -%}
+
+            {%- comment -%}
+            --------------------------------------------------------------------------------------
+            SHIPPING ESTIMATOR
+            --------------------------------------------------------------------------------------
+            {%- endcomment -%}
+
+            {%- if section.settings.show_shipping_estimator -%}
+              <div class="card">
+                <div class="estimate-shipping">
+                  <button type="button" class="estimate-shipping__toggle" data-action="toggle-collapsible" data-collapsible-force-overflow aria-expanded="false" aria-controls="shipping-estimator">
+                    <span class="estimate-shipping__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="fill: none;width: 41px;height: 32px;margin-left: -9px;margin-top: -2px;margin-right: 12px;"><path stroke=" var(--header-accent-color)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 16.016c1.245.529 2 1.223 2 1.984 0 1.657-3.582 3-8 3s-8-1.343-8-3c0-.76.755-1.456 2-1.984"/><path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8.444C17 11.537 12 17 12 17s-5-5.463-5-8.556C7 5.352 9.239 3 12 3s5 2.352 5 5.444z"/><circle cx="12" cy="8" r="1" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg> 
+                      </span>
+                    <span class="estimate-shipping__text">{{ 'cart.shipping_estimator.title' | t }}</span>
+                    <span class="estimate-shipping__arrow">{% render 'icon', icon: 'arrow-bottom' %}</span>
+                  </button>
+
+                  <div id="shipping-estimator" class="estimate-shipping__collapsible collapsible">
+                   {% render 'fretecart' %}
+                  </div>
+              </div> 
+              </div>
+            {%- endif -%}
+
+            {%- comment -%}
+            --------------------------------------------------------------------------------------
+            RECAP
+            --------------------------------------------------------------------------------------
+            {%- endcomment -%}
+
+            <form class="cart-recap" method="post" action="{{ routes.cart_url }}" novalidate="novalidate" data-item-count="{{ cart.item_count }}">
+              <div class="cart-recap__scroller">
+                <div class="card">
+                  <div class="card__section">
+                    {%- if cart.cart_level_discount_applications != blank -%}
+                      {%- for discount_application in cart.cart_level_discount_applications -%}
+                        <div class="cart-recap__price-line cart-recap__price-line--highlight text--pull">
+                          <span class="cart-recap__price-line-label">{{ discount_application.title }}</span>
+                          <span class="cart-recap__price-line-price">-{{ discount_application.total_allocated_amount | money }}</span>
+                        </div>
+                      {%- endfor -%}
+                    {%- endif -%}
+
+                    <div class="cart-recap__price-line text--pull">
+                      <span class="cart-recap__price-line-label">{{ 'cart.general.total' | t }}</span>
+                      <span class="cart-recap__price-line-price">{{ cart.total_price | money }}</span>
+                    </div>
+
+                    
+                    {%- comment -%}
+                    To calculate the total discount, we take into account the Shopify Script (for Plus merchants), but we also add the compare at price as
+                    well as potential automatic discounts at cart level
+                    {%- endcomment -%}
+
+                    {%- assign total_discount = 0 -%}
+
+                    {%- for line_item in cart.items -%}
+                      {%- if line_item.final_line_price < line_item.original_line_price -%}
+                        {%- assign total_discount = total_discount | plus: line_item.total_discount -%}
+                      {%- elsif line_item.variant.compare_at_price > line_item.variant.price -%}
+                        {%- assign line_discount = line_item.variant.compare_at_price | minus: line_item.variant.price | times: line_item.quantity -%}
+                        {%- assign total_discount = total_discount | plus: line_discount -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+
+                    {%- for discount_application in cart.cart_level_discount_applications -%}
+                      {%- assign total_discount = total_discount | plus: discount_application.total_allocated_amount -%}
+                    {%- endfor -%}
+
+                    
+
+        {% liquid assign taxa_12x = settings.juros_parcelamento | divided_by: 100 | plus: 1%}
+          <p id="juros" style="display:none"> {{ settings.juros_parcelamento | divided_by: 100 | plus: 1 }} </p>
+        <p style="font-size:16px;top:-4px;margin-bottom:-5px;position: relative" ><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18" height="18" viewBox="0 0 32 32" style="top: 4px;position: relative;"><path d="M 5 6 C 3.355469 6 2 7.355469 2 9 L 2 23 C 2 24.644531 3.355469 26 5 26 L 27 26 C 28.644531 26 30 24.644531 30 23 L 30 9 C 30 7.355469 28.644531 6 27 6 Z M 5 8 L 27 8 C 27.566406 8 28 8.433594 28 9 L 28 11 L 5 11 L 5 13 L 28 13 L 28 23 C 28 23.566406 27.566406 24 27 24 L 5 24 C 4.433594 24 4 23.566406 4 23 L 4 9 C 4 8.433594 4.433594 8 5 8 Z"></path></svg> ou <span style="font-weight: 600;">12x</span> de <b style="color: var(--color-parcel-prod);" id="juros">{{ cart.total_price| divided_by: 12 | times: taxa_12x | money}}</b></p>
+                    
+
+                    {%- if section.settings.enable_order_notes -%}
+                      <div class="cart-recap__note">
+                        <button type="button" class="cart-recap__note-button" data-action="toggle-collapsible" data-collapsible-force-overflow aria-controls="order-note" aria-expanded="false">
+                          {{- 'cart.general.note_title' | t -}}
+                          <span>
+                            <span class="cart-recap__note-edit {% if cart.note != blank %}is-visible{% endif %}">{{ 'cart.general.edit_note' | t }}</span>
+                            {%- render 'icon', icon: 'arrow-bottom' -%}
+                          </span>
+                        </button>
+
+                        <div id="order-note" class="collapsible" aria-hidden="true">
+                          <div class="cart-recap__note-inner">
+                            <textarea name="note" class="form__field form__field--textarea" rows="3" autofocus>{{ cart.note }}</textarea>
+                            <button type="button" class="form__submit form__submit--tight button button--secondary" data-action="save-note">{{ 'cart.general.save_note' | t }}</button>
+                          </div>
+                        </div>
+                      </div>
+                    {%- endif -%}
+
+                    <input type="hidden" name="attributes[collection_products_per_page]" value="">
+                    <input type="hidden" name="attributes[collection_layout]" value="">
+                    
+    {%- if settings.cart_show_free_shipping_threshold -%}
+          {%- assign threshold_in_cents = settings.cart_free_shipping_threshold | times: 100 -%}
+
+          {%- if cart.total_price >= threshold_in_cents -%}
+            <p class="page__description">{{ 'cart.general.free_shipping' | t }}</p>
+          {%- else -%}
+            {%- capture remaining_amount -%}<span>{{ cart.total_price | minus: threshold_in_cents | abs | money }}</span>{%- endcapture -%}
+            <p class="page__description">{{ 'cart.general.free_shipping_remaining_html' | t: remaining_amount: remaining_amount }}</p>
+          {%- endif -%}
+        {%- endif -%}
+    <div class="corri-main-cart-mobile">
+   
+  <style>
+     @media(max-width:769px) {
+    .corri-main-cart-mobile{
+      gap: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 20px;
+    }
+     }
+    </style>
+      
+      <button type="submit" name="checkout" class="page__button-action button button--primary-cart metade" > {{ 'cart.general.checkout' | t }}</button>
+    
+     {%- if settings.ativar_contcompra -%}
+      <a class="metade"><span style="width:97%;top: -11px;border-radius: var(--borda-bot-qnt) !important;color: var(--cont-compra-texto) !important; background: var(--cont-compra-fundo) !important; border:solid 2px var(--cont-compra-borda) !important;" class="page__button-action button button--primary botaocontinuar"> {{ settings.cont_compra_text }}</span></a>
+  
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Encontre o elemento do botão "CONTINUAR COMPRANDO" pelo seletor de classe
+  var botaoContinuarComprando = document.querySelector(".botaocontinuar");
+
+  // Adicione um ouvinte de evento de clique ao botão
+  botaoContinuarComprando.addEventListener("click", function(event) {
+    event.preventDefault(); // Impede o comportamento padrão de redirecionamento
+
+    // Obtenha a URL anterior (a página do produto) do histórico do navegador
+    var urlAnterior = document.referrer;
+
+    // Redirecione o cliente para a URL anterior
+    window.location.href = urlAnterior;
+  });
+});
+</script>
+    {%- endif -%}
+    
+    </div>
+    <br>
+    {%- if section.settings.show_payment_icons -%}
+
+
+        <style>
+
+  @media(max-width:768px) {
+  .cartoes{
+    max-height: auto;
+    width: var(--bandeiras-w-mobile2);
+    margin-top: 0px;
+    margin-bottom: 5px;
+  }  
+    
+  }
+
+  @media(min-width:769px) {
+   .cartoes{
+    max-height: auto;
+    width: var(--bandeiras-w-desktop2);
+    margin-top: 0px;
+    margin-bottom: 5px;
+  }
+    
+  }
+    
+    </style>
+
+
+                  
+                  <div class="cart-recap__secure-payment" style="margin-top: -17px;">
+                    <p class="cart-recap__secure-payment-title">{% render 'icon', icon: 'lock-2' %} {{ 'cart.general.secure_payments' | t }}</p>
+
+                    <div class="cart-recap__secure-payment-list payment-list payment-list--centered">
+                      
+                        <center style=""><div class="payment-list2">
+
+   {% if settings.show_bandeiras %}
+      
+            {% if settings.show_visa_p %}<svg viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="45" height="25" aria-labelledby="pi-visa" class="cartoes" <title id="pi-visa">Visa</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"/><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"/><path d="M28.3 10.1H28c-.4 1-.7 1.5-1 3h1.9c-.3-1.5-.3-2.2-.6-3zm2.9 5.9h-1.7c-.1 0-.1 0-.2-.1l-.2-.9-.1-.2h-2.4c-.1 0-.2 0-.2.2l-.3.9c0 .1-.1.1-.1.1h-2.1l.2-.5L27 8.7c0-.5.3-.7.8-.7h1.5c.1 0 .2 0 .2.2l1.4 6.5c.1.4.2.7.2 1.1.1.1.1.1.1.2zm-13.4-.3l.4-1.8c.1 0 .2.1.2.1.7.3 1.4.5 2.1.4.2 0 .5-.1.7-.2.5-.2.5-.7.1-1.1-.2-.2-.5-.3-.8-.5-.4-.2-.8-.4-1.1-.7-1.2-1-.8-2.4-.1-3.1.6-.4.9-.8 1.7-.8 1.2 0 2.5 0 3.1.2h.1c-.1.6-.2 1.1-.4 1.7-.5-.2-1-.4-1.5-.4-.3 0-.6 0-.9.1-.2 0-.3.1-.4.2-.2.2-.2.5 0 .7l.5.4c.4.2.8.4 1.1.6.5.3 1 .8 1.1 1.4.2.9-.1 1.7-.9 2.3-.5.4-.7.6-1.4.6-1.4 0-2.5.1-3.4-.2-.1.2-.1.2-.2.1zm-3.5.3c.1-.7.1-.7.2-1 .5-2.2 1-4.5 1.4-6.7.1-.2.1-.3.3-.3H18c-.2 1.2-.4 2.1-.7 3.2-.3 1.5-.6 3-1 4.5 0 .2-.1.2-.3.2M5 8.2c0-.1.2-.2.3-.2h3.4c.5 0 .9.3 1 .8l.9 4.4c0 .1 0 .1.1.2 0-.1.1-.1.1-.1l2.1-5.1c-.1-.1 0-.2.1-.2h2.1c0 .1 0 .1-.1.2l-3.1 7.3c-.1.2-.1.3-.2.4-.1.1-.3 0-.5 0H9.7c-.1 0-.2 0-.2-.2L7.9 9.5c-.2-.2-.5-.5-.9-.6-.6-.3-1.7-.5-1.9-.5L5 8.2z" fill="#142688"/></svg>{% endif %}                     
+                           {% if settings.show_master_p %}<svg viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="45" height="25" aria-labelledby="pi-master"class="cartoes" <title id="pi-master">Mastercard</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"/><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"/><circle fill="#EB001B" cx="15" cy="12" r="7"/><circle fill="#F79E1B" cx="23" cy="12" r="7"/><path fill="#FF5F00" d="M22 12c0-2.4-1.2-4.5-3-5.7-1.8 1.3-3 3.4-3 5.7s1.2 4.5 3 5.7c1.8-1.2 3-3.3 3-5.7z"/></svg>{% endif %}                   
+                             {% if settings.show_elo_p %}<svg role="img" aria-labelledby="pi-elo" width="45" height="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 24"class="cartoes" <title id="pi-elo">Elo</title><g fill-rule="nonzero" fill="none"><path d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z" fill="#000" opacity=".07"/><path d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32" fill="#FFF"/><g fill="#000"><path d="M13.3 15.5c-.6.6-1.4.9-2.3.9-.6 0-1.2-.2-1.6-.5l-1.2 1.9c.8.6 1.8.9 2.8.9 1.5 0 2.9-.6 3.9-1.6l-1.6-1.6zm-2.1-7.7c-3 0-5.5 2.4-5.5 5.4 0 1.1.3 2.2.9 3.1l9.8-4.2c-.6-2.5-2.7-4.3-5.2-4.3zm-3.3 5.8v-.4c0-1.8 1.5-3.2 3.2-3.2 1 0 1.8.5 2.4 1.1l-5.6 2.5zm11.6-8.3v10.5l1.8.8-.9 2.1-1.8-.8c-.4-.2-.7-.4-.9-.7-.2-.3-.3-.7-.3-1.3V5.3h2.1zM26 10.2c.3-.1.7-.2 1-.2 1.5 0 2.8 1.1 3.1 2.6l2.2-.4c-.5-2.5-2.7-4.4-5.3-4.4-.6 0-1.2.1-1.7.3l.7 2.1zm-2.6 7.1l1.5-1.7c-.7-.6-1.1-1.4-1.1-2.4s.4-1.8 1.1-2.4l-1.5-1.7c-1.1 1-1.8 2.5-1.8 4.1 0 1.7.7 3.1 1.8 4.1zm6.7-3.4c-.3 1.5-1.6 2.6-3.1 2.6-.4 0-.7-.1-1-.2l-.7 2.1c.5.2 1.1.3 1.7.3 2.6 0 4.8-1.9 5.3-4.4l-2.2-.4z"/></g></g></svg>{% endif %}
+                            {% if settings.show_amex_p %} <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 38 24" width="45" height="25" aria-labelledby="pi-american_express"class="cartoes" <title id="pi-american_express">American Express</title><g fill="none"><path fill="#000" d="M35,0 L3,0 C1.3,0 0,1.3 0,3 L0,21 C0,22.7 1.4,24 3,24 L35,24 C36.7,24 38,22.7 38,21 L38,3 C38,1.3 36.6,0 35,0 Z" opacity=".07"></path><path fill="#006FCF" d="M35,1 C36.1,1 37,1.9 37,3 L37,21 C37,22.1 36.1,23 35,23 L3,23 C1.9,23 1,22.1 1,21 L1,3 C1,1.9 1.9,1 3,1 L35,1"></path><path fill="#FFF" d="M8.971,10.268 L9.745,12.144 L8.203,12.144 L8.971,10.268 Z M25.046,10.346 L22.069,10.346 L22.069,11.173 L24.998,11.173 L24.998,12.412 L22.075,12.412 L22.075,13.334 L25.052,13.334 L25.052,14.073 L27.129,11.828 L25.052,9.488 L25.046,10.346 L25.046,10.346 Z M10.983,8.006 L14.978,8.006 L15.865,9.941 L16.687,8 L27.057,8 L28.135,9.19 L29.25,8 L34.013,8 L30.494,11.852 L33.977,15.68 L29.143,15.68 L28.065,14.49 L26.94,15.68 L10.03,15.68 L9.536,14.49 L8.406,14.49 L7.911,15.68 L4,15.68 L7.286,8 L10.716,8 L10.983,8.006 Z M19.646,9.084 L17.407,9.084 L15.907,12.62 L14.282,9.084 L12.06,9.084 L12.06,13.894 L10,9.084 L8.007,9.084 L5.625,14.596 L7.18,14.596 L7.674,13.406 L10.27,13.406 L10.764,14.596 L13.484,14.596 L13.484,10.661 L15.235,14.602 L16.425,14.602 L18.165,10.673 L18.165,14.603 L19.623,14.603 L19.647,9.083 L19.646,9.084 Z M28.986,11.852 L31.517,9.084 L29.695,9.084 L28.094,10.81 L26.546,9.084 L20.652,9.084 L20.652,14.602 L26.462,14.602 L28.076,12.864 L29.624,14.602 L31.499,14.602 L28.987,11.852 L28.986,11.852 Z"></path></g></svg>{% endif %}                     
+ 
+                             {% if settings.show_discover_p %}<svg viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="45" height="25" aria-labelledby="pi-diners_club"class="cartoes"  <title id="pi-diners_club">Diners Club</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"/><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"/><path d="M12 12v3.7c0 .3-.2.3-.5.2-1.9-.8-3-3.3-2.3-5.4.4-1.1 1.2-2 2.3-2.4.4-.2.5-.1.5.2V12zm2 0V8.3c0-.3 0-.3.3-.2 2.1.8 3.2 3.3 2.4 5.4-.4 1.1-1.2 2-2.3 2.4-.4.2-.4.1-.4-.2V12zm7.2-7H13c3.8 0 6.8 3.1 6.8 7s-3 7-6.8 7h8.2c3.8 0 6.8-3.1 6.8-7s-3-7-6.8-7z" fill="#3086C8"/></svg>{% endif %}                      
+                             {% if settings.show_hiper_f %}<svg role="img" aria-labelledby="pi-hypercard" viewBox="0 0 38 24" width="45" height="25" xmlns="http://www.w3.org/2000/svg" class="cartoes" <title id="pi-hypercard">Hypercard</title><g fill="none" fill-rule="evenodd"><path d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z" fill="#000" fill-rule="nonzero" opacity=".07"/><path d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32" fill="#FFF" fill-rule="nonzero"/><path d="M11.9 5.1H8.6c-1.4.1-2.6.6-2.9 1.8-.2.6-.3 1.3-.4 2-.7 3.3-1.3 6.7-2 9.9h25.4c2 0 3.3-.4 3.7-2 .2-.7.3-1.5.5-2.3.6-3.1 1.3-6.2 1.9-9.4H11.9z" fill="#B3131B" fill-rule="nonzero"/><path d="M6.38 9.31h.605v1.827h2.3V9.31h.605v4.421h-.605v-2.067h-2.3v2.067h-.604v-4.42zm4.364 1.213h.551v3.208h-.55v-3.208zm0-1.213h.551v.614h-.55V9.31zm3.36 3.74c.168-.212.252-.528.252-.95 0-.257-.037-.477-.111-.662-.14-.355-.398-.533-.77-.533-.376 0-.633.188-.771.563a2.23 2.23 0 00-.112.765c0 .248.037.46.112.635.14.333.397.5.77.5a.773.773 0 00.63-.318zm-2.032-2.527h.526v.428c.109-.147.227-.26.355-.34.183-.12.398-.181.644-.181.366 0 .676.14.93.42.255.28.383.68.383 1.2 0 .701-.184 1.203-.551 1.504a1.25 1.25 0 01-.813.286c-.242 0-.446-.053-.61-.16a1.408 1.408 0 01-.323-.31v1.646h-.541v-4.493zm5.477.074c.215.107.378.246.49.417.109.162.181.352.217.569.032.148.048.385.048.71h-2.362c.01.327.087.59.232.787.144.197.368.296.67.296.284 0 .51-.093.678-.28a.944.944 0 00.205-.376h.532c-.014.119-.06.25-.14.396a1.432 1.432 0 01-.266.357c-.165.16-.368.268-.61.325a1.873 1.873 0 01-.443.048c-.402 0-.742-.146-1.02-.438-.28-.292-.419-.7-.419-1.227 0-.517.14-.938.421-1.26.281-.324.648-.485 1.102-.485.229 0 .45.054.665.16zm.199 1.265a1.403 1.403 0 00-.154-.562c-.148-.261-.396-.392-.743-.392a.824.824 0 00-.626.27c-.169.18-.258.408-.268.684h1.79zm1.237-1.354h.514v.557c.042-.108.146-.24.31-.396a.804.804 0 01.62-.23l.124.012v.572a.81.81 0 00-.178-.015c-.273 0-.482.088-.629.263a.92.92 0 00-.22.607v1.853h-.541v-3.223zm4.166.172c.228.176.365.48.411.912h-.526a.972.972 0 00-.22-.495c-.115-.132-.298-.198-.55-.198-.346 0-.593.169-.741.506-.097.219-.145.489-.145.81 0 .323.068.594.205.815.136.22.351.331.644.331.225 0 .403-.068.534-.206.132-.137.222-.325.273-.564h.526c-.06.427-.21.74-.451.937-.241.198-.549.297-.924.297-.422 0-.758-.154-1.008-.462-.251-.308-.377-.693-.377-1.154 0-.566.138-1.007.413-1.322a1.332 1.332 0 011.05-.472c.363 0 .659.088.886.265zm1.54 2.564c.114.09.25.135.406.135.19 0 .375-.044.554-.132a.745.745 0 00.451-.72v-.436a.927.927 0 01-.256.106 2.18 2.18 0 01-.307.06l-.328.042a1.255 1.255 0 00-.442.123c-.167.095-.25.245-.25.452 0 .156.057.28.172.37zm1.14-1.466c.125-.016.208-.068.25-.156a.476.476 0 00.036-.208c0-.185-.065-.318-.197-.402-.131-.083-.32-.125-.564-.125-.283 0-.484.077-.602.23a.752.752 0 00-.13.375h-.505c.01-.397.139-.673.387-.829a1.59 1.59 0 01.862-.233c.38 0 .687.072.924.217.235.144.352.369.352.674v1.857c0 .056.012.101.035.135.023.034.071.051.146.051a.824.824 0 00.177-.018v.4c-.084.025-.148.04-.192.046a1.408 1.408 0 01-.181.009c-.187 0-.322-.067-.406-.199a.767.767 0 01-.094-.298c-.11.145-.269.27-.475.376a1.47 1.47 0 01-.683.16c-.3 0-.544-.091-.733-.273a.905.905 0 01-.285-.681c0-.3.094-.531.28-.695.187-.165.432-.266.735-.304l.863-.109zm1.716-1.27h.514v.557c.043-.108.146-.24.31-.396a.804.804 0 01.62-.23l.124.012v.572a.81.81 0 00-.178-.015c-.273 0-.482.088-.629.263a.92.92 0 00-.22.607v1.853h-.541v-3.223zm2.6 2.516c.147.233.381.35.704.35a.745.745 0 00.619-.324c.161-.216.242-.525.242-.929 0-.407-.083-.708-.25-.904a.78.78 0 00-.617-.294.814.814 0 00-.663.313c-.17.21-.255.516-.255.921 0 .345.074.634.22.867zm1.216-2.417c.096.06.206.166.328.316V9.295h.52v4.436h-.487v-.448a1.172 1.172 0 01-.448.43c-.173.089-.37.133-.593.133-.36 0-.67-.151-.933-.453-.263-.302-.394-.704-.394-1.206 0-.469.12-.876.36-1.22.239-.344.582-.516 1.027-.516.247 0 .453.052.62.156z" fill="#FFF"/></g></svg>{% endif %}                       	
+                            {% if settings.show_pix_p %}<svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 38 24" width="45" height="25" fill="none" aria-labelledby="pi-pix"class="cartoes" <title id="pi-pix">Pix</title><g clip-path="url(#pi-pix-a)"><path fill="#000" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3Z" opacity=".07"/><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32Z"/><path fill="#939598" fill-rule="evenodd" d="M18.125 8.246c-1.202 0-2.162.937-2.162 2.077v6.882a.216.216 0 1 1-.431 0v-6.882c0-1.393 1.168-2.509 2.593-2.509l2.107.003c1.42.003 2.585 1.117 2.585 2.505v1.465c0 1.393-1.169 2.509-2.594 2.509h-2.977a.216.216 0 0 1 0-.432h2.977c1.202 0 2.162-.937 2.162-2.077v-1.465c0-1.136-.956-2.07-2.154-2.073l-2.106-.003Zm4.849-.216c0-.12.096-.217.216-.217h.914c.313 0 .615.12.84.337.224.216.35.51.35.82v5.14a.216.216 0 1 1-.43 0V8.97a.708.708 0 0 0-.22-.51.778.778 0 0 0-.54-.215h-.914a.216.216 0 0 1-.216-.216Z" clip-rule="evenodd"/><path fill="#32BCAD" d="m24.883 7.233-.414-.4a.255.255 0 0 1-.077-.18.247.247 0 0 1 .077-.18l.414-.399a.269.269 0 0 1 .373 0l.414.4a.252.252 0 0 1 .077.18.247.247 0 0 1-.077.18l-.414.399a.263.263 0 0 1-.186.074.272.272 0 0 1-.187-.074Z"/><path stroke="#939598" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width=".432" d="M26.833 8.025h.906c.466 0 .913.178 1.243.496l2.12 2.045a.705.705 0 0 0 .497.198.726.726 0 0 0 .498-.198l2.112-2.037c.33-.318.777-.497 1.243-.497h.737"/><path fill="#939598" fill-rule="evenodd" d="M31.6 11.542a.51.51 0 0 0-.348.138l-2.12 2.045c-.37.357-.872.557-1.393.557h-.906a.216.216 0 1 1 0-.432h.906a1.57 1.57 0 0 0 1.093-.436l2.12-2.044a.92.92 0 0 1 .647-.26.942.942 0 0 1 .647.26m0 0 2.113 2.037c.288.278.682.436 1.093.436h.737a.216.216 0 1 1 0 .431h-.737c-.52 0-1.022-.2-1.393-.557l-2.112-2.037a.489.489 0 0 0-.348-.138" clip-rule="evenodd"/><path fill="#32BCAD" d="M10.343 15.372c-.454 0-.882-.17-1.204-.48l-1.74-1.678a.34.34 0 0 0-.456 0l-1.745 1.683a1.698 1.698 0 0 1-.553.357 1.746 1.746 0 0 1-.652.124H3.65l2.203 2.124a1.808 1.808 0 0 0 2.491 0l2.209-2.13h-.21ZM3.993 9.44c.455 0 .883.17 1.205.48l1.745 1.684a.33.33 0 0 0 .457 0l1.739-1.677a1.714 1.714 0 0 1 1.204-.481h.21l-2.209-2.13a1.808 1.808 0 0 0-2.491 0L3.65 9.44h.343Z"/><path fill="#32BCAD" d="M12.38 11.208 11.045 9.92a.262.262 0 0 1-.095.018h-.607c-.315 0-.618.122-.842.337l-1.74 1.677a.833.833 0 0 1-.59.235.859.859 0 0 1-.59-.235L4.836 10.27a1.222 1.222 0 0 0-.843-.337h-.746a.26.26 0 0 1-.09-.017l-1.34 1.292a1.656 1.656 0 0 0 0 2.402l1.34 1.293a.259.259 0 0 1 .09-.018h.746c.316 0 .619-.122.843-.337l1.745-1.683a.878.878 0 0 1 1.18 0l1.74 1.677c.224.215.527.336.842.337h.607c.034 0 .066.007.095.019l1.335-1.288a1.656 1.656 0 0 0 0-2.402"/></g><defs><clipPath id="pi-pix-a"><path fill="#fff" d="M0 0h38v24H0z"/></clipPath></defs></svg>{% endif %}  
+                                                     
+   {% if settings.show_boleto_p %}<svg viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="45" height="25" aria-labelledby="pi-boleto"class="cartoes" <title id="pi-boleto">Boleto</title><path fill="#fff" d="M35.7 23.965H2.3a2.307 2.307 0 0 1-2.3-2.3v-19.4C0 1 1.035-.035 2.3-.035h33.4c1.265 0 2.3 1.035 2.3 2.3v19.4c0 1.265-1.035 2.3-2.3 2.3z"/><path fill="#A7A8AB" d="M35.564 23.965H2.436c-1.344 0-2.436-1.077-2.436-2.4v-19.2c0-1.323 1.092-2.4 2.436-2.4h33.128c1.344 0 2.436 1.077 2.436 2.4v19.2c0 1.323-1.092 2.4-2.436 2.4zM2.436.925c-.806 0-1.462.646-1.462 1.44v19.2c0 .794.656 1.44 1.462 1.44h33.128c.806 0 1.462-.646 1.462-1.44v-19.2c0-.794-.656-1.44-1.462-1.44H2.436z" opacity=".25"/><path d="M8.079 4.945h.7v6.298h-.7zm-1.83 0h.7v6.298h-.7zm7.256 0h1.901v6.298h-1.901zm9.715 0h.95v6.298h-.95zm2.324 0h.95v6.298h-.95zm3.804 0h1.221v6.298h-1.221zm-1.375 0h.395v6.298h-.395zm-6.389 0h.395v6.298h-.395zm-.845 0h.395v6.298h-.395zm-2.746 0h.395v6.298h-.395zm-6.31 0h.395v6.298h-.395zm-1.163 0h.733v6.298h-.733zM6.249 19.3v-6.478H8.68c.495 0 .891.065 1.191.196.299.131.532.333.701.606.17.271.255.556.255.855 0 .276-.075.537-.225.781a1.604 1.604 0 0 1-.679.593c.392.115.694.311.903.588.211.276.317.603.317.98 0 .305-.065.587-.193.847a1.644 1.644 0 0 1-.475.603c-.189.14-.425.247-.709.32a4.328 4.328 0 0 1-1.046.109H6.248zm.86-3.755H8.51c.38 0 .653-.026.817-.075a.903.903 0 0 0 .493-.324.936.936 0 0 0 .166-.567 1.03 1.03 0 0 0-.155-.568c-.103-.164-.25-.278-.442-.338s-.52-.09-.985-.09H7.109v1.963zm0 2.995h1.614c.277 0 .472-.011.585-.032.196-.035.362-.094.495-.176a.946.946 0 0 0 .327-.362c.086-.158.128-.341.128-.547 0-.243-.062-.452-.187-.632a.978.978 0 0 0-.516-.377c-.219-.072-.535-.109-.947-.109H7.109v2.235zm4.813-1.588c0-.867.241-1.509.725-1.927.403-.347.896-.52 1.476-.52.644 0 1.172.211 1.582.633.409.421.614 1.004.614 1.748 0 .603-.09 1.077-.271 1.422a1.92 1.92 0 0 1-.792.805 2.292 2.292 0 0 1-1.132.286c-.657 0-1.188-.21-1.594-.63-.406-.421-.608-1.027-.608-1.817zm.814.002c0 .6.131 1.05.394 1.347.264.299.594.448.994.448.395 0 .724-.149.988-.449.262-.3.394-.757.394-1.371 0-.579-.133-1.018-.397-1.315a1.261 1.261 0 0 0-.985-.448c-.4 0-.73.148-.994.445-.262.297-.394.745-.394 1.344zm4.498 2.346v-6.478h.796V19.3h-.796zm5.231-1.52l.823.109c-.128.478-.368.85-.718 1.114-.35.264-.796.397-1.341.397-.685 0-1.227-.211-1.629-.633-.401-.421-.602-1.013-.602-1.775 0-.787.202-1.399.608-1.834.406-.436.932-.653 1.579-.653.626 0 1.137.213 1.534.639.397.427.596 1.027.596 1.8l-.004.211h-3.497c.03.514.175.909.437 1.182a1.3 1.3 0 0 0 .979.41c.291 0 .54-.077.745-.231.207-.154.369-.4.49-.737zm-2.606-1.276h2.615c-.035-.395-.136-.691-.3-.888a1.216 1.216 0 0 0-.983-.46c-.365 0-.671.122-.92.366-.247.244-.385.572-.412.982zm6.164 2.086l.109.703a2.951 2.951 0 0 1-.599.071c-.288 0-.511-.045-.671-.137-.158-.092-.27-.211-.335-.36s-.097-.463-.097-.941v-2.705h-.588v-.615h.588v-1.161l.796-.478v1.639h.796v.615h-.796v2.751c0 .228.014.374.042.439a.324.324 0 0 0 .136.155.53.53 0 0 0 .271.057l.347-.032zm.487-1.638c0-.867.241-1.509.725-1.927.403-.347.896-.52 1.476-.52.644 0 1.172.211 1.582.633.409.421.614 1.004.614 1.748 0 .603-.09 1.077-.271 1.422a1.92 1.92 0 0 1-.792.805 2.292 2.292 0 0 1-1.132.286c-.657 0-1.188-.21-1.594-.63-.406-.421-.608-1.027-.608-1.817zm.814.002c0 .6.131 1.05.394 1.347.264.299.594.448.994.448.395 0 .724-.149.988-.449.262-.3.394-.757.394-1.371 0-.579-.133-1.018-.397-1.315a1.261 1.261 0 0 0-.985-.448c-.4 0-.73.148-.994.445-.262.297-.394.745-.394 1.344z" fill="#221F1F"/></svg>{% endif %}
+                   
+      {% endif %}
+
+
+      
+  </div>   </center>    
+                   
+                    </div>
+                  </div>
+                {%- endif -%}
+    
+    
+    </div>
+                </div>
+
+                
+              </div>
+            </form>
+          </div>
+
+          {%- comment -%}
+          --------------------------------------------------------------------------------------
+          UPSELL
+          --------------------------------------------------------------------------------------
+          {%- endcomment -%}
+
+          {%- assign upsell_collection = collections[section.settings.upsell_collection] -%}
+
+          {%- if section.blocks.size > 0 or upsell_collection != empty -%}
+            <div class="container">
+              {%- if section.blocks.size > 0 -%}
+                <div class="section">
+                  <header class="section__header">
+                    <h2 class="section__title heading h3">{{ section.settings.trust_heading | escape }}</h2>
+                  </header>
+
+                  <div class="text-with-icons text-with-icons--boxed">
+                    {%- for block in section.blocks -%}
+                      <div class="text-with-icons__item" {{ block.shopify_attributes }}>
+                        <div class="text-with-icons__icon-wrapper">
+                          {%- if block.settings.custom_icon != blank -%}
+                            <img src="{{ block.settings.custom_icon | img_url: '60x' }}" alt="{{ block.settings.custom_icon.alt | escape }}">
+                          {%- else -%}
+                            {%- render 'icon', icon: block.settings.icon, stroke_width: 1.5 -%}
+                          {%- endif -%}
+                        </div>
+
+                        {%- if block.settings.title != blank or block.settings.content != blank -%}
+                          <div class="text-with-icons__content-wrapper">
+                            {%- if block.settings.title != blank -%}
+                              <p class="text-with-icons__title text--strong">{{ block.settings.title | escape }}</p>
+                            {%- endif -%}
+
+                            {%- if block.settings.content != blank -%}
+                              <div class="text-with-icons__content rte">
+                                {{ block.settings.content  }}
+                              </div>
+                            {%- endif -%}
+                          </div>
+                        {%- endif -%}
+                      </div>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              {%- endif -%}
+
+              {%- if upsell_collection != empty -%}
+                {%- comment -%}We iterate through all the products, by making sure to remove those that are already in the cart{%- endcomment -%}
+
+                {%- capture upsell_products -%}
+                  {%- assign upsell_products_count = 0 -%}
+
+                  {%- for product in upsell_collection.products -%}
+                    {%- unless product.available -%}
+                      {%- continue -%}
+                    {%- endunless -%}
+
+                    {%- assign include_product = true -%}
+
+                    {%- for line_item in cart.items -%}
+                      {%- if line_item.product_id == product.id -%}
+                        {%- assign include_product = false -%}
+                        {%- break -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+
+                    {%- if include_product -%}
+                      {%- render 'product-item', product: product, show_add_to_cart: true, grid_classes: '1/3--lap 1/3--desk 1/4--wide' -%}
+
+                      {%- comment -%}Check how much products we have shown and limit{%- endcomment -%}
+                      {%- assign upsell_products_count = upsell_products_count | plus: 1 -%}
+
+                      {%- if upsell_products_count >= section.settings.upsell_products_count -%}
+                        {%- break -%}
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endcapture -%}
+
+                {%- if upsell_products != blank -%}
+                  {%- capture section_settings -%}
+                  {
+                    "stackable": false,
+                    "layout": "vertical"
+                  }
+                  {%- endcapture -%}
+
+                  <div class="section" data-section-id="{{ section.id }}-upsell" data-section-type="featured-collection" data-section-settings='{{ section_settings }}'>
+                    <header class="section__header">
+                      <h2 class="section__title heading h3">{{ section.settings.upsell_heading | escape }}</h2>
+                    </header>
+
+                    <div class="scroller">
+                      <div class="scroller__inner">
+                        <div class="product-list product-list--vertical product-list--scrollable">
+                          {{ upsell_products }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {%- comment -%}
+                  --------------------------------------------------------------------------------------
+                  QUICK VIEW CONTAINER
+                  --------------------------------------------------------------------------------------
+                  {%- endcomment -%}
+
+                  <div id="modal-quick-view-{{ section.id }}" class="modal" aria-hidden="true">
+                    <div class="modal__dialog modal__dialog--stretch" role="dialog">
+                      <div class="modal__loader">
+                        {%- render 'icon', icon: 'search-loader' -%}
+                      </div>
+
+                      <div class="modal__inner"></div>
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endif -%}
+            </div>
+          {% else %}
+            <div style="margin-bottom:250px;"></div>
+ {% endif %}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Página do Carrinho",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Essas configurações são aplicáveis apenas quando o carrinho contém pelo menos um produto."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_order_notes",
+      "label": "Habilitar observações do pedido",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Mostrar ícones de pagamento",
+      "info": "As bandeiras mostradas são as mesmas mostradas na página de produto, portanto habilite ou desabilite por lá (configurações > Alterações Pagina do Produto) as bandeiras a serem mostradas.Altere a largura das bandeiras em configurações > Alterações Carrinho",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Embrulho para presente"
+    },
+    {
+      "type": "paragraph",
+      "content": "O embrulho para presente precisa ser configurado como um produto."
+    },
+    {
+      "type": "product",
+      "id": "gift_wrap_product",
+      "label": "Produto"
+    },
+    {
+      "type": "text",
+      "id": "gift_wrap_text",
+      "label": "Texto",
+      "default": "Você deseja um embrulho para presente?"
+    },
+    {
+      "type": "text",
+      "id": "gift_wrap_button",
+      "label": "Botão",
+      "default": "Adicionar embrulho para presente"
+    },
+    {
+      "type": "header",
+      "content": "Estimativa de frete"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shipping_estimator",
+      "label": "Mostrar calculadora de Frete Vision",
+      "default": true
+    },
+    
+    {
+      "type": "header",
+      "content": "Upsell"
+    },
+    {
+      "type": "paragraph",
+      "content": "Mostrar produtos adicionais para incentivar os clientes a comprar mais."
+    },
+    {
+      "type": "text",
+      "id": "upsell_heading",
+      "label": "Título",
+      "default": "Complete seu carrinho"
+    },
+    {
+      "type": "collection",
+      "id": "upsell_collection",
+      "label": "Coleção",
+      "info": "Produtos já presentes no carrinho ou esgotados serão ocultados."
+    },
+    {
+      "type": "range",
+      "id": "upsell_products_count",
+      "label": "Produtos para mostrar",
+      "min": 4,
+      "max": 12,
+      "step": 4,
+      "default": 4
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Texto de Confiança",
+      "type": "trust",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ícone",
+          "options": [
+            {
+              "value": "bi-add-to-cart",
+              "label": "Adicionar ao carrinho",
+              "group": "Loja"
+            },
+            {
+              "value": "bi-gift-wrap",
+              "label": "Embrulho para presente",
+              "group": "Loja"
+            },
+            {
+              "value": "bi-gift-box",
+              "label": "Caixa de presente",
+              "group": "Loja"
+            },
+            {
+              "value": "bi-heart",
+              "label": "Coração",
+              "group": "Loja"
+            },
+            {
+              "value": "bi-ecology",
+              "label": "Ecologia",
+              "group": "Loja"
+            },
+            {
+              "value": "bi-plant",
+              "label": "Planta",
+              "group": "Loja"
+            },
+            {
+              "value": "bi-shop",
+              "label": "Loja",
+              "group": "Loja"
+            },
+            {
+              "value": "bi-shop-pin",
+              "label": "Loja com alfinete",
+              "group": "Loja"
+            },
+            {
+              "value": "bi-alert",
+              "label": "Alerta",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-chat",
+              "label": "Chat",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-comment",
+              "label": "Comentário",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-customer-support",
+              "label": "Suporte ao cliente",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-email",
+              "label": "E-mail",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-network",
+              "label": "Rede",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-newsletter",
+              "label": "Boletim informativo",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-love",
+              "label": "Amor",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-phone",
+              "label": "Telefone",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-share",
+              "label": "Compartilhar",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-delivery",
+              "label": "Entrega",
+              "group": "Entrega"
+            },
+            {
+              "value": "bi-fast-delivery",
+              "label": "Entrega rápida",
+              "group": "Entrega"
+            },
+            {
+              "value": "bi-returns",
+              "label": "Devoluções",
+              "group": "Entrega"
+            },
+            {
+              "value": "bi-time",
+              "label": "Tempo",
+              "group": "Entrega"
+            },
+            {
+              "value": "bi-secure-payment",
+              "label": "Pagamento seguro",
+              "group": "Segurança"
+            },
+            {
+              "value": "bi-mobile-payment",
+              "label": "Pagamento móvel",
+              "group": "Segurança"
+            },
+            {
+              "value": "bi-credit-card",
+              "label": "Cartão de crédito",
+              "group": "Segurança"
+            },
+            {
+              "value": "bi-shield",
+              "label": "Escudo",
+              "group": "Segurança"
+            }
+          ],
+          "default": "bi-customer-support"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Ícone personalizado",
+          "info": "Recomendado .png de 60 x 60 pixels com transparência"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Seu título"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Conteúdo",
+          "default": "<p>Conteúdo breve sobre sua loja</p>"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,163 @@
+
+<div class="vision_countdown">
+    <div class="countdown-image">
+        <img src="{{ settings.cronoimage | img_url: 'medium' }}" alt="Imagem do contador">
+    </div>
+    <div class="countdown-content">
+        <div class="countdown-heading">{{ settings.cronotitle }}</div>
+        <div class="countdown-subheading">{{ settings.cronosubheading }}</div>
+        <div class="countdown-timer center">
+            <div class="timediv center" id="hrs"></div>
+            <div class="sep center"><span>:</span></div>
+            <div class="timediv center" id="min"></div>
+            <div class="sep center"><span>:</span></div>
+            <div class="timediv center" id="sec"></div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+.vision_countdown {
+    display: flex;
+    border-radius: var(--cronoborda);
+    background-color: var(--cronobackground_color);
+    color: var(--cronotext_color);
+    margin-top: var(--cronomargin_top);
+    margin-bottom: var(--cronomargin_bottom);
+    overflow: hidden; /* Evita que a imagem ultrapasse os limites do container */
+}
+
+  .countdown-heading {
+    font-size: var(--cronotit_desk);
+    font-weight: 600;
+}
+ .countdown-subheading {
+    font-size: var(--cronosub_desk);
+    text-align: center;
+       line-height: 1.3;
+} 
+
+.countdown-image {
+    flex: 1; /* Imagem ocupa 25% do container */
+    max-width: 25%;
+}
+
+.countdown-image img {
+    max-width: 100%;
+    height: 100%;
+}
+
+.countdown-content {
+    flex: 3; /* Mensagem ocupa 75% do container */
+    padding: 5px; /* Adapte o espaçamento conforme necessário */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.countdown-timer {
+    padding-top: 5px; /* Espaçamento entre a mensagem e o cronômetro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.timediv {
+    background-color: var(--cronobackground_box_time);
+    color: var(--cronotext_colors);
+    border-radius: 5px;
+    padding: 5px;
+    margin: 0 5px; /* Adapte a margem conforme necessário */
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+@media screen and (max-width: 680px) {
+    .vision_countdown {
+        flex-direction: row; /* Mantém a mesma direção de layout do desktop */
+    }
+    
+    .countdown-image {
+        flex: 1; /* Cada parte ocupa 50% do container */
+        max-width: 25%; /* Garante que as partes ocupem a largura total */
+         /* Adapte o espaçamento conforme necessário */
+    }
+
+    .countdown-content {
+      flex: 1;
+      padding-top: 0; /* Remove o espaçamento entre a mensagem e o cronômetro */
+      max-width: 75%;
+    }
+
+    .countdown-heading {
+    font-size: var(--cronotit_mob);
+   
+}
+ .countdown-subheading {
+    font-size: var(--cronosub_mob);
+    
+} 
+}
+
+
+
+
+@media screen and (min-width: 680px) {
+
+.countdown-image img {
+    max-height: var(--cronodesktimg) !important;
+}
+
+</style>
+
+<script defer="defer">
+    // Função para iniciar o cronômetro
+    function startCountdown(endTime) {
+        // Inicia o intervalo para atualizar o cronômetro a cada segundo
+        var c = setInterval(function () {
+            // Calcula a distância entre a data de término e o tempo atual
+            var now = new Date().getTime();
+            var distance = endTime - now;
+
+            // Verifica se a data de término já passou
+            if (distance <= 0) {
+                // Reinicia o cronômetro para mais 24 horas
+                clearInterval(c);
+                var tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                tomorrow.setHours(0, 0, 0, 0);
+                var newEndTime = tomorrow.getTime() + (24 * 60 * 60 * 1000);
+                startCountdown(newEndTime);
+                return;
+            }
+
+            // Calcula dias, horas, minutos e segundos
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Atualiza o cronômetro na página
+            document.getElementById("hrs").innerHTML = hours + " hrs";
+            document.getElementById("min").innerHTML = minutes + " min";
+            document.getElementById("sec").innerHTML = seconds + " seg";
+
+            // Mostra o cronômetro se ainda não estiver visível
+            var countdown = document.querySelector('.vision_countdown');
+            if (countdown.style.display !== 'flex') {
+                countdown.style.display = 'flex';
+            }
+
+        }, 1000);
+    }
+
+    // Inicia o cronômetro quando a página carrega
+    document.addEventListener('DOMContentLoaded', function () {
+        // Calcula a data de término para 24 horas a partir de agora
+        var endTime = new Date();
+        endTime.setHours(0, 0, 0, 0);
+        endTime = endTime.getTime() + (24 * 60 * 60 * 1000);
+        startCountdown(endTime);
+    });
+</script>

@@ -1,0 +1,254 @@
+<section data-section-id="{{ section.id }}" data-section-type="product-video" data-section-settings="{{ section_settings }}" style="margin: 0 !important; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+ <style>  
+ .product-video {
+    min-height: 590px;
+    overflow: auto;
+    justify-content: center;
+}
+
+.product-video .v-col-video .v-video-media {
+    float: left;
+    width: 75%;
+    min-height: inherit;
+}
+
+.product-video .v-col-video .v-video-media * {
+    border-radius: 6px;
+}
+
+.product-video .v-col-video .v-video-media iframe {
+    min-height: 591px;
+}
+
+.product-video .v-col-video .v-video-media button {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 65px;
+    margin-left: -34px;
+    margin-top: -32px;
+    -webkit-transition: opacity .25s cubic-bezier(0,0,.2,1);
+    -o-transition: opacity .25s cubic-bezier(0,0,.2,1);
+    transition: opacity .25s cubic-bezier(0,0,.2,1);
+    z-index: 1;
+}
+
+.product-video .v-col-video .v-video-media button svg {
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.product-video .v-col-product {
+    float: left;
+    width: 25%;
+    padding: 0 10px;
+}
+
+.product-video .v-col-product button {
+    padding: 5px;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 6px;
+    color: white;
+    width: 100%;
+    border: none;
+}
+
+.product-video .v-col-product .v-product {
+    border: 1px solid #ECECEC;
+    border-radius: 6px;
+    margin-top: 15px;
+    background: #ffffff;
+    
+}
+
+.product-video .v-col-product .v-product .product-item {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 7px !important;
+  padding-bottom: 45px;
+    
+}
+
+.product-video .v-col-product .v-product .product-item .product-item__info {
+    padding-bottom: 37px !important;
+}
+
+@media only screen and (max-width: 1024px) {
+    .product-video {
+        min-height: auto;
+    }
+
+    .product-video .v-col-video,
+    .product-video .v-col-product {
+        width: 100%;
+        text-align: center;
+        min-height: auto;
+    }
+
+    .product-video .v-col-video .v-video-media {
+        width: 100%;
+    }
+
+    .product-video .v-col-video .v-video-media iframe {
+        min-height: 220px;
+    }
+
+    .product-video .v-col-video .v-video-media button svg {
+        width: 50px;
+    }
+
+    .product-video .v-col-product {
+        padding: 0;
+    }
+
+    .product-video .v-col-product button {
+        padding: 5px;
+        width: 100%;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    .product-video .v-col-product .v-product {
+        display: none !important;
+    }
+}
+
+@media only screen and (max-width: 1024px) and (orientation:landscape) {
+    .product-video .v-col-video .v-video-media iframe {
+        min-height: 430px;
+    }
+}
+</style> 
+  
+  
+  
+  <div class="container">
+        <div class="row-fluid">
+            {% if section.settings.title != blank %}
+                <header class="section__header">
+                    <div class="section__header-stack">
+                        <h2 class="section__title heading h3">{{ section.settings.title }}</h2>
+                    </div>
+                </header>
+            {% endif %}
+
+          {% if section.settings.video_url != blank and section.settings.product != blank %}
+            <div class="product-video">
+              <div class="v-col-video">
+                <div class="v-video-media" data-youtube>
+                  <div style="position: relative; cursor:pointer;">
+                    <img class="lazyload" src="https://i.ytimg.com/vi/{{ section.settings.video_url.id }}/maxresdefault.jpg" />
+                    <button data-youtube-button="https://www.youtube.com/embed/{{ section.settings.video_url.id }}">
+                      {% render 'icon', icon: 'play' %}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="v-col-product">
+                <button style="background-color: {{ section.settings.button_color }}; color:{{ section.settings.fonte_button_color }};font-weight: 700;" onclick="location.href='{{ section.settings.product.url }}'">{{ section.settings.button_text }}</button>
+                <div>
+                  <div class="v-product" style="min-height: 540px;">
+                    {%- include 'product-item', product: section.settings.product -%}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+    </div>
+
+
+<script>
+  const youtubeVideos = [...document.querySelectorAll('[data-youtube]')];
+youtubeVideos.forEach(function(element) {
+    const button = element.querySelector('[data-youtube-button]');
+    button.addEventListener('click', function () {
+            const url = event.target.dataset.youtubeButton;
+            const youtubePlaceholder = event.target.parentNode;
+
+            const htmlString = '<iframe width="100%" src="' + url + '?autoplay=1&showinfo=0&controls=1&rel=0&modestbranding=1" allow="autoplay;" frameborder="0" allowfullscreen></iframe>';
+
+            youtubePlaceholder.style.display = 'none';
+            youtubePlaceholder.insertAdjacentHTML('beforebegin', htmlString);
+            youtubePlaceholder.parentNode.removeChild(youtubePlaceholder);
+        }
+    );
+});
+</script>
+  
+</section>
+
+
+
+{% schema %}
+{
+  "name": "Vídeo e produto",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Conheça essa solução"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "accept": ["youtube"],
+      "label": "Link do vídeo",
+      "default": "https://www.youtube.com/watch?v=brfBpJKrWJE"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texto do botão",
+      "default": "CONFERIR OFERTA"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Produto ofertado"
+    },
+    {
+      "type": "header",
+      "content": "Espaçamento"
+    },
+    {
+      "type": "text",
+      "id": "padding_top",
+      "label": "Margem superior (px)",
+      "default": "0"
+    },
+    {
+      "type": "text",
+      "id": "padding_bottom",
+      "label": "Margem inferior (px)",
+      "default": "20"
+    },
+    {
+      "type": "header",
+      "content": "Cores"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Cor do botão",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "fonte_button_color",
+      "label": "Cor da fonte",
+      "default": "#FFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vídeo e produto",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

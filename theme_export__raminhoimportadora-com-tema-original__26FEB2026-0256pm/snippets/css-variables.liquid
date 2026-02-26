@@ -1,0 +1,430 @@
+{%- assign heading_font_italic = settings.heading_font | font_modify: 'style', 'italic' -%}
+
+{%- assign text_font_medium = settings.text_font | font_modify: 'weight', '500' -%}
+{%- assign text_font_semibold = settings.text_font | font_modify: 'weight', '600' -%}
+{%- assign text_font_bold = settings.text_font | font_modify: 'weight', 'bolder' -%}
+{%- assign text_font_italic = settings.text_font | font_modify: 'style', 'italic' -%}
+{%- assign text_font_bold_italic = text_font_bold | font_modify: 'style', 'italic' -%}
+
+{%- assign text_font_bolder_weight = 'bolder' -%}
+
+{%- unless settings.heading_font.system? -%}
+  <link rel="preload" href="{{ settings.heading_font | font_url }}" as="font" type="font/woff2" crossorigin>
+{%- endunless -%}
+
+{%- unless settings.text_font.system? -%}
+  <link rel="preload" href="{{ settings.text_font | font_url }}" as="font" type="font/woff2" crossorigin>
+{%- endunless -%}
+
+<style>
+  {{ settings.heading_font | font_face: font_display: 'swap' }}
+  {{ settings.text_font | font_face: font_display: 'swap' }}
+
+  {%- if text_font_semibold -%}
+    {{ text_font_semibold | font_face: font_display: 'swap' }}
+    {%- assign text_font_bolder_weight = text_font_semibold.weight -%}
+  {%- elsif text_font_medium -%}
+    {{ text_font_medium | font_face: font_display: 'swap' }}
+    {%- assign text_font_bolder_weight = text_font_medium.weight -%}
+  {%- endif -%}
+
+  {{ heading_font_italic | font_face: font_display: 'swap' }}
+
+  {{ text_font_bold | font_face: font_display: 'swap' }}
+  {{ text_font_italic | font_face: font_display: 'swap' }}
+  {{ text_font_bold_italic | font_face: font_display: 'swap' }}
+
+  :root {
+    --default-text-font-size : 15px;
+    --base-text-font-size    : {{ settings.base_text_font_size }}px;
+    --heading-font-family    : {{ settings.heading_font.family }}, {{ settings.heading_font.fallback_families }};
+    --heading-font-weight    : {{ settings.heading_font.weight }};
+    --heading-font-style     : {{ settings.heading_font.style }};
+    --text-font-family       : {{ settings.text_font.family }}, {{ settings.text_font.fallback_families }};
+    --text-font-weight       : {{ settings.text_font.weight }};
+    --text-font-style        : {{ settings.text_font.style }};
+    --text-font-bolder-weight: {{ text_font_bolder_weight }};
+    --text-link-decoration   : {% if settings.underline_links %}underline{% else %}normal{% endif %};
+
+    --text-color               : {{ settings.text_color }};
+    --text-color-rgb           : {{ settings.text_color | color_extract: 'red' }}, {{ settings.text_color | color_extract: 'green' }}, {{ settings.text_color | color_extract: 'blue' }};
+    --heading-color            : {{ settings.heading_color }};
+    --border-color             : {{ settings.border_color }};
+    --border-color-rgb         : {{ settings.border_color | color_extract: 'red' }}, {{ settings.border_color | color_extract: 'green' }}, {{ settings.border_color | color_extract: 'blue' }};
+    --form-border-color        : {{ settings.border_color | color_darken: 5 }};
+    --accent-color             : {{ settings.accent_color }};
+    --accent-color-rgb         : {{ settings.accent_color | color_extract: 'red' }}, {{ settings.accent_color | color_extract: 'green' }}, {{ settings.accent_color | color_extract: 'blue' }};
+    --link-color               : {{ settings.link_color }};
+    --link-color-hover         : {{ settings.link_color | color_darken: 15 }};
+    --background               : {{ settings.background }};
+    --secondary-background     : {{ settings.secondary_background }};
+    --secondary-background-rgb : {{ settings.secondary_background | color_extract: 'red' }}, {{ settings.secondary_background | color_extract: 'green' }}, {{ settings.secondary_background | color_extract: 'blue' }};
+    --accent-background        : {{settings.accent_color | color_modify: 'alpha', 0.08 }};
+
+    --input-background: {% if settings.secondary_background == settings.text_color %}{% else %}{{ settings.secondary_background }}{% endif %};
+
+    --error-color       : {{ settings.error_color }};
+    --error-background  : {{ settings.error_color | color_modify: 'alpha', 0.07 }};
+    --success-color     : {{ settings.success_color }};
+    --success-background: {{ settings.success_color | color_modify: 'alpha', 0.11 }};
+
+--lupaebotao-buscar      : {{ settings.lupaebuscar_color }};
+    
+    --primary-button-background      : {{ settings.primary_button_background }};
+    --primary-button-background-rgb  : {{ settings.primary_button_background | color_extract: 'red' }}, {{ settings.primary_button_background | color_extract: 'green' }}, {{ settings.primary_button_background | color_extract: 'blue' }};
+    --primary-button-text-color      : {{ settings.primary_button_text_color }};
+    --secondary-button-background    : {{ settings.secondary_button_background }};
+    --secondary-button-background-rgb: {{ settings.secondary_button_background | color_extract: 'red' }}, {{ settings.secondary_button_background | color_extract: 'green' }}, {{ settings.secondary_button_background | color_extract: 'blue' }};
+    --secondary-button-text-color    : {{ settings.secondary_button_text_color }};
+
+   
+      --header-background : {{ settings.header_background_degrade }};
+    
+
+     --anuncio-background : {{ settings.anuncio_background_degrade }};
+  --rodape-degrade-background : {{ settings.rodape_background_degrade }};
+  
+    --header-text-color      : {{ settings.header_text_color }};
+    --header-light-text-color: {{ settings.header_light_text_color }};
+    --header-border-color    : {{ settings.header_light_text_color | color_modify: 'alpha', 0.30 }};
+    --header-accent-color    : {{ settings.header_accent_color }};
+
+    
+      --menu-background : {{ settings.menu_background_degrade }};
+  
+    --menu-text-color   : {{ settings.menu_text_color }};
+
+
+   --tit_prod-inicial-cor: {{ settings.tit-prod-inicial-cor }};
+  --tit_prod-cor: {{ settings.tit-prod-cor }};
+  
+    --footer-background-color:    {{ settings.footer_background_color }};
+    --footer-heading-text-color:  {{ settings.footer_heading_text_color }};
+    --footer-body-text-color:     {{ settings.footer_body_text_color }};
+    --footer-body-text-color-rgb: {{ settings.footer_body_text_color | color_extract: 'red' }}, {{ settings.footer_body_text_color | color_extract: 'green' }}, {{ settings.footer_body_text_color | color_extract: 'blue' }};
+    --footer-accent-color:        {{ settings.footer_accent_color }};
+    --footer-accent-color-rgb:    {{ settings.footer_accent_color | color_extract: 'red' }}, {{ settings.footer_accent_color | color_extract: 'green' }}, {{ settings.footer_accent_color | color_extract: 'blue' }};
+    --footer-border:              {% if settings.footer_background_color == settings.background %}1px solid var(--border-color){% else %}none{% endif %};
+    
+    --flickity-arrow-color: {{ settings.border_color | color_darken: 20 }};
+
+    {%- assign product_on_sale_lightness = settings.product_on_sale_accent | color_extract: 'lightness' -%}
+    {%- assign product_on_sale_discount_lightness = settings.product_on_sale_discount_accent | color_extract: 'lightness' -%}
+    
+    {%- assign product_custom_label_1_lightness = settings.product_label_1_background | color_extract: 'lightness' -%}
+    {%- assign product_custom_label_2_lightness = settings.product_label_2_background | color_extract: 'lightness' -%}
+
+    --product-on-sale-accent           : {{ settings.product_on_sale_accent }};
+    --product-on-sale-accent-rgb       : {{ settings.product_on_sale_accent | color_extract: 'red' }}, {{ settings.product_on_sale_accent | color_extract: 'green' }}, {{ settings.product_on_sale_accent | color_extract: 'blue' }};
+
+    --product-on-sale-discount-accent       : {{ settings.product_on_sale_discount_accent }};
+    --product-on-sale-discount-accent-color : {% if product_on_sale_discount_lightness < 65 %}#ffffff{% else %}#000000{% endif %};
+    
+    --product-on-sale-color            :  {{ settings.product_on_sale_accent_f }};
+    --product-in-stock-color           : {{ settings.product_in_stock_color }};
+    --product-low-stock-color          : {{ settings.product_low_stock_color }};
+    --product-sold-out-color           : {{ settings.product_sold_out_color }};
+
+
+
+    --p1-radius          : {{ settings.p1-radius }}px;
+    --p1-l-radius          : {{ settings.p1-l-radius}}px;
+    --p1-ms           : {{ settings.p1-ms }}px;
+    --p1-mi           : {{ settings.p1-mi }}px;
+    --p1-fundo           : {{ settings.p1-fundo }};
+    --p1-borda           : {{ settings.p1-borda }};
+    --p1-cor-campo          : {{ settings.p1-cor-campo }};
+    --p1-cor-aviso          : {{ settings.p1-cor-aviso }};
+    --p1-cor-holder           : {{ settings.p1-cor-holder }};
+
+
+  --cronobackground_color       : {{ settings.cronobackground_color }};
+--cronotext_color       : {{ settings.cronotext_color }};
+  --cronotext_colors       : {{ settings.cronotext_colors }};
+  --cronobackground_box_time       : {{ settings.cronobackground_box_time }};
+  --cronomargin_top       : {{ settings.cronomargin_top }}px;
+  --cronomargin_bottom       : {{ settings.cronomargin_bottom }}px;
+--cronoborda       : {{ settings.cronoborda }}px;
+--cookie-fontegeral : {{ settings.cookie_fontegeral }};
+--cookie-fundogeral : {{ settings.cookie_fundogeral }};
+--cookie-aceitarfundo : {{ settings.cookie_aceitarfundo }};
+--cookie-aceitarfonte : {{ settings.cookie_aceitarfonte }};
+--cookie-recusarfundo : {{ settings.cookie_recusarfundo }};
+--cookie-recusarfonte : {{ settings.cookie_recusarfonte }};
+--cookie-fonte : {{ settings.cookies_fonte }}px;
+
+--margem-sup-titulo : {{ settings.margem_sup_titulo }}px;
+--margem-inf-titulo : {{ settings.margem_inf_titulo }}px;
+--bordas-card : {{ settings.bordas_card }}px;
+  --bordas-cardini : {{ settings.bordas_cardini }}px;
+
+  --box-arredonda : {{ settings.box-arredonda }}px;
+
+--msup-btnadc : {{ settings.msup_btnadc }}px;
+ --minf-btnadc : {{ settings.minf_btnadc }}px;
+--font-size-titulo : {{ settings.font-size-titulo }}px;
+
+--margem-top-pix : {{ settings.margem-top-pix }}px;
+--margem-bottom-pix : {{ settings.margem-bottom-pix }}px;
+
+--margem-top-pix1 : {{ settings.margem-top-pix1 }}px;
+--margem-bottom-pix1 : {{ settings.margem-bottom-pix1 }}px;
+    
+--cont-compra-fundo : {{ settings.cont_compra_fundo }};
+--cont-compra-borda : {{ settings.cont_compra_borda }};
+  --cont-compra-texto : {{ settings.cont_compra_texto }};
+  
+    --product-truck-background         : {{ settings.product_truck_background}};
+    --color-frete-fundo                : {{ settings.color_frete_fundo}};
+    --product-truck-color              : {{ settings.product_truck_color}};
+    --product-free-shipping-color      : {{ settings.product_free_shipping_color}};
+    --product-localization-color       : {{ settings.product_localization_color}};
+    --product-icon-return-color        : {{ settings.product_icon_return_color}};
+    --product-return-color             : {{ settings.product_return_color}};
+  
+    --product-custom-label-1-background: {{ settings.product_label_1_background }};
+    --product-custom-label-1-color     : {% if product_custom_label_1_lightness < 65 %}#ffffff{% else %}#000000{% endif %};
+    --product-custom-label-2-background: {{ settings.product_label_2_background }};
+    --product-custom-label-color-1     : {{ settings.product_label_color_1 }};
+    --product-custom-label-color-2     : {{ settings.product_label_color_2 }};
+    --product-custom-label-2-color     : {% if product_custom_label_2_lightness < 65 %}#ffffff{% else %}#000000{% endif %};
+    --product-review-star-color        : {{ settings.product_star_color }};
+
+    --branding-color-marcos           : {{ settings.branding_color_marcos }};
+    --mobile-navegacao                : {{ settings.mobile_navegacao }};
+
+   --fundo-titulo-inicial                : {{ settings.fundo_titulo_inicial }};
+--texto-titulo-inicial                : {{ settings.texto_titulo_inicial }};
+  --sub-titulo-inicial                : {{ settings.sub_titulo_inicial }};
+--textcontarastreio: {{ settings.rastreionavega }};
+    
+    --nl-fundo                : {{ settings.colors_nl_fundo }};
+   --nl-borda                : {{ settings.colors_nl_borda }};
+   --nl-texto                : {{ settings.colors_nl_texto }};
+
+
+--review-borda           : {{ settings.review_borda }};
+  --review-base           : {{ settings.review_base }};
+
+--img-text-fontm           : {{ settings.img_text_fontm }}px;
+  --img-text-fontd           : {{ settings.img_text_fontd }}px;
+
+  --btn-p-car1-f                : {{ settings.btnpcarrinhofundo }};
+  --btn-p-car1-t                : {{ settings.btnpcarrinhotexto }};
+
+  --btn-p-car2-f                : {{ settings.btnpcarrinhofundo2 }};
+  --btn-p-car2-t                : {{ settings.btnpcarrinhotexto2 }};
+
+
+--preco-compare-cor              : {{ settings.preco_compare_cor }};
+--preco-produto-cor              : {{ settings.preco_produto_cor }};
+
+--desconto-lado-fundo            : {{ settings.desconto_lado_fundo }};
+--desconto-lado-fonte            : {{ settings.desconto_lado_fonte }};
+
+
+--margem-variante-sup               : {{ settings.margem_variante_sup }}px;
+--margem-variante-inf               : {{ settings.margem_variante_inf }}px;
+
+  --margem-compra-sup               : {{ settings.margem_compra_sup }}px;
+--margem-compra-inf               : {{ settings.margem_compra_inf }}px;
+
+
+  --margem-medidas-sup               : {{ settings.margem_medidas_sup }}px;
+--margem-medidas-inf               : {{ settings.margem_medidas_inf }}px;
+  
+--pix-envio-bordageral               : {{ settings.pix_envio_bordgeral }}px;
+--pix-envio-bordaenvio               : {{ settings.pix_envio_bordenvio }}px;
+  --pix-envio-tfonte               : {{ settings.pix_envio_tfonte }}px;
+ --pix-envio-tsimb              : {{ settings.pix_envio_tsimb }}px;
+
+ --espessuraicones              : {{ settings.espessuraicones }}px;
+
+
+   --progressbararredonda              : {{ settings.progressbararredonda }}px;
+
+
+--kit_cor_bolinha              : {{ settings.kit_cor_bolinha }};
+  --kit_cor_selecionado              : {{ settings.kit_cor_selecionado }};
+  --kit_cor_desconto_fundo              : {{ settings.kit_cor_desconto_fundo }};
+  --kit_cor_desconto_letra              : {{ settings.kit_cor_desconto_letra }};
+  --kit_cor_vendido              : {{ settings.kit_cor_vendido }};
+  --kit_cor_vendido_fonte              : {{ settings.kit_cor_vendido_fonte }};
+ 
+
+
+  
+
+  
+--pesquisafundo              : {{ settings.pesquisafundo }};
+  
+--pesquisaborda              : {{ settings.pesquisaborda }};  
+
+--pesquisafonte              : {{ settings.pesquisafonte }};  
+
+
+
+  
+--pix-envio-fundo              : {{ settings.pix_envio_fundo }};
+--pix-envio-textdesc              : {{ settings.pix_envio_textdesc }};
+--pix-envio-textnopix              : {{ settings.pix_envio_textnpix }};
+--pix-envio-simb              : {{ settings.pix_envio_simb }};
+--pix-envio-enviofundo              : {{ settings.pix_envio_enviofundo }};
+--pix-envio-enviotexto              : {{ settings.pix_envio_enviotexto }};
+
+  --corbordacheck              : {{ settings.corbordacheck }};
+  
+  
+    --color-primary-parcelamento  : {{ settings.color_primary_parcelamento }};
+    --color-secondary-parcelamento: {{ settings.color_secondary_parcelamento }};
+    --color-terciary-parcelamento : {{ settings.color_terciary_parcelamento }};
+    --color-active-parcelamento   : var(--color-terciary-parcelamento);
+    --color-quart-parcelamento    : {{ settings.color_quart_parcelamento }};
+    --color-quint-parcelamento    : {{ settings.color_quint_parcelamento }};
+    
+    --color-primary-whatsapp  : {{ settings.colorp_whats }};
+    --color-secundary-whatsapp: {{ settings.colors_whats }};
+    --color-terciary-whatsapp : {{ settings.colort_whats }};
+    --color-accent-whatsapp   : {{ settings.colorq_whats }};
+
+  --color-icon-f           : {{ settings.colors_icon }};
+  --color-simbol-f         : {{ settings.colors_simbol }};
+  --color-icon-f-hover     : {{ settings.colors_hovericon }};
+  --color-simbol-f-hover   : {{ settings.colors_hoversimbol }};
+
+
+--arredondakit : {{ settings.arredondakit }}px;
+ --arredondakitbola : {{ settings.arredondakitbola }}%; 
+
+ --color-parcel-ini          : {{ settings.parcel_inicial }};
+  --color-parcel-prod          : {{ settings.parcel_prod }};
+  
+    --bar-color              : {{ settings.bar_color}};
+
+    --colecao-fonte-color: {{ settings.colecao_fonte_color}};
+    --colecao-accent-color: {{ settings.colecao_accent_color}};
+    
+    --mobile-container-gutter : 20px;
+    --desktop-container-gutter: 40px;
+
+
+  --wpp_cor1: {{ settings.whatscompra_cor1 }};
+    --wpp_cor2: {{ settings.whatscompra_cor2 }};
+    --wpp_cor3: {{ settings.whatscompra_cor3 }};
+    --wpp_cor4: {{ settings.whatscompra_cor4 }};
+     --wpp_cor5: {{ settings.whatscompra_cor5 }};
+    --wpp_spc: {{ settings.spc_whatscompra }}pt;
+
+--fonte-navegacao: {{ settings.fonte_navegacao }}px;
+
+
+--cronotit_desk              : {{ settings.cronotit_desk }}px;
+  --cronotit_mob              : {{ settings.cronotit_mob }}px;
+  --cronosub_desk              : {{ settings.cronosub_desk }}px;
+  --cronosub_mob              : {{ settings.cronosub_mob }}px;
+ --cronodesktimg              : {{ settings.cronodesktimg }}px;
+  
+--margin-frete1-s: {{ settings.margin_frete1_s }}px;
+--margin-frete1-i: {{ settings.margin_frete1_i }}px;
+
+
+--margin-frete2-s: {{ settings.margin_frete2_s }}px;
+--margin-frete2-i: {{ settings.margin_frete2_i }}px;
+
+  --margin-prog-s: {{ settings.margin_prog_s }}px;
+--margin-prog-i: {{ settings.margin_prog_i }}px;
+
+
+   --margin-band-s: {{ settings.margin_band_s }}px;
+--margin-band-i: {{ settings.margin_band_i }}px;
+
+  --margin-gar-s: {{ settings.margin_gar_s }}px;
+--margin-gar-i: {{ settings.margin_gar_i }}px;
+
+--margintop-colecao: {{ settings.margintop_colecao }}px;
+--marginbot-colecao: {{ settings.marginbot_colecao }}px;
+
+--margintop-colecaom: {{ settings.margintop_colecaom }}px;
+--marginbot-colecaom: {{ settings.marginbot_colecaom }}px;
+
+  
+    --alt-bot-qnt: {{ settings.alt_botao_quantidade }}px;
+  --borda-bot-qnt: {{ settings.borda_botao_quantidade }}px;
+  --borda-atv-parcelamento: {{ settings.borda_atv_parcelamento }}px;
+  --borda-atv-parcelamento2: {{ settings.borda_atv_parcelamento2 }};
+  --fonte-wht: {{ settings.fonte_whatscompra }}px;
+
+--colorp-progress: {{ settings.colorp_progress }};
+    --colors-progress: {{ settings.colors_progress }};
+    --alt-progress: {{ settings.alt_progress}}px;
+    --font-progress: {{ settings.font_progress}}px;
+
+--padding-colecao: {{ settings.padding_colecao }}vw;
+--padding-colecao-mobile: {{ settings.padding_colecao_mobile }}vw;
+
+--frete-buscar-btn: {{ settings.buscar_frete_btn }};
+  --frete-buscar-fonte: {{ settings.buscar_frete_fonte }};
+   --frete-buscar-localizacao: {{ settings.buscar_frete_local }};
+   --frete-buscar-precos: {{ settings.buscar_frete_preco }};
+
+  --rodape-cor1: {{ settings.rodape_cor1 }};
+  --rodape-cor2: {{ settings.rodape_cor2 }};
+  --rodape-cor3: {{ settings.rodape_cor3 }};
+  --rodape-cor4: {{ settings.rodape_cor4 }};
+
+  --rodape-deg: {{ settings.rodape_deg }}deg;
+
+  --bandeiras-w-mobile: {{ settings.bandeiras_w_mobile }}%;
+  --bandeiras-w-desktop: {{ settings.bandeiras_w_desktop }}%;
+ --bandeiras-w-mobile2: {{ settings.bandeiras_w_mobile2 }}%;
+  --bandeiras-w-desktop2: {{ settings.bandeiras_w_desktop2 }}%;
+  --preco-prod: {{settings.preco_size}}px;
+  --preco-prodm: {{settings.preco_sizem}}px;
+
+--logo-msd    : {{ settings.logo-msd }}px;
+--logo-mid    : {{ settings.logo-mid }}px;
+--logo-msm    : {{ settings.logo-msm }}px;
+--logo-mim    : {{ settings.logo-mim }}px;
+
+  
+
+  --vendidos-cor-fonte           : {{ settings.vendidos_cor_fonte }};
+  --vendidos-cor-fundo           : {{ settings.vendidos_cor_fundo }};
+
+  --label2-cor-fonte           : {{ settings.label2_cor_fonte }};
+  --label2-cor-fundo           : {{ settings.label2_cor_fundo }};
+
+  --label3-cor-fonte           : {{ settings.label3_cor_fonte }};
+  --label3-cor-fundo           : {{ settings.label3_cor_fundo }};
+   --label3-cor-fundo2           : {{ settings.label3_cor_fundo2 }};
+   --label3-cor-fundo3           : {{ settings.label3_cor_fundo3 }};
+
+--bandeiras-t-fonte: {{ settings.fonte_t_bandeiras }}px;
+  
+--popup_button_right         : {{ settings.popup_button_right }}px; 
+--popup_size-color           : {{ settings.popup_size-color }}; 
+--popup_text_medidas-color   : {{ settings.popup_text_medidas-color }}; 
+--popup_border               : {{ settings.popup_border }}px;  
+--popup_show-color           : {{ settings.popup_show-color }};  
+--popup_text-color           : {{ settings.popup_text-color }};             
+--icon_popup_image:          : {{ settings.icon_popup_image }}; 
+--popup_text_titulo:          : {{ settings.icon_popup_titulo }};
+  
+    /* Shopify related variables */
+    --payment-terms-background-color: {{ settings.background }};
+  }
+</style>
+
+<script>
+  // IE11 does not have support for CSS variables, so we have to polyfill them
+  if (!(((window || {}).CSS || {}).supports && window.CSS.supports('(--a: 0)'))) {
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2';
+    script.onload = function() {
+      cssVars({});
+    };
+
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+</script>

@@ -1,0 +1,179 @@
+<style>
+:root {
+    --color-bg-topbar: {{section.settings.color_bg}};
+}
+
+/* TOP BAR */
+.top-bar-mobile {
+    display: none;
+}
+.top-bar-desktop, .top-bar-mobile {
+    width: 100%;
+    text-align: center;
+    background: var(--color-bg-topbar);
+    overflow: hidden;
+}
+
+.top-bar-desktop{
+  height: {{section.settings.altura_desktop}}px;
+}
+
+  .top-bar-mobile{
+  height: {{section.settings.altura_mobile}}px;
+}
+
+  
+.top-bar-image {
+    height: -webkit-fill-available;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+@media only screen and (max-width: 780px) {
+    .top-bar-mobile {
+        display: block;
+    }
+    .top-bar-desktop {
+        display: none;
+    }
+}
+
+</style>
+
+{% if section.settings.message %}
+    {% if section.settings.home_page_only == false or request.page_type == 'index' %}
+
+            {% if section.settings.show_desktop %}
+                <div class="top-bar-desktop">
+                    {% if section.settings.img_desktop %}
+                        {% assign img = section.settings.img_desktop | img_url: 'master' %}
+                      {%- if section.settings.linka != blank -%}
+            <a href="{{ section.settings.linka }}"> <div class="top-bar-image" style="background-image: url('{{img}}'); zoom: {{section.settings.zoom_desktop}}%;"></div>  </a>
+              {% else %}
+                        <div class="top-bar-image" style="background-image: url('{{img}}'); zoom: {{section.settings.zoom_desktop}}%;"></div>
+                      {%endif%}
+                      {%endif%}
+                </div>
+            {%endif%}
+
+            {% if section.settings.show_mobile %}
+                <div class="top-bar-mobile">
+                    {% if section.settings.img_mobile %}
+                        {% assign img = section.settings.img_mobile | img_url: 'master' %}
+{%- if section.settings.linka != blank -%}
+            <a href="{{ section.settings.linka }}"> <div class="top-bar-image" style="background-image: url('{{img}}'); zoom: {{section.settings.zoom_mobile}}%;"></div> </a>
+              {% else %}
+                   <div class="top-bar-image" style="background-image: url('{{img}}'); zoom: {{section.settings.zoom_mobile}}%;"></div>
+                      {%endif%}
+                      {%endif%}
+                </div>
+            {%endif%}
+    {%endif%}
+{%endif%}
+
+{% schema %}
+{
+    "name": "Barra do topo",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Barra do topo"
+        },
+        {
+            "type": "checkbox",
+            "id": "message",
+            "label": "Mostrar Barra do topo",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "home_page_only",
+            "label": "Exibir só na página inicial",
+            "default": false
+        },
+      {
+      "type": "url",
+      "id": "linka",
+      "label": "Link",
+      "info": "Link não obrigatório, use apenas se quiser direcionar o cliente a outra página"
+    },
+        {
+            "type": "color",
+            "id": "color_bg",
+            "label": "Cor de fundo do top bar",
+            "default": "#002AE7"
+        },
+        {
+            "type": "header",
+            "content": "Configurações de imagem"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_desktop",
+            "label": "Mostrar no desktop",
+            "default": true
+        },
+        {
+            "type": "image_picker",
+            "id": "img_desktop",
+            "info": "Tamanho recomendado: 1500 × altura escolhida px",
+            "label":"Imagem desktop"
+        },
+        {
+            "type": "range",
+            "id": "zoom_desktop",
+            "label": "Zoom Imagem Desktop",
+            "min": 0,
+            "max": 150,
+            "step": 2,
+            "unit": "%",
+            "default": 70
+        },
+      {
+            "type": "range",
+            "id": "altura_desktop",
+            "label": "Altura Imagem Desktop",
+            "min": 30,
+            "max": 90,
+            "step": 3,
+            "unit": "px",
+            "default": 45
+        },
+        
+        {
+            "type": "checkbox",
+            "id": "show_mobile",
+            "label": "Mostrar no mobile",
+            "default": true
+        },
+        {
+            "type": "image_picker",
+            "id": "img_mobile",
+            "info": "Tamanho recomendado: 800 × altura escolhida px",
+            "label":"Imagem mobile"
+        },
+        {
+            "type": "range",
+            "id": "zoom_mobile",
+            "label": "Zoom Imagem Mobile",
+            "min": 0,
+            "max": 150,
+            "step": 2,
+            "unit": "%",
+            "default": 70
+        },
+  
+      {
+            "type": "range",
+            "id": "altura_mobile",
+            "label": "Altura Imagem mobile",
+            "min": 30,
+            "max": 90,
+            "step": 3,
+            "unit": "px",
+            "default": 45
+        }
+    ]
+}
+{% endschema %}

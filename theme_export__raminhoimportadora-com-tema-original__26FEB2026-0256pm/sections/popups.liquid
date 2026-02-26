@@ -1,0 +1,236 @@
+<div data-section-id="{{ section.id }}" data-section-type="popups">
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when 'newsletter' -%}
+        {%- unless block.settings.show_only_on_index and template != 'index' -%}
+          {%- unless block.settings.show_only_for_visitors and customer -%}
+            {% capture popup_settings %}
+              {
+                "apparitionDelay": {{ block.settings.apparition_delay | json }},
+                "showOnlyOnce": {{ block.settings.show_only_once | json }}
+              }
+            {% endcapture %}
+
+            <aside class="modal modal--newsletter" data-popup-type="newsletter" data-popup-settings='{{ popup_settings }}' aria-hidden="true" {{ block.shopify_attributes }}>
+              <div class="modal__dialog" role="dialog">
+                <div class="popup-newsletter">
+                  {%- if block.settings.title != blank -%}
+                    <h3 class="popup-newsletter__title heading">{{ block.settings.title | escape }}</h3>
+                  {%- endif -%}
+
+                  <button class="popup-newsletter__close link" data-action="close-popup" aria-label="{{ 'general.accessibility.close' | t }}">
+                    {%- render 'icon', icon: 'close' -%}
+                  </button>
+
+                  {%- if block.settings.content != blank -%}
+                    <div class="popup-newsletter__content rte">
+                      {{ block.settings.content }}
+                    </div>
+                  {%- endif -%}
+
+                  {%- if block.settings.show_newsletter -%}
+                    {%- form 'customer', id: 'newsletter-popup', class: 'form popup-newsletter__form' -%}
+                      {%- if form.posted_successfully? -%}
+                        <p class="alert alert--success alert--center">{{ 'general.popup.success' | t }}</p>
+                      {%- else -%}
+                        <input type="hidden" name="contact[tags]" value="newsletter">
+
+                        <div class="form__input-wrapper form__input-wrapper--labelled">
+                          <input id="newsletter-popup[email]" type="email" class="form__field form__field--text" name="contact[email]" autofocus required="required">
+                          <label for="newsletter-popup[email]" class="form__floating-label">{{ 'general.popup.email_placeholder' | t }}</label>
+                        </div>
+
+                        <button class="button button--primary button--full" type="submit">{{ 'general.popup.subscribe' | t }}</button>
+                      {%- endif -%}
+                    {%- endform -%}
+                  {%- endif -%}
+                </div>
+              </div>
+            </aside>
+          {%- endunless -%}
+        {%- endunless -%}
+
+      {%- when 'exit' -%}
+        {%- unless block.settings.show_only_for_visitors and customer -%}
+          {% capture popup_settings %}
+            {
+              "showOnlyOnce": {{ block.settings.show_only_once | json }}
+            }
+          {% endcapture %}
+
+          <aside class="modal modal--exit-popup" data-popup-type="exit" data-popup-settings='{{ popup_settings }}' aria-hidden="true" {{ block.shopify_attributes }}>
+            <div class="modal__dialog" role="dialog">
+              <div class="exit-popup">
+                {%- if block.settings.title != blank -%}
+                  <h3 class="exit-popup__title heading">{{ block.settings.title | escape }}</h3>
+                {%- endif -%}
+
+                {%- if block.settings.subheading != blank -%}
+                  <p class="exit-popup__subheading heading">{{ block.settings.subheading | escape }}</p>
+                {%- endif -%}
+
+                <button class="exit-popup__close link" data-action="close-popup" aria-label="{{ 'general.accessibility.close' | t }}">
+                  {%- render 'icon', icon: 'close' -%}
+                </button>
+
+                {%- assign is_form_valid = false -%}
+
+                {%- if block.settings.show_newsletter -%}
+                  {%- form 'customer', id: 'exit-popup', class: 'form exit-popup__form' -%}
+                    {%- if form.posted_successfully? -%}
+                      {%- assign is_form_valid = true -%}
+                      <p class="alert alert--success alert--center">{{ block.settings.success_message }}</p>
+                    {%- else -%}
+                      <input type="hidden" name="contact[tags]" value="newsletter">
+
+                      <div class="form__input-wrapper form__input-wrapper--labelled">
+                        <input id="exit-popup[email]" type="email" class="form__field form__field--large form__field--text" name="contact[email]" autofocus required="required">
+                        <label for="exit-popup[email]" class="form__floating-label">{{ 'general.popup.email_placeholder' | t }}</label>
+                      </div>
+
+                      <button class="button button--primary button--extra-large button--full" type="submit">{{ block.settings.button_text | escape }}</button>
+                    {%- endif -%}
+                  {%- endform -%}
+                {%- endif -%}
+
+                {%- if block.settings.close_message != blank and is_form_valid == false -%}
+                  <button class="exit-popup__pay-more link link--accented" data-action="close-popup">{{ block.settings.close_message }}</button>
+                {%- endif -%}
+              </div>
+            </div>
+          </aside>
+        {%- endunless -%}
+    {%- endcase -%}
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Pop-ups",
+  "max_blocks": 2,
+  "blocks": [
+    {
+      "name": "Pop-up newsletter",
+      "type": "newsletter",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_only_on_index",
+          "label": "Mostrar apenas na página inicial",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_only_for_visitors",
+          "label": "Desativar para titulares de conta",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_only_once",
+          "label": "Mostrar apenas uma vez para visitantes",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Pop-up"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Texto",
+          "default": "<p>Você pode usar este pop-up para exibir informações úteis para seus clientes.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_newsletter",
+          "label": "Mostrar formulário de boletim informativo",
+          "info": "Os clientes que se inscreverem terão seu endereço de e-mail adicionado à lista de clientes que \"aceitam marketing\" [/admin/customers?query=&accepts_marketing=1].",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "apparition_delay",
+          "min": 0,
+          "max": 15,
+          "step": 1,
+          "unit": "seg",
+          "label": "Atraso até que o pop-up apareça",
+          "default": 5
+        }
+      ]
+    },
+    {
+      "name": "Pop-up de saída",
+      "type": "exit",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Habilite um pop-up de saída se o usuário tentar sair da página atual como meio de influenciar a ação do usuário na loja."
+        },
+        {
+          "type": "paragraph",
+          "content": "Visível apenas em desktop."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_only_for_visitors",
+          "label": "Desativar para titulares de conta",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_only_once",
+          "label": "Mostrar apenas uma vez para visitantes",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Receba 15% de desconto"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subtítulo",
+          "default": "em seu próximo pedido + ofertas exclusivas"
+        },
+        {
+          "type": "header",
+          "content": "Boletim informativo"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_newsletter",
+          "label": "Mostrar formulário de inscrição",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Texto do botão",
+          "default": "Obtenha meus 15% de desconto"
+        },
+        {
+          "type": "text",
+          "id": "success_message",
+          "label": "Mensagem de sucesso",
+          "info": "Texto exibido depois que o cliente inserir seu e-mail.",
+          "default": "Você receberá em breve um e-mail contendo o código de desconto!"
+        },
+        {
+          "type": "text",
+          "id": "close_message",
+          "label": "Mensagem de fechar",
+          "default": "Não, obrigado. Prefiro pagar mais"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,196 @@
+{%- capture section_settings -%}
+{
+  "stackable": false,
+  "layout": "vertical"
+}
+{%- endcapture -%}
+
+<style>
+  :root {
+
+--col-img-back1   : {{ section.settings.background  }};
+--col-img-back2   : {{ section.settings.background2  }};
+--col-img-deg   : {{ section.settings.background_deg }}deg;
+
+
+  }
+@media screen and (max-width: 800px) {
+  .featured-collection.lazyloaded
+  {
+    background:linear-gradient(var(--col-img-deg), var(--col-img-back1), var(--col-img-back2)) !important;
+  }
+}
+
+
+
+  
+  </style>
+
+<section class="section" data-section-id="{{ section.id }}" data-section-type="featured-collection" data-section-settings='{{ section_settings }}'>
+  <div class="container container--flush">
+    <div style="background:linear-gradient(var(--col-img-deg), var(--col-img-back1), var(--col-img-back2)) !important;border-radius: var(--bordas-cardini);">
+    {%- assign collection = section.settings.collection -%}
+
+    <div class="featured-collection lazyload"  {% if section.settings.image %}data-bgset="{{ section.settings.image | img_url: '1000x' }} [--lap]"{% endif %}>
+      <header class="featured-collection__header lazyload" {% if section.settings.image %}data-bgset="{{ section.settings.image | img_url: '1000x' }} [--tablet]"{% endif %}>
+        {%- if section.settings.title != blank -%}
+          <h2 class="featured-collection__title heading h2">{{ section.settings.title | escape }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.content != blank -%}
+          <p class="featured-collection__text">{{ section.settings.content | escape | newline_to_br }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.button_text != blank -%}
+          <a href="{{ section.settings.button_link | default: collection.url | default: '#' }}" class="featured-collection__cta button button--floating">{{ section.settings.button_text | escape }}</a>
+        {%- endif -%}
+      </header>
+
+      <div class="featured-collection__content">
+        <div class="scroller scroller--flush">
+          <div class="scroller__inner">
+            <div class="product-list product-list--scrollable">
+              {%- assign grid_classes = '1/2--lap 1/3--desk 1/4--wide' -%}
+
+              {%- unless collection == blank -%}
+                {%- for product in collection.products limit: section.settings.products_count -%}
+                  {%- render 'product-item', product: product, grid_classes: grid_classes, show_add_to_cart: section.settings.show_quick_buy -%}
+                {%- endfor -%}
+              {%- else -%}
+                {%- for i in (1..section.settings.products_count) -%}
+                  {%- render 'product-item-placeholder', grid_classes: grid_classes -%}
+                {%- endfor -%}
+              {%- endunless -%}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+
+<style>
+  
+
+  #shopify-section-{{ section.id }} .featured-collection__header {
+    color: {{ section.settings.text_color }};
+  }
+
+  #shopify-section-{{ section.id }} .featured-collection__header .button {
+    color: {{ section.settings.button_text_color }};
+    background-color: {{ section.settings.button_background }};
+  }
+</style>
+
+
+
+{% schema %}
+{
+  "name": "Coleção com Imagem",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Coleção"
+    },
+    {
+      "type": "range",
+      "id": "products_count",
+      "label": "Produtos à mostrar..",
+      "min": 4,
+      "max": 48,
+      "step": 4,
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_buy",
+      "label": "Mostrar botão de compra rápida",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagem",
+      "info": "Recomenda-se imagem de 1000 x 400px .png com fundo transparente (Oculto no celular)"
+    },
+    {
+          "type": "color",
+          "id": "background",
+          "label": "Background 1",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "background2",
+          "label": "Background 2",
+          "default": "#f3f4f4"
+        },
+        {
+          "type": "range",
+          "id": "background_deg",
+          "label": "Inclinação do Degrade",
+          "min": 0,
+          "max": 360,
+          "step": 5,
+          "unit": "deg",
+          "default": 150
+        },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Cor do texto",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Coleção em destaque"
+    },
+    {
+      "type": "textarea",
+      "id": "content",
+      "label": "Texto",
+      "default": "Fale mais sobre seu produto ou coleção..."
+    },
+    {
+      "type": "header",
+      "content": "Botão"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Texto",
+      "default": "#0774d7"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texto do botão",
+      "default": "Saiba mais"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link",
+      "info": "URL da coleção é usado se nenhum link for atribuído"
+    }
+  ],
+  "presets": [
+    {
+      "category": "Collection",
+      "name": "Coleção com Imagem",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

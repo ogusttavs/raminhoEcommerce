@@ -1,0 +1,141 @@
+
+{% if product.tags contains 'personalizar1' %}
+<!-- INICIO CAMPO -->
+<p class="line-item-property__field">
+
+  {%- if settings.mostrar-p1-l1 -%}
+  <label for="campo-personalizacao" class="align-label-campo">{{ settings.personaliza1-texto1 }} <span class="aviso">{{ settings.personaliza1-aviso1 }}</span> </label>
+  <input id="campo-personalizacao" placeholder="{{ settings.personaliza1-holder1 }}" type="text" maxlength="{{ settings.p1-l1-qntd }}" name="properties[{{ settings.personaliza1-texto1 }}]">
+  {%- endif -%}
+
+  {%- if settings.mostrar-p1-l2 -%}
+  <label for="campo-personalizacao" class="align-label-campo" style="margin-top: 8px">{{ settings.personaliza1-texto2 }} <span class="aviso">{{ settings.personaliza1-aviso2 }}</span></label>
+  <input id="campo-personalizacao" placeholder="{{ settings.personaliza1-holder2 }}" type="text" maxlength="{{ settings.p1-l2-qntd }}" name="properties[{{ settings.personaliza1-texto2 }}]">
+  {%- endif -%}
+
+</p>
+
+<!-- FIM CAMPO -->
+{% endif %}
+
+{% if product.tags contains 'personalizar2' %}
+<!-- INICIO CAMPO -->
+<p class="line-item-property__field">
+
+  {%- if settings.mostrar-p2-l1 -%}
+  <label for="campo-personalizacao" class="align-label-campo">{{ settings.personaliza2-texto1 }} <span class="aviso">{{ settings.personaliza2-aviso1 }}</span> </label>
+  <input id="campo-personalizacao" placeholder="{{ settings.personaliza2-holder1 }}" type="text" maxlength="{{ settings.p2-l1-qntd }}" name="properties[{{ settings.personaliza2-texto1 }}]">
+{%- endif -%}
+
+  {%- if settings.mostrar-p2-l2 -%}
+  <label for="campo-personalizacao" class="align-label-campo" style="margin-top: 8px">{{ settings.personaliza2-texto2 }} <span class="aviso">{{ settings.personaliza2-aviso2 }}</span></label>
+  <input id="campo-personalizacao" placeholder="{{ settings.personaliza2-holder2 }}" type="text" maxlength="{{ settings.p2-l2-qntd }}" name="properties[{{ settings.personaliza2-texto2 }}]">
+{%- endif -%}
+
+</p>
+<!-- FIM CAMPO -->
+{% endif %}
+
+{% if product.tags contains 'personalizar3' %}
+<!-- INICIO CAMPO -->
+<p class="line-item-property__field">
+
+  {%- if settings.mostrar-p3-l1 -%}
+  <label for="campo-personalizacao" class="align-label-campo">{{ settings.personaliza3-texto1 }} <span class="aviso">{{ settings.personaliza3-aviso1 }}</span> </label>
+  <input id="campo-personalizacao" placeholder="{{ settings.personaliza3-holder1 }}" type="text" maxlength="{{ settings.p3-l1-qntd }}" name="properties[{{ settings.personaliza3-texto1 }}]">
+{%- endif -%}
+
+  {%- if settings.mostrar-p3-l2 -%}
+  <label for="campo-personalizacao" class="align-label-campo" style="margin-top: 8px">{{ settings.personaliza3-texto2 }} <span class="aviso">{{ settings.personaliza3-aviso2 }}</span></label>
+  <input id="campo-personalizacao" placeholder="{{ settings.personaliza3-holder2 }}" type="text" maxlength="{{ settings.p3-l2-qntd }}" name="properties[{{ settings.personaliza3-texto2 }}]">
+{%- endif -%}
+
+</p>
+<!-- FIM CAMPO -->
+{% endif %}
+
+{% if product.tags contains 'personalizar4' %}
+<!-- INICIO CAMPO -->
+<p class="line-item-property__field">
+
+  {%- if settings.mostrar-p4-l1 -%}
+  <label for="campo-personalizacao" class="align-label-campo">{{ settings.personaliza4-texto1 }} <span class="aviso">{{ settings.personaliza4-aviso1 }}</span> </label>
+  <input id="campo-personalizacao" placeholder="{{ settings.personaliza4-holder1 }}" type="text" maxlength="{{ settings.p4-l1-qntd }}" name="properties[{{ settings.personaliza4-texto1 }}]">
+{%- endif -%}
+
+  {%- if settings.mostrar-p4-l2 -%}
+  <label for="campo-personalizacao" class="align-label-campo" style="margin-top: 8px">{{ settings.personaliza4-texto2 }} <span class="aviso">{{ settings.personaliza4-aviso2 }}</span></label>
+  <input id="campo-personalizacao" placeholder="{{ settings.personaliza4-holder2 }}" type="text" maxlength="{{ settings.p4-l2-qntd }}" name="properties[{{ settings.personaliza4-texto2 }}]">
+{%- endif -%}
+
+</p>
+<!-- FIM CAMPO -->
+{% endif %}
+
+
+{% if product.tags contains 'personalizar5' %}
+<!-- INICIO CAMPO -->
+<p class="line-item-property__field">
+
+  {%- if settings.mostrar-p5-l1 -%}
+  <label for="campo-personalizacao" class="align-label-campo">{{ settings.personaliza5-texto1 }} <span class="aviso">{{ settings.personaliza5-aviso1 }}</span> </label>
+  <input id="campo-personalizacao" placeholder="{{ settings.personaliza5-holder1 }}" type="text" maxlength="{{ settings.p5-l1-qntd }}" name="properties[{{ settings.personaliza5-texto1 }}]">
+{%- endif -%}
+
+  {%- if settings.mostrar-p5-l2 -%}
+  <label for="campo-personalizacao" class="align-label-campo" style="margin-top: 8px">{{ settings.personaliza5-texto2 }} <span class="aviso">{{ settings.personaliza5-aviso2 }}</span></label>
+  <input id="campo-personalizacao" placeholder="{{ settings.personaliza5-holder2 }}" type="text" maxlength="{{ settings.p5-l2-qntd }}" name="properties[{{ settings.personaliza5-texto2 }}]">
+{%- endif -%}
+
+</p>
+<!-- FIM CAMPO -->
+{% endif %}
+
+
+<style>
+  #campo-personalizacao {
+    border: 1px solid #d7d7eb73;
+    background: white;
+    border-radius: var(--p1-l-radius);
+    width: 100%;
+    height: 42px;
+    font-size: 16px;
+    padding: 10px;
+}
+  .line-item-property__field {
+    display: flex;
+    border: 1px solid var(--p1-borda);
+    flex-direction: column;
+    gap: 1px;
+    margin: 0;
+    margin-top: var(--p1-ms);
+    margin-bottom: var(--p1-mi);
+    background: var(--p1-fundo );
+    border-radius: var(--p1-radius);
+    padding: 13px;
+  }
+  
+  input::placeholder {
+    color: var(--p1-cor-holder);
+  }
+
+  .align-label-campo { 
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--p1-cor-campo);
+  }
+
+  .aviso {
+    color: var( --p1-cor-aviso);
+    font-weight: normal;
+    margin-left: 6px;
+    font-size: 11px;
+    margin-top: 2px
+  }
+  
+</style>
+

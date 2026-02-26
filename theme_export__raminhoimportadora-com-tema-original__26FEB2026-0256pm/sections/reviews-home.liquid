@@ -1,0 +1,237 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.pkgd.min.js" defer></script>
+
+<style>
+  .review-list .review {
+    padding: 10px;
+    width: 25%;
+}
+
+.review-list .review .review-card {
+    background-color: #fff;
+    border-radius: var(--bordas-cardini);
+    box-shadow: 0px 7px var(--review-borda);
+    border: 1px solid rgba(0,0,0,0.07);
+    padding: 10px 15px 5px 15px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.0' width='768.000000pt' height='768.000000pt' viewBox='0 0 768.000000 768.000000' preserveAspectRatio='xMidYMid meet'%3E%3Cg transform='translate(0.000000 768.000000) scale(0.100000 -0.100000)' fill='%23dbdbdb' stroke='none'%3E%3Cpath d='M892 6944 c-154 -34 -265 -97 -392 -224 -98 -98 -144 -165 -187 -270 -53 -133 -53 -122 -53 -1136 0 -1069 -4 -1011 85 -1189 105 -211 291 -363 521 -427 76 -21 103 -22 679 -27 l600 -6 58 -27 c117 -55 191 -138 227 -256 40 -129 22 -439 -35 -609 -98 -291 -348 -557 -628 -667 -153 -60 -202 -68 -487 -75 -304 -8 -322 -12 -398 -95 -78 -85 -77 -78 -77 -457 l0 -335 30 -59 c35 -69 105 -128 171 -144 55 -14 420 -14 555 -1 353 36 687 153 989 348 522 336 877 893 977 1532 17 107 18 226 18 1780 l0 1665 -22 84 c-72 270 -276 485 -548 579 l-80 27 -970 2 c-797 1 -981 -1 -1033 -13z'/%3E%3Cpath d='M4732 6944 c-154 -34 -265 -97 -392 -224 -98 -98 -144 -165 -187 -270 -53 -133 -53 -122 -53 -1136 0 -1069 -4 -1011 85 -1189 105 -211 291 -363 521 -427 76 -21 103 -22 679 -27 l600 -6 58 -27 c117 -55 191 -138 227 -256 40 -129 22 -439 -35 -609 -98 -291 -348 -557 -628 -667 -153 -60 -202 -68 -487 -75 -304 -8 -322 -12 -398 -95 -78 -85 -77 -78 -77 -457 l0 -335 30 -59 c35 -69 105 -128 171 -144 55 -14 420 -14 555 -1 353 36 687 153 989 348 522 336 877 893 977 1532 17 107 18 226 18 1780 l0 1665 -22 84 c-72 270 -276 485 -548 579 l-80 27 -970 2 c-797 1 -981 -1 -1033 -13z'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 97% 100%;
+    background-size: 20px 20px;
+    color: #2d2d2d;
+    position: relative;
+    min-height: 156px;
+}
+
+  
+.review-list .review .review-card p {
+    padding: 0px;
+    line-height: 1.2;
+    margin: 5px 5px 5px 0;
+}
+
+.review-list .review .review-card .review-heading {
+    font-weight: 500;
+}
+
+.review-list .review .review-card .review-subheading {
+    font-size: 12px;
+    color: lightgray;
+}
+
+.review-list .review .review-card .review-body {
+    margin-top: 10px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+    font-size: 13px;
+}
+
+.review-list .review .review-card .review-stars {
+    background-size: 18px;
+    position: absolute;
+    bottom: 0px;
+    left: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    margin-left: 5px;
+}
+
+.review-list .review .review-card .review-stars .star {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAxOCAxOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTguNTYyMjEgMTMuODk5NUwxMi42MjE5IDE2LjM1NDlDMTMuMzY1NCAxNi44MDQ5IDE0LjI3NTIgMTYuMTM5NyAxNC4wNzk1IDE1LjI5ODRMMTMuMDAzNCAxMC42ODExTDE2LjU5MzYgNy41NzAyN0MxNy4yNDkgNy4wMDI4OSAxNi44OTY5IDUuOTI2ODIgMTYuMDM2IDUuODU4MzRMMTEuMzExMSA1LjQ1NzI2TDkuNDYyMiAxLjA5NDI4QzkuMTI5NTkgMC4zMDE5MDUgNy45OTQ4MyAwLjMwMTkwNSA3LjY2MjIzIDEuMDk0MjhMNS44MTMzNCA1LjQ0NzQ4TDEuMDg4NDIgNS44NDg1NkMwLjIyNzU2IDUuOTE3MDMgLTAuMTI0NjA5IDYuOTkzMSAwLjUzMDgxNiA3LjU2MDQ5TDQuMTIwOTggMTAuNjcxM0wzLjA0NDkxIDE1LjI4ODZDMi44NDkyNiAxNi4xMjk5IDMuNzU5MDMgMTYuNzk1MSA0LjUwMjQ5IDE2LjM0NTFMOC41NjIyMSAxMy44OTk1WiIgZmlsbD0iI0ZCQ0MzNiIvPgo8L3N2Zz4K);
+    background-size: 16px;
+    height: 16px;
+    width: 16px;
+}
+
+.review-audited {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 12px auto 0;
+    position: relative;
+    color: #818993;
+    font-size: 13px;
+}
+
+.review-audited img {
+    margin-left: 5px;
+    height: 17px;
+    vertical-align: middle;
+    width: 70px;
+}
+
+@media only screen and (max-width: 1024px) {
+    .review-audited {
+        text-align: center;
+        display: block;
+    }
+    .review-list .review {
+        width: 100%;
+    }
+
+    .review-list .review {
+        padding: 0 0 10px;
+        margin-right: 5px;
+    }
+}
+</style>
+  
+ <section data-section-id="{{ section.id }}" data-section-type="review-list" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+    <div class="container">
+        <div class="row-fluid">
+            {% if section.settings.title != blank %}
+                <header class="section__header">
+                    <div class="section__header-stack">
+                        <h2 class="section__title heading h3">{{ section.settings.title }}</h2>
+                    </div>
+                </header>
+            {% endif %}
+
+            <div class="carousel review-list">
+                {% for block in section.blocks %}
+                    <div class="review" data-review-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+                        <div class="review-card">
+                            <p class="review-heading">{{ block.settings.person_name }}</p>
+                            <p class="review-subheading">{{ block.settings.review_date }}</p>
+                            <p class="review-body">{{ block.settings.review_description }}</p>
+                            <p class="review-stars">
+                                {% for i in (1..block.settings.amount_stars) %}
+                                    <span class="star"></span>
+                                {% endfor %}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="review-audited">
+               {{ section.settings.avaliacao_texto }}
+                <img src="{{ 'Logo-RD-tesmonycorrect.png' |  asset_img_url: '399x104' }}" alt="Logotipo Tesmony da seção de reviews">
+            </div>
+        </div>
+    </div>
+   
+<script>
+  $(document).ready(function() {
+    // Verifica se a largura da tela é menor que 768 pixels (tamanho comum para dispositivos móveis)
+    if ($(window).width() < 768) {
+      $('.carousel.review-list').flickity({
+        cellAlign: 'left',
+        contain: true,
+        prevNextButtons: true,
+        pageDots: false,
+        groupCells: true,
+        autoPlay: 3000, // Defina o tempo de autoplay em milissegundos
+        wrapAround: true // Permite rolar infinitamente
+      });
+    } else {
+      // Se não for um dispositivo móvel, não ative o autoplay
+      $('.carousel.review-list').flickity({
+        cellAlign: 'left',
+        contain: true,
+        prevNextButtons: true,
+        pageDots: false,
+        groupCells: true,
+        autoPlay: 3000, // Desative a reprodução automática
+        wrapAround: true // Permite rolar infinitamente
+      });
+    }
+  });
+</script>
+   
+</section>
+
+{% schema %}
+{
+  "name": "Lista de avaliação",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "O que falam sobre nós"
+    },
+      {
+        "type": "text",
+        "id": "avaliacao_texto",
+        "label": "Texto de avaliação",
+        "default": "Avaliações reais auditadas por"
+      },
+    {
+      "type": "header",
+      "content": "Espaçamento"
+    },
+    {
+      "type": "text",
+      "id": "padding_top",
+      "label": "Margem superior (px)",
+      "default": "0"
+    },
+    {
+      "type": "text",
+      "id": "padding_bottom",
+      "label": "Margem inferior (px)",
+      "default": "20"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "avaliacao",
+      "name": "Avaliação",
+      "settings": [
+        {
+          "type": "text",
+          "id": "person_name",
+          "label": "Nome da pessoa"
+        },
+        {
+          "type": "text",
+          "id": "review_date",
+          "label": "Data da avaliação"
+        },
+        {
+          "type": "textarea",
+          "id": "review_description",
+          "label": "Descrição da avaliação"
+        },
+        {
+          "type": "range",
+          "id": "amount_stars",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "label": "Quantidade de estrelas",
+          "default": 5
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lista de avaliação"
+    }
+  ]
+}
+{% endschema %}

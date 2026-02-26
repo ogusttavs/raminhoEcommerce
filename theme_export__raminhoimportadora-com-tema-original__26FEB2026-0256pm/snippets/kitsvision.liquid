@@ -1,0 +1,332 @@
+
+<!-- INICIO Código dos KITS VISION -->
+
+
+{%- assign umaunidade = false -%}
+    {%- assign duasunidades = false -%}
+    {%- assign tresunidades = false -%}
+    
+    {%- assign opcao = -1 -%}
+	
+    {%- for option in product.options -%}
+    	{% assign opcao = opcao | plus: 1 %}
+    	{%- if option == 'Quantidade' -%}
+    		{%- break -%}
+    	{%- endif -%}
+    {%- endfor -%}
+
+    {% for variant in product.variants %}
+    	
+    	{%- if umaunidade == false or duasunidades == false or tresunidades == false -%}
+    
+            {%- if variant.options[opcao] == '1 unidade' and umaunidade != true -%}
+    
+    			{%- assign preco1_min = variant.price -%}
+               
+                {%- assign preco1_puro_min = variant.price | divided_by: 100.00 -%}
+    
+    			{%- assign preco1_puro_max = variant.compare_at_price | divided_by: 100.00 -%}
+    
+    			{%- assign preco1_max = variant.compare_at_price -%}
+    			
+    			{%- assign umaunidade = true -%}
+
+            {%- elsif variant.options[opcao] == '2 unidades' and duasunidades != true -%}
+    
+    			{%- assign preco2_puro_min = variant.price | divided_by: 100.00 -%}
+    
+    			{%- assign preco2_puro_max = variant.compare_at_price | divided_by: 100.00 -%}
+    
+    			{%- assign preco2_max = variant.compare_at_price -%}
+    
+    			{%- assign preco2_min = variant.price -%}
+    
+    			{%- assign duasunidades = true -%}
+
+            {%- elsif variant.options[opcao] == '3 unidades' and tresunidades != true -%}
+    
+    			{%- assign preco3_puro_min = variant.price | divided_by: 100.00 -%}
+    
+    			{%- assign preco3_puro_max = variant.compare_at_price | divided_by: 100.00 -%}
+    
+    			{%- assign preco3_max = variant.compare_at_price -%}
+    
+    			{%- assign preco3_min = variant.price -%}
+    
+    			{%- assign tresunidades = true -%}
+
+            {%- endif -%}
+    
+    	{%- else -%}
+    	
+    		{%- break -%}
+    	
+    	{%- endif -%}
+    
+    {% endfor %}
+    
+ 
+<style>
+.product-form__option.hidden {
+  display: none !important;
+}
+  </style>
+
+
+    {%- for option in product.options -%}
+    	{%- if option == 'Quantidade' -%}  
+         
+ <div class="tt-swatches-container tt-swatches-container-js" style="margin-bottom: 35px;">
+        <div class="tt-wrapper">
+          <div class="tt-title-options" style="display: none;">Quantidade: <span class="current_option_name">1 unidade</span></div>
+          <ul class="tt-options-swatch options-large">
+            <li id="1_unidade" style="width: 100%;"><a style="display: flex; align-items: center; justify-content: space-around;" href="#!" onclick="alterarVariante('1 unidade')" data-value="1 unidade">
+              <div class="col-1 pl-0" style="margin-left: -17px; margin-right: -51px;">
+                <div id="bola1" class="selector-bola" style=""></div>
+              </div>
+              <div class="col-4 text-left">
+                <p id="n_variante" class="new-selector-nome-variante">1 unidade</p>
+               <p class="selector-desconto" style="color: var(--kit_cor_desconto_letra); margin: 0;float: right;"> {{ settings.kit_label_desc1 }} {{ preco1_puro_max | minus: preco1_puro_min | times: 100.0 | divided_by: preco1_puro_max | round }}% {{ settings.kit_label_desc2 }}</p>
+              </div>
+              <div class="col-7 text-left pr-0" style="margin-right: -13px !important;" >
+                <p style="margin-bottom: -1px;"> </p>
+                <p style="margin-top:5px;line-height: 14px; margin: 0;display: inline-flex; inline-size: max-content;flex-direction: column-reverse;"><span class="selector-total-antigo">{{ preco1_max | money }}</span><span class="selector-total-variante">{{ preco1_min | money }}</span></p>
+              </div>
+              </a></li>
+            <li id="2_unidades" style="width: 100%;"><a style="display: flex; align-items: center; justify-content: space-around;" href="#!" onclick="alterarVariante('2 unidades')" data-value="2 unidades">
+              <div class="col-1 pl-0" style="margin-left: -17px; margin-right: -51px;">
+                <div id="bola2" class="selector-bola"></div>
+              </div>
+              <div class="col-4 text-left">
+           
+                <p class="new-selector-nome-variante" style="line-height: 14px; margin: 0;">2 unidades</p>
+                                <p class="selector-desconto" style=" color: var(--kit_cor_desconto_letra);line-height: 14px; margin: 0;float: right;"> {{ settings.kit_label_desc1 }} {{ preco2_puro_max | minus: preco2_puro_min | times: 100.0 | divided_by: preco2_puro_max | round }}% {{ settings.kit_label_desc2 }}</p>
+              </div>
+              <div class="col-7 text-left pr-0">
+     <p class="selector-mais-vendido" style="line-height: 14px;">{{ settings.kit_label_vendido }}</p>
+       
+      <p style="margin-top:5px;line-height: 14px; margin: 0; display: inline-flex; inline-size: max-content;flex-direction: column-reverse;;"><span class="selector-total-antigo">{{ preco2_max | money }}</span><span class="selector-total-variante">{{ preco2_min | money }}</span></p>
+              </div>
+              </a></li>
+            <li id="3_unidades" style="width: 100%;"><a style="display: flex; align-items: center; justify-content: space-around;" href="#!" onclick="alterarVariante('3 unidades')" data-value="3 unidades">
+              <div class="col-1 pl-0" style="margin-left: -17px; margin-right: -51px;">
+                <div id="bola3" class="selector-bola"></div>
+              </div>
+              <div class="col-4 text-left">
+                <p class="new-selector-nome-variante">3 unidades</p>
+                <p class="selector-desconto" style=" color: var(--kit_cor_desconto_letra);line-height: 14px; margin: 0;float: right;"> {{ settings.kit_label_desc1 }} {{ preco3_puro_max | minus: preco3_puro_min | times: 100.0 | divided_by: preco3_puro_max | round }}% {{ settings.kit_label_desc2 }}</p>
+              </div>
+              <div class="col-7 text-left pr-0">
+                <p style="margin-bottom: -1px;"> </p>
+                <p style="margin-top:5px;line-height: 14px; margin: 0;display: inline-flex; inline-size: max-content;flex-direction: column-reverse;;"><span class="selector-total-antigo">{{ preco3_max | money }}</span><span class="selector-total-variante">{{ preco3_min | money }}</span></p>
+              </div>
+              </a></li>
+          </ul>
+        </div>
+      </div>
+
+      <script>
+
+        $(document).ready(function(){
+          $("#1_unidade").attr('class', 'active');
+          $("#bola1").attr('style', 'background-color: var(--kit_cor_bolinha);box-shadow: 0 0 0 2px var(--kit_cor_bolinha);');
+          $( "input[value='1 unidade']" ).click();
+        });
+
+        function alterarVariante(variante){
+          $( "input[value='"+variante+"']" ).click();
+
+          if(variante == "1 unidade"){
+
+            $("#1_unidade").attr('class', 'active');
+            $("#2_unidades").attr('class', 'inactive');
+            $("#3_unidades").attr('class', 'inactive');
+
+            $("#bola1").attr('style', 'background-color: var(--kit_cor_bolinha);box-shadow: 0 0 0 2px var(--kit_cor_bolinha)');
+            $("#bola2").attr('style', '');
+            $("#bola3").attr('style', '');
+
+          } else if(variante == "2 unidades") {
+
+            $("#1_unidade").attr('class', 'inactive');
+            $("#2_unidades").attr('class', 'active');
+            $("#3_unidades").attr('class', 'inactive');
+
+            $("#bola1").attr('style', '');
+            $("#bola2").attr('style', 'background-color: var(--kit_cor_bolinha);box-shadow: 0 0 0 2px var(--kit_cor_bolinha)');
+            $("#bola3").attr('style', '');
+
+          } else {
+
+            $("#1_unidade").attr('class', 'inactive');
+            $("#2_unidades").attr('class', 'inactive');
+            $("#3_unidades").attr('class', 'active');
+
+            $("#bola1").attr('style', '');
+            $("#bola2").attr('style', '');
+            $("#bola3").attr('style', 'background-color: var(--kit_cor_bolinha);box-shadow: 0 0 0 2px var(--kit_cor_bolinha)');
+
+          }
+        }
+      </script>
+
+      <style>
+
+        .text-left {
+       text-align: left !important;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 18px;
+      margin-right: -13px ;
+        }
+
+        ul.tt-options-swatch li a:not(.options-color) {
+          padding: 13px 5px!important;
+          background: #fff!important;
+          border: 1px solid #dcdcdc;
+          width: 100%;
+          border-radius: var(--arredondakit);
+        }
+
+        ul.tt-options-swatch li.active a:not(.options-color) {
+          border: 2px solid var(--kit_cor_selecionado);
+        }
+
+        #id {
+          background-color: #bc0406;
+        }
+
+        li { 
+          list-style-type: none;
+        }
+
+        ul.tt-options-swatch li {
+          margin: 13px 0 0;
+        }
+
+        .tt-options-swatch.options-large li a {
+          min-width: 40px;
+          min-height: 40px;
+        }
+
+        .new-selector-preco-velho{
+          text-align: left;
+          margin-top: 0px !important;
+          color: #999999;
+          font-size: 14px;
+          text-decoration: line-through;
+        }
+
+        .new-selector-preco-novo{
+          margin-top: 0px;
+          /* margin-top: -5px !important; */
+          font-size: 19px;
+          font-weight: bold;
+          color: #333333;
+          text-align: left;
+          margin-bottom: 5px;
+        }
+
+        .new-selector-preco-parcelado{
+          margin: 0px;
+          text-align: left;
+          color: #3D4246;
+          font-size: 12px;
+          margin-top: 1px;
+        }
+
+        .new-selector-por-desconto{
+          font-size: 12px;
+          margin-left: 5px;
+          color: #39b54a;
+        }
+
+        .new-selector-nome-variante{
+          display: block;
+          vertical-align: middle;
+          color: var(--text-color);
+          margin: 0px;
+          text-align: left;
+          word-break:break-word;
+          font-weight:700;
+              font-size: 15px;
+        }
+
+        .new-selector-active{
+          border: 3px solid #bc0406;
+        }
+
+        .selector-preco-antigo{
+          text-align: left;
+          color: #999999;
+          text-decoration: line-through;
+          font-size: 14px;
+          margin-right: 5px;
+        }
+        .selector-preco-variante{
+          margin-top: 0px;
+          font-size: 14px;
+          font-weight: bold;
+          color: var(--text-color);
+          text-align: left;
+          margin-bottom: 5px;
+        }
+        .selector-total-antigo{
+          text-align: left;
+          color: #999999;
+          font-size: 14px !important;
+          text-decoration: line-through;
+
+        }
+        .selector-total-variante{
+          margin-top: 0px;
+          font-size: 14px;
+          font-weight: bold;
+          color: #000;
+          text-align: left;
+          margin-bottom: 5px;
+        }
+        .selector-texto-total{
+          font-size: 13px;
+          color: #333333;
+        }
+        .selector-desconto{
+font-size: 12px;
+    text-align: center;
+    display: inline-block;
+    margin-top: 0px;
+        }
+        .selector-mais-vendido{
+    margin-top: -21px;
+    margin-bottom: 4px;
+    margin-left: -25px;
+    margin-right: -21px;
+    text-align: center;
+    font-size: 12px;
+    background: var(--kit_cor_vendido);
+    color: var(--kit_cor_vendido_fonte);
+    padding: 3px 8px;
+    border-radius: 5px;
+    display: inline-block;
+    font-weight: 600;
+        }
+        .selector-bola{
+          height: 18px;
+          width: 18px;
+          border: 3px solid #dcdcdc;
+          border-radius: var(--arredondakitbola);
+          display: inline-block;
+          /* float: left; */
+          /* float: left; */
+          /* margin-right: 10px; */
+          /* margin: auto; */
+          vertical-align: middle;
+          /* position: absolute; */
+        }
+      </style>
+
+ {%- endif -%} 
+      {% endfor %}
+
+<!-- FIM Código dos KITS VISION -->

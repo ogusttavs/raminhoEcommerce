@@ -1,0 +1,311 @@
+<!doctype html>
+
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+
+
+<!-- INICIO INSTALE SEUS PIXELS AQUI -->
+
+    <!-- FINAL INSTALE SEUS PIXELS AQUI -->
+
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="{{ settings.accent_color }}">
+
+   {%- if settings.favicon -%}
+      <link rel="shortcut icon" href="{{ settings.favicon | img_url: '96x96' }}" type="image/png">
+    {%- endif -%}
+    
+
+    
+    {%- capture seo_page_title -%}
+      {%- if request.page_type == 'search' and search.terms != blank -%}
+        {{ search.terms | split: ' AND ' | last | split: 'product_type:' | last }} - {{ shop.name }}
+      {%- else -%}
+        {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}
+      {%- endif -%}
+    {%- endcapture -%}
+
+    
+    <title>{{- seo_page_title -}}</title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+   {%- else -%}
+      <meta name="description" content="{{ shop.name }}">
+    {%- endif -%}
+
+    <link rel="canonical" href="{{ canonical_url }}">
+
+ 
+
+    {%- comment -%}Few prefech to increase performance on commonly used third-parties{%- endcomment -%}
+    <link rel="preload" as="style" href="{{ 'theme.min.css' | asset_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com">
+    <link rel="preconnect" href="https://fonts.shopifycdn.com">
+    {%- comment -%}<link rel="dns-prefetch" href="https://productreviews.shopifycdn.com">{%- endcomment -%}
+    <link rel="dns-prefetch" href="https://ajax.googleapis.com">
+    <link rel="dns-prefetch" href="https://maps.googleapis.com">
+    <link rel="dns-prefetch" href="https://maps.gstatic.com">
+
+    {% render 'social-meta-tags' %}
+    {% render 'css-variables' %}
+
+     {{ content_for_header }}
+     
+    {%include "setbg"%}
+
+    <link rel="stylesheet" href="{{ 'theme.min.css' | asset_url }}">
+ 
+  
+    {% render 'microdata-schema' %}
+   
+
+<!-- INICIO DOS BLOQUEADORES -->
+  
+    {% if settings.ali_hunter_enable %}
+      {% render 'blockalihtr' %}
+    {% endif %}
+    
+    {% if settings.botao_direito_enable %}
+        <script type="text/javascript">
+            var message="Desculpe, o clique com o botão direito foi desativado.";
+            function clickIE() {if (document.all) {(message);return false;}}
+            function clickNS(e) {if
+            (document.layers||(document.getElementById&&!document.all)) {
+                if (e.which==2||e.which==3) {(message);return false;}}}
+            if (document.layers)
+            {document.captureEvents(Event.MOUSEDOWN);document.onmousedown=clickNS;}
+            else{document.onmouseup=clickNS;document.oncontextmenu=clickIE;}
+            document.oncontextmenu=new Function("return false")
+        </script>
+    {% endif %}
+
+    {% if settings.atalho_f12_enable %}
+        <script>
+            document.onkeydown = function(e) {
+                if(event.keyCode == 123) {
+                    return false;
+                }
+                if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
+                    return false;
+                }
+                if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){
+                    return false;
+                }
+                if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){
+                    return false;
+                }
+            }
+        </script>
+    {% endif %}
+
+    {% if settings.selecionar_conteudo_enable %}
+        <script>
+            function disableselect(e) {
+                return false;
+            }
+
+            function reEnable() {
+                return true;
+            }
+
+            document.onselectstart = new Function("return false");
+
+            if (window.sidebar) {
+                document.onmousedown = disableselect;
+                document.onclick = reEnable;
+            }
+        </script>
+    {% endif %}    
+
+
+<!-- CASO TENHA MAIS BLOQUEADORES, INSIRA ABAIXO DESSA LINHA -->
+    
+
+<!-- FIM DOS BLOQUEADORES -->
+
+    
+    <script>
+      // This allows to expose several variables to the global scope, to be used in scripts
+      window.theme = {
+        pageType: {{ request.page_type | json }},
+        cartCount: {{ cart.item_count | json }},
+        moneyFormat: {{ shop.money_format | json }},
+        moneyWithCurrencyFormat: {{ shop.money_with_currency_format | json }},
+        currencyCodeEnabled: {{ settings.currency_code_enabled | json }},
+        showDiscount: {{ settings.show_discount | json }},
+        discountMode: {{ settings.discount_mode | json }},
+        searchMode: {{ settings.search_mode | json }},
+        searchUnavailableProducts: {{ settings.search_unavailable_products | json }},
+        cartType: {{ settings.cart_type | json }}
+      };
+
+      window.routes = {
+        rootUrl: {{ routes.root_url | json }},
+        rootUrlWithoutSlash: {% if routes.root_url == '/' %}''{% else %}{{ routes.root_url | json }}{% endif %},
+        cartUrl: {{ routes.cart_url | json }},
+        cartAddUrl: {{ routes.cart_add_url | json }},
+        cartChangeUrl: {{ routes.cart_change_url | json }},
+        searchUrl: {{ routes.search_url | json }},
+        productRecommendationsUrl: {{ routes.product_recommendations_url | json }}
+      };
+
+      window.languages = {
+        productRegularPrice: {{ 'product.general.regular_price' | t | json }},
+        productSalePrice: {{ 'product.general.sale_price' | t | json }},
+        collectionOnSaleLabel: {{ 'collection.product.discount_html' | t | json }},
+        productFormUnavailable: {{ 'product.form.unavailable' | t | json }},
+        productFormAddToCart: {% if product.template_suffix == 'pre-order' %}{{ 'product.form.pre_order' | t | json }}{% else %}{{ 'product.form.add_to_cart' | t | json }}{% endif %},
+        productFormSoldOut: {{ 'product.form.sold_out' | t | json }},
+        productAdded: {{ 'product.form.added' | t | json }},
+        productAddedShort: {{ 'product.form.added_short' | t | json }},
+        shippingEstimatorNoResults: {{ 'cart.shipping_estimator.no_results_title' | t | json }},
+        shippingEstimatorOneResult: {{ 'cart.shipping_estimator.one_result_title' | t | json }},
+        shippingEstimatorMultipleResults: {{ 'cart.shipping_estimator.multiple_results_title' | t | json }},
+        shippingEstimatorErrors: {{ 'cart.shipping_estimator.errors' | t | json }}
+      };
+
+      window.lazySizesConfig = {
+        loadHidden: false,
+        hFac: 0.8,
+        expFactor: 3,
+        customMedia: {
+          '--phone': '(max-width: 640px)',
+          '--tablet': '(min-width: 641px) and (max-width: 1023px)',
+          '--lap': '(min-width: 1024px)'
+        }
+      };
+
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    </script>
+
+    {%- if request.page_type == 'customers/addresses' -%}
+      <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer></script>
+      <script src="{{ 'customer_area.js' | shopify_asset_url }}" defer></script>
+    {%- endif -%}
+
+    
+<!-- NÃO ASSINCRONIZE NEM ADIE ESSE SCRIPT  -->  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous" ></script> 
+    
+    <script src="{{ 'theme.min.js' | asset_url }}" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+    <script src="{{ 'custom.js' | asset_url }}" defer></script>
+ 
+
+    
+    {%- if request.page_type != 'cart' -%}
+      <script>
+        (function () {
+          window.onpageshow = function() {
+            // We force re-freshing the cart content onpageshow, as most browsers will serve a cache copy when hitting the
+            // back button, which cause staled data
+            document.documentElement.dispatchEvent(new CustomEvent('cart:refresh', {
+              bubbles: true,
+              detail: {scrollToTop: false}
+            }));
+          };
+        })();
+      </script>
+    {%- endif -%}
+  
+	    
+<!-- AREVIEW  -->
+
+
+    <!-- AREVIEW  -->
+  
+</head>
+
+  <body class="TemaSabinoVision {% if settings.animation_image_zoom %}features--animate-zoom{% endif%} template-{{ request.page_type | handle }} {% if request.page_type contains '/' %}template-{{ request.page_type | split: '/' | last | handle }}{% endif %}" data-instant-intensity="viewport">
+
+    
+    {%- comment -%}Common SVG definitions that we are re-using in several places{%- endcomment -%}
+    <svg class="visually-hidden">
+      <linearGradient id="rating-star-gradient-half">
+        <stop offset="50%" stop-color="var(--product-review-star-color)" />
+        <stop offset="50%" stop-color="rgba(var(--text-color-rgb), .4)" stop-opacity="0.4" />
+      </linearGradient>
+    </svg>
+
+    <a href="#main" class="visually-hidden skip-to-content">{{ 'general.accessibility.skip_to_content' | t }}</a>
+    <span class="loading-bar"></span>
+
+
+  {% section 'barra-topo-vision' %} 
+    {% section 'announcement-bar' %}
+   
+
+    {%- unless request.page_type == 'cart' -%}
+      {%- comment -%}As required by Shopify rules, popup must be removed on cart page to remove distraction{%- endcomment -%}
+      {% section 'popups' %}
+    {%- endunless -%}
+
+           
+    {% section 'header' %}
+    
+    
+    <main id="main" role="main">
+      {{ content_for_layout }}
+    </main>
+
+         
+    {% render 'stickyvision' %}
+    
+    {% section 'static-text-with-icons' %}
+    {% section 'footer' %}
+
+
+
+{% if template contains "product" %}
+
+    <script>
+      const juros_12x = Number('{{ settings.juros_parcelamento | divided_by: 100 | plus: 1}} ')
+      const segunda_parcela_taxa = Number('{{ settings.taxa_segunda_parcela | divided_by: 100 | plus: 1}} ')
+      const terceira_parcela_taxa = Number('{{ settings.taxa_terceira_parcela| divided_by: 100 | plus: 1}} ')
+      const quarta_parcela_taxa = Number('{{ settings.taxa_quarta_parcela | divided_by: 100 | plus: 1}} ')
+      const quinta_parcela_taxa = Number('{{ settings.taxa_quinta_parcela | divided_by: 100 | plus: 1}} ')
+      const sexta_parcela_taxa = Number('{{ settings.taxa_sexta_parcela | divided_by: 100 | plus: 1}} ')
+      const setima_parcela_taxa = Number('{{ settings.taxa_setima_parcela | divided_by: 100 | plus: 1}} ')
+      const oitava_parcela_taxa = Number('{{ settings.taxa_oitava_parcela | divided_by: 100 | plus: 1}} ')
+      const nona_parcela_taxa = Number('{{ settings.taxa_nona_parcela | divided_by: 100 | plus: 1}} ')
+      const decima_parcela_taxa = Number('{{ settings.taxa_decima_parcela | divided_by: 100 | plus: 1}} ')
+      const decima_primeira_parcela_taxa = Number('{{ settings.taxa_decima_primeira_parcela | divided_by: 100 | plus: 1}} ')
+      const decima_segunda_parcela_taxa = Number('{{ settings.taxa_decima_segunda_parcela | divided_by: 100 | plus: 1}} ')
+      const preco_pix = Number('{{ 100 | minus: settings.desconto_pix | divided_by: 100 }} ')
+      const preco_boleto = Number('{{ 100 | minus: settings.desconto_boleto | divided_by: 100 }} ')
+    </script>
+
+          {% endif %}
+
+{% if template contains "product" or template contains "cart"  %}
+<style>
+  h2.section__title.heading.h3 {
+    border-bottom: none !important;
+    color: var(--text-color);
+}
+  .section__header-stack {
+    background: none !important;
+    box-shadow: none;
+}
+</style>
+
+  
+  {% endif %}        
+    <ul hidden>
+      <li id="a11y-new-window-message">{{ 'general.accessibility.new_window' | t }}</li>
+    </ul>
+  
+
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" defer></script>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" defer></script>
+
+          
+<!-- Não remova. Checkout Yampi. -->
+{% capture yampi_snippet_content %}{% include 'YampiSnippet' %}{% endcapture %} {% unless yampi_snippet_content contains 'Liquid error' %} {% include 'YampiSnippet' %} {% endunless %}
+<!-- Não remova. Checkout Yampi. --> </body>
+          
+</html>
+         

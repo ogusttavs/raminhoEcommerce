@@ -1,0 +1,251 @@
+<section class="section section--tight" data-section-id="{{ section.id }}" data-section-type="text-with-icons">
+  <div class="container container--flush">
+    <div class="text-with-icons {% if section.settings.stack_mobile %}text-with-icons--stacked{% endif %}">
+      {%- for block in section.blocks -%}
+        <div class="text-with-icons__item" data-block-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+          <div class="text-with-icons__icon-wrapper">
+            {%- if block.settings.custom_icon != blank -%}
+              <img src="{{ block.settings.custom_icon | img_url: '60x' }}" alt="{{ block.settings.custom_icon.alt | escape }}">
+            {%- else -%}
+              {%- render 'icon', icon: block.settings.icon, stroke_width: 1.5 -%}
+            {%- endif -%}
+          </div>
+
+          {%- if block.settings.title != blank or block.settings.content != blank -%}
+            <div class="text-with-icons__content-wrapper">
+              {%- if block.settings.title != blank -%}
+                <p class="text-with-icons__title text--strong">{{ block.settings.title | escape }}</p>
+              {%- endif -%}
+
+              {%- if block.settings.content != blank -%}
+                <div class="text-with-icons__content rte">
+                  {{ block.settings.content  }}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Texto com ícones",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "stack_mobile",
+      "label": "Empilhar em dispositivos móveis",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ícone",
+          "options": [
+            {
+              "value": "bi-add-to-cart",
+              "label": "Adicionar ao carrinho",
+              "group": "Loja"
+            },
+            {
+              "value": "bi-gift-wrap",
+              "label": "Embrulho para presente",
+              "group": "Loja"
+            },
+            {
+              "value": "bi-gift-box",
+              "label": "Caixa de presente",
+              "group": "Loja"
+            },
+            {
+              "value": "bi-heart",
+              "label": "Coração",
+              "group": "Loja"
+            },
+            {
+              "value": "bi-ecology",
+              "label": "Ecologia",
+              "group": "Loja"
+            },
+            {
+              "value": "bi-plant",
+              "label": "Planta",
+              "group": "Loja"
+            },
+            {
+              "value": "bi-shop",
+              "label": "Loja",
+              "group": "Loja"
+            },
+            {
+              "value": "bi-shop-pin",
+              "label": "Loja com pino",
+              "group": "Loja"
+            },
+            {
+              "value": "bi-alert",
+              "label": "Alerta",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-chat",
+              "label": "Chat",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-comment",
+              "label": "Comentário",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-customer-support",
+              "label": "Suporte ao cliente",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-email",
+              "label": "E-mail",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-network",
+              "label": "Rede",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-newsletter",
+              "label": "Boletim informativo",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-love",
+              "label": "Amor",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-phone",
+              "label": "Telefone",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-share",
+              "label": "Compartilhar",
+              "group": "Comunicação"
+            },
+            {
+              "value": "bi-delivery",
+              "label": "Entrega",
+              "group": "Entrega"
+            },
+            {
+              "value": "bi-fast-delivery",
+              "label": "Entrega rápida",
+              "group": "Entrega"
+            },
+            {
+              "value": "bi-returns",
+              "label": "Devoluções",
+              "group": "Entrega"
+            },
+            {
+              "value": "bi-time",
+              "label": "Tempo",
+              "group": "Entrega"
+            },
+            {
+              "value": "bi-secure-payment",
+              "label": "Pagamento seguro",
+              "group": "Segurança"
+            },
+            {
+              "value": "bi-mobile-payment",
+              "label": "Pagamento móvel",
+              "group": "Segurança"
+            },
+            {
+              "value": "bi-computer-payment",
+              "label": "Pagamento por computador",
+              "group": "Segurança"
+            },
+            {
+              "value": "bi-credit-card",
+              "label": "Cartão de crédito",
+              "group": "Segurança"
+            },
+            {
+              "value": "bi-shield",
+              "label": "Escudo",
+              "group": "Segurança"
+            }
+          ],
+          "default": "bi-customer-support"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Ícone personalizado",
+          "info": "Recomendado: 60 x 60px .png com transparência"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Seu título"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Conteúdo",
+          "default": "<p>Conteúdo breve sobre a sua loja</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Texto",
+      "name": "Texto com ícones",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "icon": "bi-delivery",
+            "title": "Entrega gratuita em todo o mundo"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "bi-returns",
+            "title": "Satisfação garantida ou seu dinheiro de volta"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "bi-customer-support",
+            "title": "Suporte de alta qualidade"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "bi-secure-payment",
+            "title": "Pagamentos seguros"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

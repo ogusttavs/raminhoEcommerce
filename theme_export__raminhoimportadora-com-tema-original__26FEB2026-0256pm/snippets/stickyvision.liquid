@@ -1,0 +1,129 @@
+{% if settings.mostrar-flutuante %}
+
+{% if template contains 'product' %}
+<div id="sticky__button-by-marcos" style="display:none">
+  <form class="form1" action="/cart/add" method="post">
+    {%- if product.has_only_default_variant -%}
+     <input name="id" value="{{ product.selected_or_first_available_variant.id }}" type="hidden">{{}}
+      <button type="submit" style="font-size:15px !important; width:97% !important; padding: 0 !important;height: 40px !important; ">{{ settings.flutuante1_texto }}</button>
+    {%- else -%}
+    <select name="id">
+      {% for variant in product.variants %}
+      <option value="{{variant.id}}"> <span style="font-size:12px !important">{{variant.title}} - {{ variant.price| money }}</span></option>
+      {% endfor %}
+    </select>
+    <button type="submit" style="font-size:16px !important; margin-left:5px !important ">{{ settings.flutuante2_texto }}</button>
+    {%- endif -%}
+    
+  </form>
+</div>
+<script>
+var d = document.getElementById("sticky__button-by-marcos")
+
+window.addEventListener('scroll', () => {
+   let positionP = window.pageYOffset
+   let x = window.matchMedia("(min-width: 700px)")
+     if (x.matches) {
+  		if(positionP > 500) {
+			d.style.display = 'none'
+        }
+    }
+  else {
+        if(positionP > 1000) {
+			d.style.display = 'block'
+            d.style.margin = 'auto'
+		} else {
+			d.style.display = 'none'
+          }
+    }
+    })
+</script>
+
+<style>
+{% comment %}
+  /* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  margin-right: -7px;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-margin: 1px;
+}
+
+form.form1 {
+    padding: 3px 0 3px 0;
+    border-radius: 10px;
+}
+
+  #sticky__button-by-marcos{
+    display: flex;
+    padding: 5px;
+    justify-content: center;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    z-index: 9999;
+    background: #fff0;
+    
+    border-top: px solid #e2e2e2;
+    text-align: center;
+    
+  }
+  #sticky__button-by-marcos select{
+  	background: #fff !important;
+    
+  }
+  
+  #sticky__button-by-marcos select,
+  #sticky__button-by-marcos input,
+  #sticky__button-by-marcos button{
+    height:38px !important;
+    font-size: 14px;
+    border-radius:10px;
+    margin:1px 0px;
+    vertical-align: middle;
+    padding: 0 10px;
+  }
+
+ #sticky__button-by-marcos button {
+    padding: 15px 5px;
+    border: 0px;
+    font-weight: 700;
+    background-color: #008a00;
+    color: #fff;
+ 
+}
+  
+ #sticky__button-by-marcos option{ 
+  font-size:10px !important;
+  }
+  
+
+  @media only screen and (max-width: 600px) {
+  #sticky__button-by-marcos button{
+    padding: 3px 3px;
+    width: 44% !important;
+    border-radius:23px;
+}
+  }
+@media only screen and (max-width: 600px) {
+  #sticky__button-by-marcos select{
+    padding: 5px 5px;
+    width: 50% !important;
+    border-radius: 23px;
+    max-width: 20ch;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+  }
+ 
+ {% endcomment %} 
+input::-webkit-inner-spin-button,input::-webkit-outer-spin-button{margin-right:-7px}input[type=number]{-moz-margin:1px}form.form1{padding:3px 0;border-radius:7px;}#sticky__button-by-marcos{display:flex;padding:5px;justify-content:center;position:fixed;bottom:0;width:100%;z-index:9999;background:#fff0;border-top:solid px;text-align:center}#sticky__button-by-marcos select{background:#fff!important}#sticky__button-by-marcos button,#sticky__button-by-marcos input,#sticky__button-by-marcos select{height:38px!important;font-size:14px;border-radius:7px;margin:1px 0;vertical-align:middle;padding:0 10px}#sticky__button-by-marcos button{padding:15px 5px;border:0;font-weight:700;background: var(--primary-button-background);border-radius: var(--borda-bot-qnt) !important;color:#fff}#sticky__button-by-marcos option{font-size:10px!important}@media only screen and (max-width:600px){#sticky__button-by-marcos button{padding:3px;width:44%!important;border-radius:15px}#sticky__button-by-marcos select{padding:5px 5px;width:50%!important;border-radius: var(--borda-bot-qnt);max-width:20ch;text-overflow:ellipsis;white-space:nowrap}}
+  
+
+</style>
+
+{% endif %}
+{% endif %}
