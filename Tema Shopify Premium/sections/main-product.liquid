@@ -1,0 +1,235 @@
+{{ 'product-page.css' | asset_url | stylesheet_tag }}
+
+<section class="product-section">
+  <div class="container">
+    <div class="product-grid">
+      
+      <!-- Lado Esquerdo: Galeria Apple Style (Stack de imagens grandes) -->
+      <div class="product-gallery">
+        {% for image in product.images %}
+          <img src="{{ image | image_url: width: 1200 }}" 
+               alt="{{ image.alt | escape | default: product.title }}"
+               loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+               width="1200" height="auto">
+        {% else %}
+          <div style="background:var(--color-background-alt); height: 600px; display:flex; align-items:center; justify-content:center; border-radius: 16px;">
+            <p>Produto sem imagem</p>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Lado Direito: Informações Fixas (Sticky) -->
+      <div class="product-form-container">
+        
+        <!-- Renderiza os blocos na ordem que o lojista definiu no painel da Shopify -->
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            
+            {%- when '@app' -%}
+              {% render block %}
+            
+            {%- when 'title' -%}
+              <h1 class="product-title font-heading" {{ block.shopify_attributes }}>{{ product.title }}</h1>
+            
+            {%- when 'price' -%}
+              <div class="product-price-wrapper" id="price-{{ section.id }}" {{ block.shopify_attributes }}>
+                <span class="product-price">{{ product.selected_or_first_available_variant.price | money }}</span>
+              </div>
+            
+            {%- when 'variant_picker' -%}
+              <!-- Seletor Exclusivo estilo iOS -->
+              {%- unless product.has_only_default_variant -%}
+                <variant-selects data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
+                  {%- for option in product.options_with_values -%}
+                    <div class="variant-selector-wrapper">
+                      <label class="variant-label font-body">{{ option.name }}</label>
+                      <div class="segmented-control">
+                        {%- for value in option.values -%}
+                          <input type="radio" 
+                                 id="Option-{{ section.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}"
+                                 class="variant-radio"
+                                 name="options[{{ option.name | escape }}]"
+                                 value="{{ value | escape }}"
+                                 form="product-form-{{ section.id }}"
+                                 {% if option.selected_value == value %}checked{% endif %}
+                          >
+                          <label class="segmented-btn" for="Option-{{ section.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}">
+                            {{ value }}
+                          </label>
+                        {%- endfor -%}
+                      </div>
+                    </div>
+                  {%- endfor -%}
+                  
+                  <!-- Tag select oculta para a Shopify processar o form nativo via JS -->
+                  <script type="application/json">
+                    {{ product.variants | json }}
+                  </script>
+                </variant-selects>
+              {%- endunless -%}
+            
+            {%- when 'buy_buttons' -%}
+              <div {{ block.shopify_attributes }}>
+                {%- form 'product', product, id: 'product-form-' | append: section.id, class: 'product-form' -%}
+                  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                  <div class="product-form__buttons">
+                    <button type="submit" 
+                            name="add" 
+                            class="product-add-to-cart font-body"
+                            {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
+                      {% if product.selected_or_first_available_variant.available %}
+                        Colocar no Empório
+                      {% else %}
+                        Esgotado nesta safra
+                      {% endif %}
+                    </button>
+                    <!-- Yampi Native Checkout Integration might hook here via JS -->
+                  </div>
+                {%- endform -%}
+              </div>
+
+            {%- when 'description' -%}
+              {%- if product.description != blank -%}
+                <div class="product-description" {{ block.shopify_attributes }}>
+                  {{ product.description }}
+                </div>
+              {%- endif -%}
+
+            {%- when 'trust_badge' -%}
+              <div class="trust-badge flex items-center" style="gap: 1rem; margin-top: 2rem; opacity: 0.8;" {{ block.shopify_attributes }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-primary);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span class="font-body" style="font-size: 0.9rem;">Entrega D+1 Cuidadosa. Frescor Garantido Raminho.</span>
+              </div>
+              
+          {%- endcase -%}
+        {%- endfor -%}
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Script para trocar o preço e ID variante quando o usuário clicar no seletor -->
+<script>
+  class VariantSelects extends HTMLElement {
+    constructor() {
+      super();
+      this.addEventListener('change', this.onVariantChange);
+    }
+
+    onVariantChange() {
+      this.updateOptions();
+      this.updateMasterId();
+      this.toggleAddButton(true, '', false);
+      this.updateURL();
+      
+      if (!this.currentVariant) {
+        this.toggleAddButton(true, '', true);
+      } else {
+        this.updateVariantInput();
+        this.renderProductInfo();
+      }
+    }
+
+    updateOptions() {
+      this.options = Array.from(this.querySelectorAll('input[type="radio"]:checked')).map((radio) => radio.value);
+    }
+
+    updateMasterId() {
+      const variantData = JSON.parse(this.querySelector('script[type="application/json"]').textContent);
+      this.currentVariant = variantData.find((variant) => {
+        return !variant.options.map((option, index) => {
+          return this.options[index] === option;
+        }).includes(false);
+      });
+    }
+
+    updateVariantInput() {
+      const productForms = document.querySelectorAll(`#product-form-${this.dataset.section}`);
+      productForms.forEach((productForm) => {
+        const input = productForm.querySelector('input[name="id"]');
+        input.value = this.currentVariant.id;
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+    }
+
+    updateURL() {
+      if (!this.currentVariant || this.dataset.updateUrl === 'false') return;
+      window.history.replaceState({ }, '', `${this.dataset.url}?variant=${this.currentVariant.id}`);
+    }
+
+    renderProductInfo() {
+      // Basic price update logic fetching the new HTML snippet (can be optimized but adequate for now)
+      fetch(`${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`)
+        .then((response) => response.text())
+        .then((responseText) => {
+          const html = new DOMParser().parseFromString(responseText, 'text/html');
+          const destination = document.getElementById(`price-${this.dataset.section}`);
+          const source = html.getElementById(`price-${this.dataset.section}`);
+          if (source && destination) destination.innerHTML = source.innerHTML;
+
+          this.toggleAddButton(!this.currentVariant.available, 'Esgotado nesta safra');
+        });
+    }
+
+    toggleAddButton(disable = true, text, modifyClass = true) {
+      const productForm = document.getElementById(`product-form-${this.dataset.section}`);
+      if (!productForm) return;
+      
+      const addButton = productForm.querySelector('[name="add"]');
+      if (!addButton) return;
+
+      if (disable) {
+        addButton.setAttribute('disabled', 'disabled');
+        if (text) addButton.textContent = text;
+      } else {
+        addButton.removeAttribute('disabled');
+        addButton.textContent = 'Colocar no Empório';
+      }
+    }
+  }
+
+  customElements.define('variant-selects', VariantSelects);
+</script>
+
+{% schema %}
+{
+  "name": "Página de Produto",
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "title",
+      "name": "Título",
+      "limit": 1
+    },
+    {
+      "type": "price",
+      "name": "Preço",
+      "limit": 1
+    },
+    {
+      "type": "variant_picker",
+      "name": "Seletor de Variantes",
+      "limit": 1
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Botão de Compra",
+      "limit": 1
+    },
+    {
+      "type": "description",
+      "name": "Descrição do Produto",
+      "limit": 1
+    },
+    {
+      "type": "trust_badge",
+      "name": "Selo de Garantia",
+      "limit": 1
+    }
+  ],
+  "settings": []
+}
+{% endschema %}
