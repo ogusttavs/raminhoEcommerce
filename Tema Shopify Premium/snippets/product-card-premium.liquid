@@ -50,7 +50,8 @@
   <!-- CTA Box: Quick Add to Cart -->
   <!-- Preparado para receber a lógica de Grama/Unidade na Sprint 3 -->
   <div class="product-actions">
-    {% form 'product', product, id: "quick-add-form-" | append: product.id %}
+    {% assign form_id = 'quick-add-form-' | append: product.id %}
+    {% form 'product', product, id: form_id, class: 'quick-add-form' %}
       <input type="hidden" name="id" value="{{ product.variants.first.id }}">
       <button type="submit" class="btn-quick-add text-dark">
         Adicionar

@@ -38,6 +38,10 @@
 - **[26/02/2026 - 19:30]** Adicionadas quebras de credibilidade: `sections/delivery-guarantee.liquid` (Motoboys e Seguro em Dark Mode); e `sections/newsletter.liquid` (Footer Capture).
 - **[26/02/2026 - 19:40]** Para finalizar a Sprint 2 em 100%, criado o Bloco UI "O Culto ao Frescor" (`sections/subscription-teaser.liquid`), que faz o teaser visual do Clube de Assinaturas exigido na Homepage.
 - **[26/02/2026 - 19:40]** Sprint 2 marcada como 100% "Concluída" em `task.md` e `sprint_todolist.md`. (Commit Final: `feat: finalize sprint 2 with subscription UI teaser`).
+- **[26/02/2026 - 20:00]** QA & Refinamento: Resolvidos alertas de schema CLI no JSON e tamanho de labels.
+- **[26/02/2026 - 20:05]** Ajuste de Copy/Tom de Voz: Removida linguagem agressiva "Culto" das seções de Assinatura e Newsletter. Reescrita sessão de Logística para refletir as entregas de Motoboy/Carro em D+1 exatamente como a operação exige.
+- **[26/02/2026 - 20:10]** Correção Urgente B1: Ajustado parse de Liquid no `product-card-premium.liquid` que acusava erro "new_comment" ao usar form append direto na tag nativa; substituído por variável `assign form_id`.
+- **[26/02/2026 - 20:10]** 🚀 **SPRINT 2 ENCERRADA BEM SUCEDIDA E APROVADA PELO DIRETOR.**
 
 ---
 
