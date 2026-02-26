@@ -91,6 +91,7 @@
 | 3.10 | Barra progresso frete grátis | ⬜ | "Faltam R$X para frete grátis" |
 | 3.11 | Bloqueio carrinho < R$129,90 com mensagem premium | ⬜ | Mensagem elegante, não agressiva |
 | 3.12 | Upsell discreto no carrinho | ⬜ | "Aproveite e leve também" |
+| 3.13 | Popup Validador de CEP (Gated Checkout) | ⬜ | Exigir CEP antes do botão Finalizar para barrar áreas não cobertas |
 
 **Resultado:** Página de produto e carrinho que convertem com elegância total.
 
@@ -146,10 +147,10 @@
 |---|---|---|---|
 | Sprint 1 — Setup & Design System | 7 | 5 | 71% |
 | Sprint 2 — Homepage Premium | 10 | 10 | 100% |
-| Sprint 3 — Produto & Carrinho | 12 | 0 | 0% |
+| Sprint 3 — Produto & Carrinho | 13 | 0 | 0% |
 | Sprint 4 — Conteúdo & Produtos | 7 | 0 | 0% |
 | Sprint 5 — Polish & QA | 9 | 0 | 0% |
-| **Total** | **45** | **15** | **33%** |
+| **Total** | **46** | **15** | **32%** |
 
 ---
 
