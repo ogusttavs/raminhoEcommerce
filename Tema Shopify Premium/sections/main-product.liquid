@@ -78,7 +78,7 @@
                             class="product-add-to-cart font-body"
                             {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
                       {% if product.selected_or_first_available_variant.available %}
-                        Colocar no Empório
+                        Pôr no Carrinho
                       {% else %}
                         Esgotado nesta safra
                       {% endif %}
@@ -184,7 +184,7 @@
         if (text) addButton.textContent = text;
       } else {
         addButton.removeAttribute('disabled');
-        addButton.textContent = 'Colocar no Empório';
+        addButton.textContent = 'Pôr no Carrinho';
       }
     }
   }
