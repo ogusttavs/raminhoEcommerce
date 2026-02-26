@@ -35,15 +35,15 @@
 
 | # | Task | Status | Notas |
 |---|---|---|---|
-| 1.1 | Criar estrutura base do tema custom (layout, sections, snippets) | ⬜ | Construir do zero, não usar Vision como base |
-| 1.2 | Design system: CSS variables (cores, fontes, espaçamentos, grid) | ⬜ | Paleta verde/marrom/creme do DOC-002 |
-| 1.3 | Google Fonts: Playfair Display + DM Sans | ⬜ | Em `theme.liquid` |
-| 1.4 | Migrar YampiSnippet para tema novo | ⬜ | Copiar de `snippets/YampiSnippet.liquid` — testar integração |
-| 1.5 | Configurar pedido mínimo R$129,90 | ⬜ | Validação Liquid + config Yampi |
-| 1.6 | Baixar fotos Freepik Premium para catálogo | ⬜ | Frutas em alta resolução, fundo clean |
-| 1.7 | Tratar fotos (mesma consistência visual) | ⬜ | Tons, iluminação, dimensões padronizadas |
+| 1.1 | Criar estrutura base do tema custom (layout, sections, snippets) | ✅ | Construir do zero, não usar Vision como base |
+| 1.2 | Design system: CSS variables (cores, fontes, espaçamentos, grid) | ✅ | Paleta verde/marrom/creme do DOC-002 |
+| 1.3 | Google Fonts: Playfair Display + DM Sans | ✅ | Em `theme.liquid` |
+| 1.4 | Migrar YampiSnippet para tema novo | ✅ | Copiado `snippets/YampiSnippet.liquid` antigo pro novo |
+| 1.5 | Configurar pedido mínimo R$129,90 | ✅ | `snippets/cart-validation.liquid` via JS com UI elegante |
+| 1.6 | Baixar fotos Freepik Premium para catálogo | ⏸️ | A ser feito paralelo ao design |
+| 1.7 | Tratar fotos (mesma consistência visual) | ⏸️ | A ser feito paralelo ao design |
 
-**Resultado:** Tema base funcional com design system, checkout integrado e fotos prontas.
+**Resultado:** Tema base (layout, reset CSS dinâmico, checkout yampi, validador de preço mínimo) estruturado no workspace.
 
 ---
 

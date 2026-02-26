@@ -1,0 +1,31 @@
+<!-- Minimum Order Validation Logic (R$ 129,90) -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // 12990 centavos = R$ 129,90
+    const MINIMUM_ORDER_CENTS = 12990;
+    
+    // Formatar moeda (ex: R$ 129,90)
+    const formatMoney = (cents) => {
+      return 'R$ ' + (cents / 100).toFixed(2).replace('.', ',');
+    };
+
+    const cartTotalCents = {{ cart.total_price | default: 0 }};
+    const diffCents = MINIMUM_ORDER_CENTS - cartTotalCents;
+
+    // Busca botões de finalização de compra na página
+    const checkoutButtons = document.querySelectorAll('button[name="checkout"], input[name="checkout"], a[href="/checkout"], .btn-checkout-yampi');
+    
+    if (checkoutButtons.length > 0 && cartTotalCents > 0 && cartTotalCents < MINIMUM_ORDER_CENTS) {
+      checkoutButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          alert(`Qualidade premium até na porta da sua casa! 🍏\n\nNosso pedido mínimo é de ${formatMoney(MINIMUM_ORDER_CENTS)} para cobrir o envio com motoboys próprios, seguro contra danos físicos e garantia de reposição gratuita em caso de frutas fora do padrão.\n\nFalta apenas ${formatMoney(diffCents)} para você finalizar o seu pedido. Aproveite nossas novidades!`);
+        });
+        
+        // Estilização visual (opcional) indicando bloqueio
+        btn.style.opacity = '0.5';
+        btn.style.cursor = 'not-allowed';
+      });
+    }
+  });
+</script>

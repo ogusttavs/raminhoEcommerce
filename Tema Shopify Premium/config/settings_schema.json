@@ -1,0 +1,87 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Raminho Premium Theme",
+    "theme_author": "Antigravity OS",
+    "theme_version": "1.0.0",
+    "theme_support_url": "https://agencylink.com/"
+  },
+  {
+    "name": "Cores Rebranding (Premium)",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Aviso: Mudar aqui altera todo o site via CSS Variables"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Cor Primária (Ex: Verde Esmeralda ou Azul Antigo)",
+        "default": "#0D7C4A"
+      },
+      {
+        "type": "color",
+        "id": "color_primary_dark",
+        "label": "Cor Escura (Ex: Verde Floresta)",
+        "default": "#073D24"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "label": "Cor Secundária (Ex: Marrom Terra ou Vermelho Antigo)",
+        "default": "#4A3728"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Cor de Acento (Ex: Laranja ou Amarelo Antigo)",
+        "default": "#E87A2D"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Fundo da Página",
+        "default": "#F7F3EB"
+      },
+      {
+        "type": "color",
+        "id": "color_background_alt",
+        "label": "Fundo Secundário (Ex: Branco)",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_text_main",
+        "label": "Texto Principal",
+        "default": "#1a1a1a"
+      },
+      {
+        "type": "color",
+        "id": "color_text_light",
+        "label": "Texto Secundário (Em fundos escuros)",
+        "default": "#F7F3EB"
+      }
+    ]
+  },
+  {
+    "name": "Tipografia Premium",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Google Fonts Customizadas"
+      },
+      {
+        "type": "text",
+        "id": "font_heading",
+        "label": "Fonte dos Títulos",
+        "default": "'Playfair Display', serif"
+      },
+      {
+        "type": "text",
+        "id": "font_body",
+        "label": "Fonte do Corpo de Texto",
+        "default": "'DM Sans', sans-serif"
+      }
+    ]
+  }
+]

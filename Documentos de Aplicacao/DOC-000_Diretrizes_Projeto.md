@@ -6,7 +6,10 @@
 | **Versão** | 1.0 |
 | **Data de criação** | 26/02/2026 |
 
-Este é o **Documento Mestre** que rege 100% da forma como a engenharia, design e processos de negócio deverão ser conduzidos no e-commerce da Raminho Importadora. Todo Agente de IA ou Desenvolvedor Humano que entrar no projeto **deve** seguir estas regras estritamente.
+Este é o **Documento Mestre** que rege 100% da forma como a engenharia, design e processos de negócio deverão ser conduzidos no e-commerce da Raminho Importadora. Todo Agente de IA ou Desenvolvedor Humano que entrar no projeto **deve** ler este documento PRIMEIRO e seguir estas regras estritamente.
+
+> 🔴 **REGRA DE OURO PARA AGENTES AVULSOS:**
+> Se você é um novo Agente de IA assumindo este projeto agora, sua primeira ação obrigatória é abrir o arquivo `Documentos de Aplicacao/LOG-001_Registro_de_Acoes.md` e o `Documentos de Aplicacao/sprint_todolist.md`. Lá você entenderá exatamente onde o projeto parou e qual é a sua próxima micro-tarefa. Não tome ações destrutivas sem ler o log.
 
 ---
 
@@ -36,11 +39,13 @@ Para manter os Action Logs organizados, todo *commit* (e toda mensagem de atuali
 - `style:` Formatação de visual/UI, sem mudar lógica.
 - `chore:` Tarefas de manutenção (ex: atualizar versão do bundle).
 
-### 2.3 Registro Obrigatório de Ações (Logging)
-Toda alteração de arquitetura, variável de CSS criada, ou nova funcionalidade inserida deve ser imediatamente documentada no documento **`LOG-001_Registro_de_Acoes.md`**. Ao iniciar uma requisição do Cliente, o Agente sempre atua:
+### 2.3 Registro Obrigatório de Ações (Logging) Contínuo
+Toda alteração de arquitetura, variável de CSS criada, ou nova funcionalidade inserida deve ser imediatamente documentada no documento **`LOG-001_Registro_de_Acoes.md`** e no respectivo **`sprint_todolist.md`**. 
+
+> ⚠️ **MANDATÓRIO:** O registro não é feito "no final do dia". Ele é feito **a cada ação concluída**. Ao iniciar uma requisição do Cliente, o Agente sempre atua no ciclo:
 1. Analisa e constrói a solução.
 2. Escreve a solução/código.
-3. **LOGA no `LOG-001`**.
+3. **ATUALIZA simultaneamente o `LOG-001` (com a ação) e o `sprint_todolist` (marcando checklist).**
 4. Só então informa sucesso ao cliente.
 
 ### 2.4 Testes de QA e Mobile-First

@@ -1,0 +1,39 @@
+{% style %}
+  :root {
+    /* Cores Injetadas pelo Shopify Admin via settings_schema.json */
+    --color-primary: {{ settings.color_primary }};
+    --color-primary-dark: {{ settings.color_primary_dark }};
+    --color-secondary: {{ settings.color_secondary }};
+    --color-accent: {{ settings.color_accent }};
+    
+    --color-background: {{ settings.color_background }};
+    --color-background-alt: {{ settings.color_background_alt }};
+    
+    --color-text-main: {{ settings.color_text_main }};
+    --color-text-light: {{ settings.color_text_light }};
+    
+    --font-heading: {{ settings.font_heading }};
+    --font-body: {{ settings.font_body }};
+    
+    /* Variáveis Globais de Espaçamento e Borda */
+    --border-radius-base: 8px;
+    --border-radius-pill: 50px;
+    
+    --transition-fast: 0.2s ease;
+    --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text-main);
+    font-family: var(--font-body);
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: var(--font-heading);
+    margin: 0;
+  }
+{% endstyle %}
