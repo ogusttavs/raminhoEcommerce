@@ -3,6 +3,9 @@
   Requires: `product` object
 {% endcomment %}
 
+<!-- Require CSS and JS for Segmented Selectors inside cards -->
+<script src="{{ 'product-page.css' | asset_url }}" async></script>
+
 <div class="product-card">
   <a href="{{ product.url }}" class="product-card-link">
     <!-- Image Wrapper -->
@@ -36,25 +39,62 @@
 
     <!-- Info Wrapper -->
     <div class="product-info flex flex-col items-center">
-      <h3 class="product-title font-heading text-dark">{{ product.title }}</h3>
+      <h3 class="product-title font-heading text-dark" style="font-size: 1.2rem; margin-bottom: 0.2rem;">{{ product.title }}</h3>
       
-      <div class="product-pricing">
+      <div class="product-pricing" id="price-card-{{ product.id }}">
         {% if product.compare_at_price > product.price %}
-          <span class="price-compare text-secondary"><s>{{ product.compare_at_price | money }}</s></span>
+          <span class="price-compare text-secondary" style="font-size:0.9rem;"><s>{{ product.compare_at_price | money }}</s></span>
         {% endif %}
-        <span class="price-current text-primary">{{ product.price | money }}</span>
+        <span class="price-current text-primary" style="font-weight: 600;">{{ product.price | money }}</span>
       </div>
     </div>
   </a>
 
-  <!-- CTA Box: Quick Add to Cart -->
-  <!-- Preparado para receber a lógica de Grama/Unidade na Sprint 3 -->
-  <div class="product-actions">
+  <!-- CTA Box: Quick Add to Cart with Segmented Control -->
+  <div class="product-actions" style="margin-top: 1rem;">
     {% assign form_id = 'quick-add-form-' | append: product.id %}
+    
+    {%- unless product.has_only_default_variant -%}
+      <!-- Variant Picker in Card -->
+      <variant-selects data-section="card-{{ product.id }}" data-url="{{ product.url }}" style="display: block; width: 100%; margin-bottom: 0.5rem;">
+        {%- for option in product.options_with_values -%}
+          <div class="variant-selector-wrapper" style="margin-bottom: 0.5rem;">
+            <div class="segmented-control" style="padding: 2px;">
+              {%- for value in option.values -%}
+                <input type="radio" 
+                       id="Option-card-{{ product.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}"
+                       class="variant-radio"
+                       name="options[{{ option.name | escape }}]"
+                       value="{{ value | escape }}"
+                       form="{{ form_id }}"
+                       {% if option.selected_value == value %}checked{% endif %}
+                >
+                <label class="segmented-btn font-body" style="padding: 0.4rem; font-size: 0.85rem;" for="Option-card-{{ product.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}">
+                  {{ value }}
+                </label>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endfor -%}
+        
+        <script type="application/json">
+          {{ product.variants | json }}
+        </script>
+      </variant-selects>
+    {%- endunless -%}
+
     {% form 'product', product, id: form_id, class: 'quick-add-form' %}
-      <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-      <button type="submit" class="btn-quick-add text-dark">
-        Adicionar
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+      <button type="submit" 
+              name="add"
+              class="btn-quick-add text-dark font-body" 
+              style="width: 100%; padding: 0.8rem; border-radius: 8px; font-weight: 500; cursor: pointer; transition: all 0.2s;"
+              {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
+        {% if product.selected_or_first_available_variant.available %}
+          Pôr no Empório
+        {% else %}
+          Esgotado
+        {% endif %}
       </button>
     {% endform %}
   </div>
