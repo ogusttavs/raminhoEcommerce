@@ -5,6 +5,8 @@
 
 <!-- Require CSS for Segmented Selectors inside cards -->
 {{ 'product-page.css' | asset_url | stylesheet_tag }}
+<!-- Require JS for Smart Stepper and Ajax Cart -->
+<script src="{{ 'smart-add-to-cart.js' | asset_url }}" defer="defer"></script>
 
 <div class="product-card">
   <a href="{{ product.url }}" class="product-card-link">
@@ -83,19 +85,48 @@
       </variant-selects>
     {%- endunless -%}
 
-    {% form 'product', product, id: form_id, class: 'quick-add-form' %}
-      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-      <button type="submit" 
-              name="add"
-              class="btn-quick-add text-dark font-body" 
-              style="width: 100%; padding: 0.8rem; border-radius: 8px; font-weight: 500; cursor: pointer; transition: all 0.2s;"
-              {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
-        {% if product.selected_or_first_available_variant.available %}
-          Pôr no Carrinho
-        {% else %}
-          Esgotado
-        {% endif %}
-      </button>
-    {% endform %}
+    <smart-add-to-cart data-section="card-{{ product.id }}">
+      {% form 'product', product, id: form_id, class: 'quick-add-form' %}
+        <input type="hidden" name="id" class="variant-id-input" value="{{ product.selected_or_first_available_variant.id }}">
+        
+        <!-- Smart Quantity Stepper Minimal Style for Cards -->
+        <div class="product-qty-stepper flex items-center justify-between" style="background: rgba(0,0,0,0.03); padding: 0.3rem; border-radius: 8px; margin-bottom: 0.5rem; display: flex;">
+          <button type="button" class="stepper-btn stepper-minus text-dark" style="width: 30px; height: 30px; border:none; background:transparent; font-size:1.2rem; cursor:pointer;" aria-label="Diminuir">
+            &minus;
+          </button>
+          
+          <input type="number" name="quantity" class="stepper-input hidden" value="1" min="1" style="display:none;">
+          
+          <div class="stepper-display text-center" style="flex:1;">
+            <span class="stepper-text font-body text-dark" style="font-weight: 500; font-size: 0.9rem;">
+              1 un
+            </span>
+          </div>
+
+          <button type="button" class="stepper-btn stepper-plus text-dark" style="width: 30px; height: 30px; border:none; background:transparent; font-size:1.2rem; cursor:pointer;" aria-label="Aumentar">
+            &plus;
+          </button>
+        </div>
+
+        <button type="submit" 
+                name="add"
+                class="btn-quick-add text-dark font-body" 
+                style="width: 100%; padding: 0.8rem; border-radius: 8px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: flex; justify-content: space-between; align-items: center;"
+                {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
+          <span class="btn-text">
+            {% if product.selected_or_first_available_variant.available %}
+              Pôr no Carrinho
+            {% else %}
+              Esgotado
+            {% endif %}
+          </span>
+          <span class="btn-price" data-base-price="{{ product.selected_or_first_available_variant.price }}">
+            {% if product.selected_or_first_available_variant.available %}
+              {{ product.selected_or_first_available_variant.price | money }}
+            {% endif %}
+          </span>
+        </button>
+      {% endform %}
+    </smart-add-to-cart>
   </div>
 </div>
