@@ -79,10 +79,10 @@
 
 | # | Task | Status | Notas |
 |---|---|---|---|
-| 3.1 | Galeria de fotos estilo Apple (grande, zoom suave) | ⬜ | Destaque visual máximo |
-| 3.2 | Seletor Grama/Unidade (segmented control iOS-style) | ⬜ | Via variants (Shopify Basic suporta) — DOC-010 |
+| 3.1 | Galeria de fotos estilo Apple (grande, zoom suave) | ✅ | Imagens responsivas empilhadas em split-screen |
+| 3.2 | Seletor Grama/Unidade (segmented control iOS-style) | ✅ | Vanilla JS `variant-selects` implementado com visual iOS |
 | 3.3 | Botão de compra sticky no mobile | ⬜ | Fixo ao scrollar |
-| 3.4 | Selo de garantia sutil (design, não gritante) | ⬜ | Confiança pelo design |
+| 3.4 | Selo de garantia sutil (design, não gritante) | ✅ | Injetado como bloco OS 2.0 |
 | 3.5 | Accordion clean para descrição | ⬜ | Expandível |
 | 3.6 | Seção de Reviews/Avaliações (design próprio) | ⬜ | Integrado ao tema |
 | 3.7 | Cross-sell "Combina com..." | ⬜ | Recomendações visuais elegantes |

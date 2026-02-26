@@ -43,6 +43,11 @@
 - **[26/02/2026 - 20:10]** Correção Urgente B1: Ajustado parse de Liquid no `product-card-premium.liquid` que acusava erro "new_comment" ao usar form append direto na tag nativa; substituído por variável `assign form_id`.
 - **[26/02/2026 - 20:10]** 🚀 **SPRINT 2 ENCERRADA BEM SUCEDIDA E APROVADA PELO DIRETOR.**
 
+### [Sprint 3] — Produto & Carrinho
+- **[26/02/2026 - 20:20]** Bootstrapp da Sprint 3: Criados os 3 pilares da nova Página de Produto -> `templates/product.json`, `sections/main-product.liquid`, e `assets/product-page.css`. 
+- **[26/02/2026 - 20:20]** Arquitetado o Seletor de Variantes (Grama vs Unidade) usando um Web Component nativo `<variant-selects>` em Vanilla JS, desenhado no layout _Segmented Control_ da Apple para fluidez máxima, alterando o preço sem reloads da página.
+- **[26/02/2026 - 20:20]** Blocos OS 2.0 liberados na página (`price`, `title`, `description`, `buy_buttons`, `trust_badge`).
+
 ---
 
 *(Os próximos logs deverão ser registrados imediatamente após cada commit/ação na Sprint).*
