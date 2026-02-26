@@ -70,22 +70,52 @@
             
             {%- when 'buy_buttons' -%}
               <div {{ block.shopify_attributes }}>
-                {%- form 'product', product, id: 'product-form-' | append: section.id, class: 'product-form' -%}
-                  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-                  <div class="product-form__buttons">
-                    <button type="submit" 
-                            name="add" 
-                            class="product-add-to-cart font-body"
-                            {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
-                      {% if product.selected_or_first_available_variant.available %}
-                        Pôr no Carrinho
-                      {% else %}
-                        Esgotado nesta safra
-                      {% endif %}
-                    </button>
-                    <!-- Yampi Native Checkout Integration might hook here via JS -->
-                  </div>
-                {%- endform -%}
+                <smart-add-to-cart data-section="{{ section.id }}">
+                  {%- form 'product', product, id: 'product-form-' | append: section.id, class: 'product-form' -%}
+                    <input type="hidden" name="id" class="variant-id-input" value="{{ product.selected_or_first_available_variant.id }}">
+                    
+                    <!-- Smart Quantity Stepper iOS Style -->
+                    <div class="product-qty-stepper flex items-center justify-between" style="background: var(--color-background-alt); padding: 0.5rem; border-radius: 12px; margin-bottom: 1rem; border: 1px solid rgba(0,0,0,0.05);">
+                      <button type="button" class="stepper-btn stepper-minus text-dark" style="width: 40px; height: 40px; border:none; background:transparent; font-size:1.5rem; cursor:pointer;" aria-label="Diminuir">
+                        &minus;
+                      </button>
+                      
+                      <input type="number" name="quantity" class="stepper-input hidden" value="1" min="1" style="display:none;">
+                      
+                      <div class="stepper-display text-center" style="flex:1;">
+                        <span class="stepper-text font-body text-dark" style="font-weight: 600; font-size: 1.1rem;">
+                          <!-- JS Init -->
+                          1 un
+                        </span>
+                      </div>
+
+                      <button type="button" class="stepper-btn stepper-plus text-dark" style="width: 40px; height: 40px; border:none; background:transparent; font-size:1.5rem; cursor:pointer;" aria-label="Aumentar">
+                        &plus;
+                      </button>
+                    </div>
+
+                    <div class="product-form__buttons">
+                      <button type="submit" 
+                              name="add" 
+                              class="product-add-to-cart font-body"
+                              style="display: flex; justify-content: space-between; align-items: center;"
+                              {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
+                        <span class="btn-text" style="font-weight: 700;">
+                          {% if product.selected_or_first_available_variant.available %}
+                            Pôr no Carrinho
+                          {% else %}
+                            Esgotado
+                          {% endif %}
+                        </span>
+                        <span class="btn-price" data-base-price="{{ product.selected_or_first_available_variant.price }}">
+                          {% if product.selected_or_first_available_variant.available %}
+                            {{ product.selected_or_first_available_variant.price | money }}
+                          {% endif %}
+                        </span>
+                      </button>
+                    </div>
+                  {%- endform -%}
+                </smart-add-to-cart>
               </div>
 
             {%- when 'description' -%}
@@ -176,20 +206,160 @@
       const productForm = document.getElementById(`product-form-${this.dataset.section}`);
       if (!productForm) return;
       
-      const addButton = productForm.querySelector('[name="add"]');
-      if (!addButton) return;
+      const btnText = productForm.querySelector('.btn-text');
+      const btnPrice = productForm.querySelector('.btn-price');
+      if (!addButton || !btnText) return;
 
       if (disable) {
         addButton.setAttribute('disabled', 'disabled');
-        if (text) addButton.textContent = text;
+        if (text) btnText.textContent = text;
+        if (btnPrice) btnPrice.style.display = 'none';
       } else {
         addButton.removeAttribute('disabled');
-        addButton.textContent = 'Pôr no Carrinho';
+        btnText.textContent = 'Pôr no Carrinho';
+        if (btnPrice) btnPrice.style.display = 'block';
       }
     }
   }
 
   customElements.define('variant-selects', VariantSelects);
+
+  // -----------------------------------------
+  // SMART ADD TO CART + QUANTITY PARSER LOGIC
+  // -----------------------------------------
+  class SmartAddToCart extends HTMLElement {
+    constructor() {
+      super();
+      this.form = this.querySelector('form');
+      this.qtyInput = this.querySelector('.stepper-input');
+      this.btnMinus = this.querySelector('.stepper-minus');
+      this.btnPlus = this.querySelector('.stepper-plus');
+      this.stepperText = this.querySelector('.stepper-text');
+      this.submitBtn = this.querySelector('[name="add"]');
+      this.btnText = this.querySelector('.btn-text');
+      this.btnPrice = this.querySelector('.btn-price');
+      this.variantInput = this.querySelector('.variant-id-input');
+      
+      this.variantsScript = document.querySelector('variant-selects script[type="application/json"]');
+      this.variantsJson = this.variantsScript ? JSON.parse(this.variantsScript.textContent) : null;
+      
+      this.bindEvents();
+      if (this.variantsJson) this.updateUI(); 
+    }
+
+    bindEvents() {
+      if(this.btnMinus) this.btnMinus.addEventListener('click', () => this.changeQty(-1));
+      if(this.btnPlus) this.btnPlus.addEventListener('click', () => this.changeQty(1));
+      
+      // Ouça o variante globalmente
+      if(this.variantInput) {
+        this.variantInput.addEventListener('change', () => {
+          this.qtyInput.value = 1; // Reseta qty pra 1 na troca de peso/unid
+          this.updateUI();
+        });
+      }
+
+      this.form.addEventListener('submit', this.handleAddToCart.bind(this));
+    }
+
+    getCurrentVariant() {
+      if(!this.variantsJson) return null;
+      const id = parseInt(this.variantInput.value, 10);
+      return this.variantsJson.find(v => v.id === id);
+    }
+
+    changeQty(step) {
+      let currentVal = parseInt(this.qtyInput.value, 10);
+      let newVal = currentVal + step;
+      if (newVal < 1) newVal = 1;
+      this.qtyInput.value = newVal;
+      this.updateUI();
+    }
+
+    updateUI() {
+      const variant = this.getCurrentVariant();
+      if (!variant) return;
+
+      const qty = parseInt(this.qtyInput.value, 10);
+      
+      // Inteligência de Formatação de Gramas/KG vs Unidades
+      this.stepperText.textContent = this.getSmartQuantityText(variant.title, qty);
+      
+      // Recalculo do Preço no Botão
+      if (variant.available) {
+        const totalCents = variant.price * qty;
+        this.btnPrice.textContent = this.formatCentsToBRL(totalCents);
+      }
+    }
+
+    getSmartQuantityText(variantTitle, quantity) {
+      let title = (variantTitle || "").toLowerCase();
+      
+      let gMatch = title.match(/(\d+)\s*g/);
+      if (gMatch && !title.includes('kg')) {
+        let baseGrams = parseInt(gMatch[1], 10);
+        let totalGrams = baseGrams * quantity;
+        if (totalGrams >= 1000) {
+          let kg = totalGrams / 1000;
+          return kg.toString().replace('.', ',') + 'kg';
+        }
+        return totalGrams + 'g';
+      }
+      
+      let kgMatch = title.match(/([\d.,]+)\s*kg/);
+      if (kgMatch) {
+        let baseKg = parseFloat(kgMatch[1].replace(',', '.'));
+        let totalKg = baseKg * quantity;
+        return totalKg.toString().replace('.', ',') + 'kg';
+      }
+      
+      return quantity + ' un';
+    }
+
+    formatCentsToBRL(cents) {
+      return (cents / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    handleAddToCart(e) {
+      e.preventDefault();
+      
+      const originalText = this.btnText.textContent;
+      const originalBg = this.submitBtn.style.backgroundColor;
+      this.submitBtn.disabled = true;
+      this.btnText.textContent = "Separando na Safra...";
+      this.btnPrice.style.display = 'none';
+      
+      const formData = new FormData(this.form);
+      
+      fetch(window.Shopify.routes.root + 'cart/add.js', {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        this.btnText.textContent = "✓ No Empório!";
+        this.submitBtn.style.backgroundColor = "var(--color-primary-dark)";
+        
+        setTimeout(() => {
+          this.submitBtn.disabled = false;
+          this.btnText.textContent = originalText;
+          this.submitBtn.style.backgroundColor = originalBg;
+          this.btnPrice.style.display = 'block';
+        }, 2000);
+      })
+      .catch((error) => {
+        this.btnText.textContent = "Erro!";
+        setTimeout(() => {
+          this.submitBtn.disabled = false;
+          this.btnText.textContent = originalText;
+          this.btnPrice.style.display = 'block';
+        }, 2000);
+      });
+    }
+  }
+
+  customElements.define('smart-add-to-cart', SmartAddToCart);
 </script>
 
 {% schema %}
