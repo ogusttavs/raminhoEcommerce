@@ -28,10 +28,10 @@
 ---
 
 ## Sprint 1 — "Setup & Design System"
-**Status:** ⬜ Não iniciada  
+**Status:** ✅ Concluída  
 **Estimativa:** 1.5 semanas  
-**Início:** *A definir*  
-**Término:** *A definir*
+**Início:** 26/02/2026  
+**Término:** 26/02/2026
 
 | # | Task | Status | Notas |
 |---|---|---|---|
@@ -48,9 +48,9 @@
 ---
 
 ## Sprint 2 — "Homepage Premium"
-**Status:** ⬜ Não iniciada  
+**Status:** 🔄 Em andamento  
 **Estimativa:** 1.5 semanas  
-**Início:** *A definir*  
+**Início:** 26/02/2026  
 **Término:** *A definir*
 
 | # | Task | Status | Notas |
