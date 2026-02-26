@@ -1,0 +1,109 @@
+<style>
+  .subscription-teaser {
+    background-color: var(--color-background-alt); /* Cor de fundo creme alternativo */
+    padding: 6rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sub-teaser-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .sub-teaser-grid {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  .sub-teaser-content {
+    flex: 1;
+    max-width: 500px;
+    z-index: 2;
+  }
+
+  .sub-teaser-title {
+    color: var(--color-primary-dark);
+    font-size: 2.5rem;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .sub-teaser-text {
+    color: var(--color-secondary);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .sub-teaser-image-wrapper {
+    flex: 1;
+    position: relative;
+    width: 100%;
+    min-height: 400px;
+    border-radius: var(--border-radius-base);
+    overflow: hidden;
+  }
+
+  .sub-teaser-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+</style>
+
+<section class="subscription-teaser">
+  <div class="container">
+    <div class="sub-teaser-grid">
+      
+      <!-- Lado Esquerdo: Texto Premium da Assinatura -->
+      <div class="sub-teaser-content">
+        <h2 class="sub-teaser-title font-heading">O Culto ao Frescor.<br>Toda Semana na Sua Porta.</h2>
+        <p class="sub-teaser-text">
+          Conheça o <strong>Clube Raminho</strong>. Nossa curadoria exclusiva separa as melhores safras da estação antes de todos e envia na frequência que você escolher, com frete cortesia.
+        </p>
+        <a href="/pages/clube" class="btn btn--primary">Descubra o Clube</a>
+      </div>
+
+      <!-- Lado Direito: Imagem -->
+      <div class="sub-teaser-image-wrapper">
+        {% if section.settings.image != blank %}
+          <img src="{{ section.settings.image | image_url: width: 800 }}" 
+               alt="Caixa Clube Raminho" 
+               class="sub-teaser-img"
+               loading="lazy">
+        {% else %}
+          <div style="background-color: var(--color-primary-dark); width: 100%; height: 100%; position: absolute; display: flex; align-items: center; justify-content: center; color: var(--color-background);">
+            <span class="font-heading" style="font-size: 1.5rem; opacity: 0.5;">Imagem da Caixa Premium</span>
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Teaser: Clube Assinatura",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Foto Lifestyle da Caixa do Clube"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Teaser do Clube Premium"
+    }
+  ]
+}
+{% endschema %}

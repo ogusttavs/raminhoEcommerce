@@ -63,7 +63,7 @@
 | 2.5 | Grid de categorias com hover animado | ✅ | Carrossel horizontal Netflix-style (`featured-collection-netflix`) implementado em CSS puro. |
 | 2.6 | Seção "Nossa Entrega" dark (motoboys + seguro + garantia) | ✅ | Construído em React/Liquid como `delivery-guarantee.liquid`. |
 | 2.7 | Comunicar pedido mínimo R$129,90 de forma elegante | ✅ | Presente do CSS Master até a listagem e no footer. |
-| 2.8 | Criar bloco "Clube de Assinaturas" premium | ⏸️ | Depende da arquitetura de backend na Sprint 4. |
+| 2.8 | Criar bloco "Clube de Assinaturas" premium | ✅ | UI Teaser criado na home (`subscription-teaser.liquid`). |
 | 2.9 | Footer elegante (4 colunas) | ✅ | Cores dark e grids finalizados (`footer.liquid`). |
 | 2.10 | Newsletter section premium | ✅ | Formulário clean "Entre para o Culto" (`newsletter.liquid`). |
 
@@ -145,11 +145,11 @@
 | Sprint | Tasks | Concluídas | % |
 |---|---|---|---|
 | Sprint 1 — Setup & Design System | 7 | 5 | 71% |
-| Sprint 2 — Homepage Premium | 10 | 9 | 90% |
+| Sprint 2 — Homepage Premium | 10 | 10 | 100% |
 | Sprint 3 — Produto & Carrinho | 12 | 0 | 0% |
 | Sprint 4 — Conteúdo & Produtos | 7 | 0 | 0% |
 | Sprint 5 — Polish & QA | 9 | 0 | 0% |
-| **Total** | **45** | **14** | **31%** |
+| **Total** | **45** | **15** | **33%** |
 
 ---
 

@@ -22,6 +22,10 @@
             "type": "delivery-guarantee",
             "settings": {}
         },
+        "subscription_teaser": {
+            "type": "subscription-teaser",
+            "settings": {}
+        },
         "newsletter": {
             "type": "newsletter",
             "settings": {}
@@ -35,6 +39,8 @@
         "hero",
         "frutas_da_estacao",
         "delivery_policy",
-        "newsletter"
+        "subscription_teaser",
+        "newsletter",
+        "footer"
     ]
 }

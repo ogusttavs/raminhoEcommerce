@@ -36,7 +36,8 @@
 - **[26/02/2026 - 19:30]** Desenvolvido `sections/header.liquid` (Navegação Sticky Glassmorphism) e `sections/hero-banner.liquid` (Banner imersivo com CSS parallax).
 - **[26/02/2026 - 19:30]** Desenvolvidos os componentes de prateleira: `snippets/product-card-premium.liquid` (Card minimalista) e `sections/featured-collection-netflix.liquid` (Carrossel Horizontal).
 - **[26/02/2026 - 19:30]** Adicionadas quebras de credibilidade: `sections/delivery-guarantee.liquid` (Motoboys e Seguro em Dark Mode); e `sections/newsletter.liquid` (Footer Capture).
-- **[26/02/2026 - 19:30]** Sprint 2 marcada como "Concluída" em `task.md` e `sprint_todolist.md` (90% das tasks UI implementadas). (Commit: `feat: sprint 2 complete homepage premium OS 2.0 sections`).
+- **[26/02/2026 - 19:40]** Para finalizar a Sprint 2 em 100%, criado o Bloco UI "O Culto ao Frescor" (`sections/subscription-teaser.liquid`), que faz o teaser visual do Clube de Assinaturas exigido na Homepage.
+- **[26/02/2026 - 19:40]** Sprint 2 marcada como 100% "Concluída" em `task.md` e `sprint_todolist.md`. (Commit Final: `feat: finalize sprint 2 with subscription UI teaser`).
 
 ---
 
