@@ -1,9 +1,5 @@
 {
     "sections": {
-        "header": {
-            "type": "header",
-            "settings": {}
-        },
         "hero": {
             "type": "hero-banner",
             "settings": {
@@ -29,10 +25,6 @@
         "newsletter": {
             "type": "newsletter",
             "settings": {}
-        },
-        "footer": {
-            "type": "footer",
-            "settings": {}
         }
     },
     "order": [
@@ -40,7 +32,6 @@
         "frutas_da_estacao",
         "delivery_policy",
         "subscription_teaser",
-        "newsletter",
-        "footer"
+        "newsletter"
     ]
 }

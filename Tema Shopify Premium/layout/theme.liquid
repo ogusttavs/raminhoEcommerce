@@ -34,21 +34,15 @@
   </head>
 
   <body>
-    <!-- Aqui entrará o section 'header' posteriormente -->
-    <header class="site-header">
-      <div class="container flex justify-between items-center" style="padding-top: 1rem; padding-bottom: 1rem;">
-        <h1 class="font-heading text-primary" style="font-size: 1.5rem; margin: 0;">{{ shop.name }}</h1>
-        <nav>
-          <a href="/cart" class="text-dark" style="text-decoration: none;">Carrinho</a>
-        </nav>
-      </div>
-    </header>
+    <!-- Header Premium Injetado -->
+    {% section 'header' %}
 
     <main id="MainContent" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
 
-    <!-- Aqui entrará o footer posteriormente -->
+    <!-- Footer Premium Injetado -->
+    {% section 'footer' %}
     
     <!-- Validação Carrinho (Pedido Mínimo) -->
     {% render 'cart-validation' %}
