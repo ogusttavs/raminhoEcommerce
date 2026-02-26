@@ -29,6 +29,7 @@
 - **[26/02/2026 - 19:00]** Criado o arquivo base `assets/design-system.css`.
 - **[26/02/2026 - 19:00]** Snippet vital de checkout da Yampi copiado para `snippets/YampiSnippet.liquid` para garantir integrações.
 - **[26/02/2026 - 19:00]** Adicionada trava de fluxo do Cliente: `snippets/cart-validation.liquid` injetado no layout global para evitar compras menores que R$ 129,90, disparando alerta modal premium. (Commit: `feat: base theme layout and minimum order cart validation`).
+- **[26/02/2026 - 19:15]** Criado o `DOC-013_Plano_de_Assinatura.md` para arquitetar o modelo de Clube de Assinaturas contornando as limitações do Shopify Basic via Yampi/Appmax. Inseridas as tasks de Assinatura na Sprint 2 (Frontend) e Sprint 4 (Backend). Tabela da Sprint 1 corrigida para 71% concluída.
 
 ---
 

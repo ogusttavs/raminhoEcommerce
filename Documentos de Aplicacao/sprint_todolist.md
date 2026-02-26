@@ -62,8 +62,9 @@
 | 2.5 | Grid de categorias com hover animado | ⬜ | Frutas / Verduras / Empório |
 | 2.6 | Seção "Nossa Entrega" dark (motoboys + seguro + garantia) | ⬜ | Comunicar entrega premium |
 | 2.7 | Comunicar pedido mínimo R$129,90 de forma elegante | ⬜ | Barra ou tooltip |
-| 2.8 | Footer elegante (4 colunas) | ⬜ | Newsletter, contato, redes |
-| 2.9 | Newsletter section premium | ⬜ | Design com incentivo |
+| 2.8 | Criar bloco "Clube de Assinaturas" premium | ⬜ | Teaser visual do clube de frutas |
+| 2.9 | Footer elegante (4 colunas) | ⬜ | Newsletter, contato, redes |
+| 2.10 | Newsletter section premium | ⬜ | Design com incentivo |
 
 **Resultado:** Homepage completa nível Apple — primeira impressão vende sozinha.
 
@@ -109,8 +110,10 @@
 | 4.5 | Criar página de política de garantia | ⬜ | Seguro + reposição grátis |
 | 4.6 | Personalizar checkout Yampi (visual da marca) | ⬜ | Cores e fontes alinhadas |
 | 4.7 | Páginas de coleção (design custom) | ⬜ | Grid premium com filtros |
+| 4.8 | Configurar Produto de Assinatura Recorrente | ⬜ | Integração técnica plano (Yampi/Appmax) DOC-013 |
+| 4.9 | Criar Landing Page do "Clube Raminho" | ⬜ | Página focada em conversão para assinatura |
 
-**Resultado:** Conteúdo visual em todos os produtos, storytelling configurado.
+**Resultado:** Conteúdo visual em todos os produtos, assinaturas ativas e storytelling configurado.
 
 ---
 
@@ -140,12 +143,12 @@
 
 | Sprint | Tasks | Concluídas | % |
 |---|---|---|---|
-| Sprint 1 — Setup & Design System | 7 | 0 | 0% |
+| Sprint 1 — Setup & Design System | 7 | 5 | 71% |
 | Sprint 2 — Homepage Premium | 9 | 0 | 0% |
 | Sprint 3 — Produto & Carrinho | 12 | 0 | 0% |
 | Sprint 4 — Conteúdo & Produtos | 7 | 0 | 0% |
 | Sprint 5 — Polish & QA | 9 | 0 | 0% |
-| **Total** | **44** | **0** | **0%** |
+| **Total** | **44** | **5** | **11%** |
 
 ---
 
