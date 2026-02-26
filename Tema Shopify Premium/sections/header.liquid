@@ -1,0 +1,99 @@
+{% comment %}
+  Header Premium Sticky
+  - Fundo transparente ou sólido dependendo do scroll (animado no CSS)
+  - Logo centralizado
+  - Ícones minimalistas (Busca, User, Cart)
+{% endcomment %}
+
+{{ 'header.css' | asset_url | stylesheet_tag }}
+
+<header class="header-premium" id="SiteHeader">
+  <div class="container header-inner flex justify-between items-center">
+    
+    <!-- Esquerda: Menu Hamburger (Mobile) & Busca -->
+    <div class="header-left flex items-center">
+      <button class="header-icon-btn hidden-desktop" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <a href="/search" class="header-icon-btn hidden-mobile" aria-label="Buscar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </a>
+    </div>
+
+    <!-- Centro: Logo -->
+    <div class="header-center">
+      <a href="{{ routes.root_url }}" class="header-logo">
+        {% if section.settings.logo != blank %}
+          <img src="{{ section.settings.logo | image_url: width: 300 }}" 
+               alt="{{ shop.name }}" 
+               width="{{ section.settings.logo_width }}" 
+               height="auto" 
+               loading="eager">
+        {% else %}
+          <span class="font-heading header-logo-text">{{ shop.name }}</span>
+        {% endif %}
+      </a>
+    </div>
+
+    <!-- Direita: Conta & Carrinho -->
+    <div class="header-right flex items-center">
+      <a href="{{ routes.account_url }}" class="header-icon-btn hidden-mobile" aria-label="Conta">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </a>
+      <a href="{{ routes.cart_url }}" class="header-icon-btn cart-btn" aria-label="Carrinho">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        {% if cart.item_count > 0 %}
+          <span class="cart-count">{{ cart.item_count }}</span>
+        {% endif %}
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Script simples para Header Sticky "Smart" (some no scroll down, volta no scroll up)
+  document.addEventListener('DOMContentLoaded', () => {
+    const header = document.getElementById('SiteHeader');
+    let lastScrollY = window.scrollY;
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('is-sticky');
+        if (window.scrollY > lastScrollY) {
+          // Scroll Down
+          header.classList.add('is-hidden');
+        } else {
+          // Scroll Up
+          header.classList.remove('is-hidden');
+        }
+      } else {
+        header.classList.remove('is-sticky');
+        header.classList.remove('is-hidden');
+      }
+      lastScrollY = window.scrollY;
+    }, { passive: true });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Header Premium",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Principal (Preferência: Proposta Heritage Oval ou Minimal Wordmark)"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 250,
+      "step": 10,
+      "default": 100,
+      "unit": "px",
+      "label": "Largura da Logo"
+    }
+  ]
+}
+{% endschema %}

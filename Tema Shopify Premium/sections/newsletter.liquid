@@ -1,0 +1,92 @@
+<style>
+  .newsletter-section {
+    background-color: var(--color-background-alt); /* Ex: Branco puro para destaque limpo */
+    padding: 5rem 0;
+    text-align: center;
+    border-top: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .newsletter-inner {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .newsletter-title {
+    font-size: 2rem;
+    color: var(--color-primary-dark);
+    margin-bottom: 0.5rem;
+  }
+
+  .newsletter-subtitle {
+    color: var(--color-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+
+  .newsletter-form-group {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 450px;
+    margin: 0 auto;
+  }
+
+  .newsletter-input {
+    flex-grow: 1;
+    padding: 1rem 1.5rem;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: var(--border-radius-pill);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    background-color: var(--color-background);
+  }
+
+  .newsletter-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+
+  .newsletter-btn {
+    padding: 1rem 2rem;
+    border-radius: var(--border-radius-pill);
+  }
+
+  @media(max-width: 500px) {
+    .newsletter-form-group {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<section class="newsletter-section">
+  <div class="container newsletter-inner">
+    <h2 class="newsletter-title font-heading">Entre para o Culto.</h2>
+    <p class="newsletter-subtitle">Assine para receber convites para colheitas exclusivas e safras limitadas antes de todo mundo. E ganhe frete grátis na primeira compra.</p>
+    
+    {% form 'customer', class: 'newsletter-form' %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div class="newsletter-form-group">
+        <input type="email"
+               name="contact[email]"
+               class="newsletter-input"
+               value="{% if customer %}{{ customer.email }}{% endif %}"
+               placeholder="Seu endereço de e-mail"
+               autoCorrect="off"
+               autoCapitalize="off">
+        <button type="submit" class="btn btn--primary newsletter-btn" name="commit">
+          Assinar
+        </button>
+      </div>
+    {% endform %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter Premium",
+  "presets": [
+    {
+      "name": "Newsletter Clássica"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,40 @@
+{
+    "sections": {
+        "header": {
+            "type": "header",
+            "settings": {}
+        },
+        "hero": {
+            "type": "hero-banner",
+            "settings": {
+                "title": "A excelência da fazenda, entregue com maestria.",
+                "subtitle": "Selecionamos artesanalmente o que há de melhor no mundo há mais de 40 anos."
+            }
+        },
+        "frutas_da_estacao": {
+            "type": "featured-collection-netflix",
+            "settings": {
+                "title": "Frutas da Estação",
+                "description": "O frescor absoluto, colhido hoje pela manhã."
+            }
+        },
+        "delivery_policy": {
+            "type": "delivery-guarantee",
+            "settings": {}
+        },
+        "newsletter": {
+            "type": "newsletter",
+            "settings": {}
+        },
+        "footer": {
+            "type": "footer",
+            "settings": {}
+        }
+    },
+    "order": [
+        "hero",
+        "frutas_da_estacao",
+        "delivery_policy",
+        "newsletter"
+    ]
+}

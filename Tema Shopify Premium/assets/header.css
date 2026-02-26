@@ -1,0 +1,130 @@
+/* 
+  Header Premium Styling
+  Minimalist, sticky, auto-hiding on scroll down
+*/
+
+.header-premium {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: var(--color-background);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease, border-color 0.3s ease;
+    border-bottom: 1px solid transparent;
+    /* Border becomes visible on scroll */
+}
+
+/* Scroll states applied via JS */
+.header-premium.is-sticky {
+    background-color: rgba(247, 243, 235, 0.95);
+    /* matching --color-background but slightly transparent */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.header-premium.is-hidden {
+    transform: translateY(-100%);
+}
+
+.header-inner {
+    height: 80px;
+    /* Generous height for premium feel */
+}
+
+.header-logo {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+}
+
+.header-logo img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+.header-logo-text {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    letter-spacing: -0.02em;
+}
+
+.header-icon-btn {
+    background: none;
+    border: none;
+    color: var(--color-text-main);
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--transition-fast), transform var(--transition-fast);
+    text-decoration: none;
+}
+
+.header-icon-btn:hover {
+    color: var(--color-primary);
+    transform: scale(1.05);
+}
+
+.cart-btn {
+    position: relative;
+}
+
+.cart-count {
+    position: absolute;
+    top: 0px;
+    right: -2px;
+    background-color: var(--color-accent);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    height: 16px;
+    min-width: 16px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    line-height: 1;
+    font-family: var(--font-body);
+}
+
+/* Utilities inside header */
+.header-left,
+.header-right {
+    flex: 1;
+    gap: 1rem;
+}
+
+.header-right {
+    justify-content: flex-end;
+}
+
+.header-center {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .hidden-mobile {
+        display: none !important;
+    }
+
+    .header-inner {
+        height: 64px;
+    }
+
+    .header-logo-text {
+        font-size: 1.4rem;
+    }
+}
+
+@media (min-width: 769px) {
+    .hidden-desktop {
+        display: none !important;
+    }
+}

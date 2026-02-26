@@ -31,6 +31,13 @@
 - **[26/02/2026 - 19:00]** Adicionada trava de fluxo do Cliente: `snippets/cart-validation.liquid` injetado no layout global para evitar compras menores que R$ 129,90, disparando alerta modal premium. (Commit: `feat: base theme layout and minimum order cart validation`).
 - **[26/02/2026 - 19:15]** Criado o `DOC-013_Plano_de_Assinatura.md` para arquitetar o modelo de Clube de Assinaturas contornando as limitações do Shopify Basic via Yampi/Appmax. Inseridas as tasks de Assinatura na Sprint 2 (Frontend) e Sprint 4 (Backend). Tabela da Sprint 1 corrigida para 71% concluída.
 
+### [Sprint 2] — Homepage Premium
+- **[26/02/2026 - 19:30]** Estruturado o JSON `templates/index.json` definindo a ordem e arquitetura (OS 2.0) da Homepage.
+- **[26/02/2026 - 19:30]** Desenvolvido `sections/header.liquid` (Navegação Sticky Glassmorphism) e `sections/hero-banner.liquid` (Banner imersivo com CSS parallax).
+- **[26/02/2026 - 19:30]** Desenvolvidos os componentes de prateleira: `snippets/product-card-premium.liquid` (Card minimalista) e `sections/featured-collection-netflix.liquid` (Carrossel Horizontal).
+- **[26/02/2026 - 19:30]** Adicionadas quebras de credibilidade: `sections/delivery-guarantee.liquid` (Motoboys e Seguro em Dark Mode); e `sections/newsletter.liquid` (Footer Capture).
+- **[26/02/2026 - 19:30]** Sprint 2 marcada como "Concluída" em `task.md` e `sprint_todolist.md` (90% das tasks UI implementadas). (Commit: `feat: sprint 2 complete homepage premium OS 2.0 sections`).
+
 ---
 
 *(Os próximos logs deverão ser registrados imediatamente após cada commit/ação na Sprint).*

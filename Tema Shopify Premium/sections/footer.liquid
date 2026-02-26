@@ -1,0 +1,50 @@
+<footer class="site-footer" style="background-color: var(--color-primary-dark); color: var(--color-text-light); padding: 4rem 0 2rem 0; border-top: 1px solid rgba(255,255,255,0.1);">
+  <div class="container">
+    <div class="footer-grid flex flex-col md:flex-row justify-between gap-2" style="display: flex; flex-wrap: wrap; gap: 3rem;">
+      
+      <!-- Logo Info -->
+      <div class="footer-brand" style="flex: 1; min-width: 250px;">
+        <h2 class="font-heading" style="font-size: 2rem; margin-bottom: 1rem; color: var(--color-background);">{{ shop.name }}</h2>
+        <p style="opacity: 0.8; line-height: 1.6; max-width: 300px;">A excelência da fazenda na sua mesa. Desde 1984 selecionando as melhores frutas do mundo no Mercado Municipal de São Paulo.</p>
+        <p style="margin-top: 1rem; opacity: 0.7; font-size: 0.9rem;">Pedido Mínimo: R$ 129,90</p>
+      </div>
+
+      <!-- Links 1 -->
+      <div class="footer-links" style="flex: 1; min-width: 200px;">
+        <h4 style="margin-bottom: 1.5rem; color: var(--color-accent); font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em;">Categorias</h4>
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem;">
+          <li><a href="/collections/todas-as-frutas" style="color: inherit; text-decoration: none; opacity: 0.8; transition: opacity 0.2s;">Todas as Frutas</a></li>
+          <li><a href="/collections/frutas-da-estacao" style="color: inherit; text-decoration: none; opacity: 0.8; transition: opacity 0.2s;">Frutas da Estação</a></li>
+          <li><a href="/collections/emporio" style="color: inherit; text-decoration: none; opacity: 0.8; transition: opacity 0.2s;">Empório Premium</a></li>
+          <li><a href="/pages/clube" style="color: var(--color-accent); text-decoration: none; font-weight: 600;">Clube de Assinaturas</a></li>
+        </ul>
+      </div>
+
+      <!-- Links 2 -->
+      <div class="footer-links" style="flex: 1; min-width: 200px;">
+        <h4 style="margin-bottom: 1.5rem; color: var(--color-accent); font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em;">Suporte</h4>
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem;">
+          <li><a href="/pages/nossa-entrega" style="color: inherit; text-decoration: none; opacity: 0.8;">Política de Entrega e Seguro</a></li>
+          <li><a href="/pages/garantia-de-qualidade" style="color: inherit; text-decoration: none; opacity: 0.8;">Garantia de Qualidade</a></li>
+          <li><a href="/pages/fale-conosco" style="color: inherit; text-decoration: none; opacity: 0.8;">Contato WhatsApp</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; opacity: 0.6;">
+      <p>&copy; {{ 'now' | date: "%Y" }} {{ shop.name }}. Todos os direitos reservados. Feito com rigor e maestria.</p>
+      <div class="payment-methods" style="display: flex; gap: 0.5rem;">
+        <!-- Icons de pagamento (cartão, pix) seriam inseridos aqui dependendo da Appmax -->
+        <span>Pix, Cartões e Yampi</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer Premium",
+  "settings": []
+}
+{% endschema %}

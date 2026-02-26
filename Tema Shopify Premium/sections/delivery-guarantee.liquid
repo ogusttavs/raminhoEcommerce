@@ -1,0 +1,88 @@
+<!-- 
+  Delivery Guarantee / Premium Trust Section
+  Usa Dark Mode Background em contraste com a página
+-->
+<style>
+  .delivery-guarantee-section {
+    background-color: var(--color-primary-dark); /* Fundo Verde Super Escuro */
+    color: var(--color-text-light); /* Letras Creme */
+    padding: 6rem 0;
+  }
+
+  .guarantee-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .guarantee-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .guarantee-item {
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+  .guarantee-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1.5rem auto;
+    color: var(--color-accent); /* Laranja dando destaque */
+  }
+
+  .guarantee-title {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: var(--color-background);
+  }
+
+  .guarantee-text {
+    font-size: 1rem;
+    opacity: 0.85;
+    line-height: 1.6;
+  }
+</style>
+
+<section class="delivery-guarantee-section">
+  <div class="container">
+    <div class="guarantee-grid">
+      
+      <!-- Bloco 1 -->
+      <div class="guarantee-item">
+        <svg class="guarantee-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 21v-3.5c0-.83.67-1.5 1.5-1.5h11c.83 0 1.5.67 1.5 1.5V21"/><path d="M19 19c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2Z"/><path d="M5 19c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2Z"/><path d="M22 17l-3-6h-9l-3 6"/><path d="M4 11V6c0-1.1.9-2 2-2h8"/><path d="M14 4v11"/></svg>
+        <h3 class="guarantee-title font-heading">Motoboys da Casa</h3>
+        <p class="guarantee-text">Diferente de aplicativos terceiros, nossos entregadores são parceiros treinados para cuidar de produtos delicados. E cada entrega é segurada por nós.</p>
+      </div>
+
+      <!-- Bloco 2 -->
+      <div class="guarantee-item">
+        <svg class="guarantee-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        <h3 class="guarantee-title font-heading">Reposição Imediata Zero Custo</h3>
+        <p class="guarantee-text">Uma fruta não agradou visualmente ou amassou no caminho? Mande foto no nosso WhatsApp. Entregamos uma nova no mesmo dia, sem nenhum frete extra.</p>
+      </div>
+
+      <!-- Bloco 3 -->
+      <div class="guarantee-item">
+        <svg class="guarantee-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="m16 10-4 4-4-4"/></svg>
+        <h3 class="guarantee-title font-heading">Pedido Mínimo Inteligente</h3>
+        <p class="guarantee-text">Nosso pedido mínimo de <strong>R$ 129,90</strong> existe justamente para bancarmos essa infraestrutura absurda de cuidado, entregando o seu empório impecável.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Nossa Garantia (Dark)",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Nossa Garantia (Motoboys)"
+    }
+  ]
+}
+{% endschema %}

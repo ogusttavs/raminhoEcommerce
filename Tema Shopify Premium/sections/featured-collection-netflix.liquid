@@ -1,0 +1,137 @@
+{{ 'product-card.css' | asset_url | stylesheet_tag }}
+
+<style>
+  /* Slider Horizontal Netflix Base */
+  .netflix-slider-section {
+    padding: 4rem 0 5rem 0;
+    overflow: hidden; /* Prevent horizontal scrollbar on body */
+  }
+
+  .netflix-slider-header {
+    margin-bottom: 2rem;
+  }
+
+  .netflix-slider-title {
+    font-size: 2.2rem;
+    color: var(--color-primary-dark);
+  }
+
+  .netflix-slider-description {
+    color: var(--color-secondary);
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+  }
+
+  /* O container principal que tem overflow scroll */
+  .netflix-track-container {
+    width: 100%;
+    /* Margin negativa para permitir o slider encostar na borda da tela no mobile */
+    margin-right: calc(-50vw + 50%);
+    padding-right: calc(50vw - 50%);
+  }
+
+  /* O trilho invisivel onde os cards deslizam */
+  .netflix-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1.5rem;
+    padding-bottom: 2.5rem; /* Space for box-shadow hover */
+    /* Hide scrollbar */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .netflix-track::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+
+  /* Os itens individuais (cards) */
+  .netflix-slide {
+    flex: 0 0 auto;
+    width: 280px; /* Largura fixa para manter o controle */
+    scroll-snap-align: start;
+  }
+
+  @media (min-width: 769px) {
+    .netflix-slide {
+      width: 320px; /* Pouco maior no desktop */
+    }
+  }
+</style>
+
+<section class="netflix-slider-section" style="background-color: var(--color-background);">
+  <div class="container">
+    
+    <div class="netflix-slider-header">
+      <h2 class="netflix-slider-title font-heading">{{ section.settings.title }}</h2>
+      {% if section.settings.description != blank %}
+        <p class="netflix-slider-description">{{ section.settings.description }}</p>
+      {% endif %}
+    </div>
+
+    <!-- Pista de Deslizamento -->
+    <div class="netflix-track-container">
+      <div class="netflix-track">
+        {% assign collection = collections[section.settings.collection] %}
+        
+        {% if collection != blank and collection.products_count > 0 %}
+          {% for product in collection.products limit: section.settings.limit %}
+            <div class="netflix-slide">
+              {% render 'product-card-premium', product: product %}
+            </div>
+          {% endfor %}
+        {% else %}
+          <!-- Modo Placeholder para visualização -->
+          {% for i in (1..6) %}
+            <div class="netflix-slide">
+              <div style="background:var(--color-background-alt); border-radius:8px; padding:2rem; text-align:center; height:450px; display:flex; align-items:center; justify-content:center; color:var(--color-secondary);">
+                Produto Exemplo {{ i }}
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Carrossel Horizontal",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título da Seção",
+      "default": "Frutas da Estação"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Descrição Curta",
+      "default": "O frescor absoluto colhido hoje."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Coleção para Exibir"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "default": 8,
+      "label": "Máximo de Produtos"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Carrossel Tipo Netflix"
+    }
+  ]
+}
+{% endschema %}
