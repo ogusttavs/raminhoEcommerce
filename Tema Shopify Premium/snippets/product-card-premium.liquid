@@ -44,10 +44,11 @@
       <h3 class="product-title font-heading text-dark" style="font-size: 1.2rem; margin-bottom: 0.2rem;">{{ product.title }}</h3>
       
       <div class="product-pricing" id="price-card-{{ product.id }}">
-        {% if product.compare_at_price > product.price %}
-          <span class="price-compare text-secondary" style="font-size:0.9rem;"><s>{{ product.compare_at_price | money }}</s></span>
+        {% assign cheapest_variant = product.variants | sort: 'price' | first %}
+        {% if cheapest_variant.compare_at_price > cheapest_variant.price %}
+          <span class="price-compare text-secondary" style="font-size:0.9rem;"><s>{{ cheapest_variant.compare_at_price | money }}</s></span>
         {% endif %}
-        <span class="price-current text-primary" style="font-weight: 600;">{{ product.price | money }}</span>
+        <span class="price-current text-primary" style="font-weight: 600;">{{ cheapest_variant.price | money }}</span>
       </div>
     </div>
   </a>
@@ -58,20 +59,26 @@
     
     {%- unless product.has_only_default_variant -%}
       <!-- Variant Picker in Card -->
-      <variant-selects data-section="card-{{ product.id }}" data-url="{{ product.url }}" style="display: block; width: 100%; margin-bottom: 0.5rem;">
+      <variant-selects data-section="card-{{ product.id }}" data-url="{{ product.url }}" style="display: block; width: 100%; margin-bottom: 0.8rem;">
         {%- for option in product.options_with_values -%}
-          <div class="variant-selector-wrapper" style="margin-bottom: 0.5rem;">
-            <div class="segmented-control" style="padding: 2px;">
+          <!-- Hide any option that isn't the first one (e.g., Maturation) to keep card ultra clean -->
+          <div class="variant-selector-wrapper" {% if forloop.index0 > 0 %}style="display:none;"{% else %}style="margin-bottom: 0.5rem;"{% endif %}>
+            <div class="segmented-control" style="padding: 3px; background: rgba(0,0,0,0.04); border-radius: 8px;">
               {%- for value in option.values -%}
+                {% assign is_checked = false %}
+                {% if cheapest_variant.options[forloop.parentloop.index0] == value %}
+                  {% assign is_checked = true %}
+                {% endif %}
+                
                 <input type="radio" 
                        id="Option-card-{{ product.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}"
                        class="variant-radio"
                        name="options[{{ option.name | escape }}]"
                        value="{{ value | escape }}"
                        form="{{ form_id }}"
-                       {% if option.selected_value == value %}checked{% endif %}
+                       {% if is_checked %}checked{% endif %}
                 >
-                <label class="segmented-btn font-body" style="padding: 0.4rem; font-size: 0.85rem;" for="Option-card-{{ product.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}">
+                <label class="segmented-btn font-body" style="padding: 0.5rem; font-size: 0.85rem; border-radius: 6px; user-select: none;" for="Option-card-{{ product.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}">
                   {{ value }}
                 </label>
               {%- endfor -%}
@@ -87,42 +94,42 @@
 
     <smart-add-to-cart data-section="card-{{ product.id }}">
       {% form 'product', product, id: form_id, class: 'quick-add-form' %}
-        <input type="hidden" name="id" class="variant-id-input" value="{{ product.selected_or_first_available_variant.id }}">
+        <input type="hidden" name="id" class="variant-id-input" value="{{ cheapest_variant.id }}">
         
         <!-- Smart Quantity Stepper Minimal Style for Cards -->
-        <div class="product-qty-stepper flex items-center justify-between" style="background: rgba(0,0,0,0.03); padding: 0.3rem; border-radius: 8px; margin-bottom: 0.5rem; display: flex;">
-          <button type="button" class="stepper-btn stepper-minus text-dark" style="width: 30px; height: 30px; border:none; background:transparent; font-size:1.2rem; cursor:pointer;" aria-label="Diminuir">
+        <div class="product-qty-stepper flex items-center justify-between" style="background: #fff; padding: 0.2rem; border-radius: 8px; margin-bottom: 0.8rem; border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 2px 5px rgba(0,0,0,0.02); display: flex;">
+          <button type="button" class="stepper-btn stepper-minus text-dark" style="width: 35px; height: 35px; border:none; background:transparent; font-size:1.4rem; cursor:pointer; outline:none;" aria-label="Diminuir">
             &minus;
           </button>
           
           <input type="number" name="quantity" class="stepper-input hidden" value="1" min="1" style="display:none;">
           
           <div class="stepper-display text-center" style="flex:1;">
-            <span class="stepper-text font-body text-dark" style="font-weight: 500; font-size: 0.9rem;">
+            <span class="stepper-text font-body text-dark" style="font-weight: 500; font-size: 0.95rem;">
               1 un
             </span>
           </div>
 
-          <button type="button" class="stepper-btn stepper-plus text-dark" style="width: 30px; height: 30px; border:none; background:transparent; font-size:1.2rem; cursor:pointer;" aria-label="Aumentar">
+          <button type="button" class="stepper-btn stepper-plus text-dark" style="width: 35px; height: 35px; border:none; background:transparent; font-size:1.4rem; cursor:pointer; outline:none;" aria-label="Aumentar">
             &plus;
           </button>
         </div>
 
         <button type="submit" 
                 name="add"
-                class="btn-quick-add text-dark font-body" 
-                style="width: 100%; padding: 0.8rem; border-radius: 8px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: flex; justify-content: space-between; align-items: center;"
-                {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
-          <span class="btn-text">
-            {% if product.selected_or_first_available_variant.available %}
-              Pôr no Carrinho
+                class="btn-quick-add font-body" 
+                style="width: 100%; padding: 0.8rem 1rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; justify-content: space-between; align-items: center; background-color: var(--color-primary); color: #fff; border:none; outline:none; box-shadow: 0 4px 10px rgba(13, 124, 74, 0.15);"
+                {% if cheapest_variant.available == false %}disabled{% endif %}>
+          <span class="btn-text" style="text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em;">
+            {% if cheapest_variant.available %}
+              Adicionar
             {% else %}
               Esgotado
             {% endif %}
           </span>
-          <span class="btn-price" data-base-price="{{ product.selected_or_first_available_variant.price }}">
-            {% if product.selected_or_first_available_variant.available %}
-              {{ product.selected_or_first_available_variant.price | money }}
+          <span class="btn-price" data-base-price="{{ cheapest_variant.price }}" style="font-weight: 700; font-size: 0.95rem; letter-spacing: 0.02em;">
+            {% if cheapest_variant.available %}
+              {{ cheapest_variant.price | money }}
             {% endif %}
           </span>
         </button>

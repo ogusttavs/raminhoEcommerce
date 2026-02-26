@@ -20,6 +20,7 @@
 
       <!-- Lado Direito: Informações Fixas (Sticky) -->
       <div class="product-form-container">
+        {% assign cheapest_variant = product.variants | sort: 'price' | first %}
         
         <!-- Renderiza os blocos na ordem que o lojista definiu no painel da Shopify -->
         {%- for block in section.blocks -%}
@@ -33,7 +34,7 @@
             
             {%- when 'price' -%}
               <div class="product-price-wrapper" id="price-{{ section.id }}" {{ block.shopify_attributes }}>
-                <span class="product-price">{{ product.selected_or_first_available_variant.price | money }}</span>
+                <span class="product-price">{{ cheapest_variant.price | money }}</span>
               </div>
             
             {%- when 'variant_picker' -%}
@@ -41,19 +42,24 @@
               {%- unless product.has_only_default_variant -%}
                 <variant-selects data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
                   {%- for option in product.options_with_values -%}
-                    <div class="variant-selector-wrapper">
+                    <div class="variant-selector-wrapper" {% if forloop.index0 > 0 %}style="display:none;"{% else %}style="margin-bottom: 1.5rem;"{% endif %}>
                       <label class="variant-label font-body">{{ option.name }}</label>
-                      <div class="segmented-control">
+                      <div class="segmented-control" style="background: rgba(0,0,0,0.04); padding: 4px; border-radius: 12px;">
                         {%- for value in option.values -%}
+                          {% assign is_checked = false %}
+                          {% if cheapest_variant.options[forloop.parentloop.index0] == value %}
+                            {% assign is_checked = true %}
+                          {% endif %}
+                          
                           <input type="radio" 
                                  id="Option-{{ section.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}"
                                  class="variant-radio"
                                  name="options[{{ option.name | escape }}]"
                                  value="{{ value | escape }}"
                                  form="product-form-{{ section.id }}"
-                                 {% if option.selected_value == value %}checked{% endif %}
+                                 {% if is_checked %}checked{% endif %}
                           >
-                          <label class="segmented-btn" for="Option-{{ section.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}">
+                          <label class="segmented-btn" style="user-select: none;" for="Option-{{ section.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}">
                             {{ value }}
                           </label>
                         {%- endfor -%}
@@ -69,27 +75,27 @@
               {%- endunless -%}
             
             {%- when 'buy_buttons' -%}
-              <div {{ block.shopify_attributes }}>
+              <div {{ block.shopify_attributes }} style="margin-bottom: 2rem;">
                 <smart-add-to-cart data-section="{{ section.id }}">
                   {%- form 'product', product, id: 'product-form-' | append: section.id, class: 'product-form' -%}
-                    <input type="hidden" name="id" class="variant-id-input" value="{{ product.selected_or_first_available_variant.id }}">
+                    <input type="hidden" name="id" class="variant-id-input" value="{{ cheapest_variant.id }}">
                     
                     <!-- Smart Quantity Stepper iOS Style -->
-                    <div class="product-qty-stepper flex items-center justify-between" style="background: var(--color-background-alt); padding: 0.5rem; border-radius: 12px; margin-bottom: 1rem; border: 1px solid rgba(0,0,0,0.05);">
-                      <button type="button" class="stepper-btn stepper-minus text-dark" style="width: 40px; height: 40px; border:none; background:transparent; font-size:1.5rem; cursor:pointer;" aria-label="Diminuir">
+                    <div class="product-qty-stepper flex items-center justify-between" style="background: #fff; padding: 0.5rem; border-radius: 12px; margin-bottom: 1rem; border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+                      <button type="button" class="stepper-btn stepper-minus text-dark" style="width: 50px; height: 50px; border:none; background:transparent; font-size:1.8rem; cursor:pointer; outline:none;" aria-label="Diminuir">
                         &minus;
                       </button>
                       
                       <input type="number" name="quantity" class="stepper-input hidden" value="1" min="1" style="display:none;">
                       
                       <div class="stepper-display text-center" style="flex:1;">
-                        <span class="stepper-text font-body text-dark" style="font-weight: 600; font-size: 1.1rem;">
+                        <span class="stepper-text font-body text-dark" style="font-weight: 600; font-size: 1.2rem;">
                           <!-- JS Init -->
                           1 un
                         </span>
                       </div>
 
-                      <button type="button" class="stepper-btn stepper-plus text-dark" style="width: 40px; height: 40px; border:none; background:transparent; font-size:1.5rem; cursor:pointer;" aria-label="Aumentar">
+                      <button type="button" class="stepper-btn stepper-plus text-dark" style="width: 50px; height: 50px; border:none; background:transparent; font-size:1.8rem; cursor:pointer; outline:none;" aria-label="Aumentar">
                         &plus;
                       </button>
                     </div>
@@ -98,18 +104,18 @@
                       <button type="submit" 
                               name="add" 
                               class="product-add-to-cart font-body"
-                              style="display: flex; justify-content: space-between; align-items: center;"
-                              {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
-                        <span class="btn-text" style="font-weight: 700;">
-                          {% if product.selected_or_first_available_variant.available %}
-                            Pôr no Carrinho
+                              style="display: flex; justify-content: space-between; align-items: center; width: 100%; border:none; outline:none; box-shadow: 0 8px 20px rgba(13, 124, 74, 0.2);"
+                              {% if cheapest_variant.available == false %}disabled{% endif %}>
+                        <span class="btn-text" style="font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">
+                          {% if cheapest_variant.available %}
+                            Adicionar ao Carrinho
                           {% else %}
                             Esgotado
                           {% endif %}
                         </span>
-                        <span class="btn-price" data-base-price="{{ product.selected_or_first_available_variant.price }}">
-                          {% if product.selected_or_first_available_variant.available %}
-                            {{ product.selected_or_first_available_variant.price | money }}
+                        <span class="btn-price" data-base-price="{{ cheapest_variant.price }}" style="font-weight: 800; font-size: 1.2rem;">
+                          {% if cheapest_variant.available %}
+                            {{ cheapest_variant.price | money }}
                           {% endif %}
                         </span>
                       </button>
