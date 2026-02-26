@@ -101,17 +101,14 @@
     opacity: 0.6;
 }
 
-/* CTA "Add to Cart" escondido inicialmente */
+/* CTA and Controls Always Visible for better UX */
 .product-actions {
     margin-top: 1rem;
-    opacity: 0;
-    transform: translateY(10px);
     transition: opacity var(--transition-smooth), transform var(--transition-smooth);
 }
 
 .product-card:hover .product-actions {
-    opacity: 1;
-    transform: translateY(0);
+    /* No change needed as it is always visible */
 }
 
 .btn-quick-add {

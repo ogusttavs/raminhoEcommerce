@@ -3,8 +3,8 @@
   Requires: `product` object
 {% endcomment %}
 
-<!-- Require CSS and JS for Segmented Selectors inside cards -->
-<script src="{{ 'product-page.css' | asset_url }}" async></script>
+<!-- Require CSS for Segmented Selectors inside cards -->
+{{ 'product-page.css' | asset_url | stylesheet_tag }}
 
 <div class="product-card">
   <a href="{{ product.url }}" class="product-card-link">
