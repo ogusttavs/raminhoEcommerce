@@ -51,6 +51,7 @@
 - **[27/02/2026 - 00:45]** **Mathematical Logo Centering:** Migração do Header para CSS Grid com slots laterais fixos (70px). Garante que a logo Raminho esteja sempre no centro absoluto geométrico da tela, eliminando desvios causados por ícones ou menus.
 - **[27/02/2026 - 01:00]** **UX Polish & Bug Fixes:** Resolvido bug crítico de overlap no mobile (títulos cortados pelo header fixo). Corrigida lógica de pedido mínimo (R$ 129,90) e frete grátis (R$ 497,00) no Drawer Cart para conformidade com DOC-004.
 - **[27/02/2026 - 01:10]** **Card Cleanup:** Removida a 2ª imagem (hover) dos product cards para priorizar a estética "Clean Apple" e evitar instabilidades em conexões mobile.
+- **[27/02/2026 - 02:00]** ⚠️ **ROLLBACK ARQUITETURAL (REVISÃO 002):** Após uma série de implementações que introduziram bugs gravíssimos de escopo JS e carregamento de assets (quebrando o carrinho em páginas secundárias e removendo o CSS de vitrines inteiras), o código fonte do tema foi **revertido 100% para o estado estável pré-refatoração** (commit `393480a`). A documentação (arquivos MD, análise de fretes, logos novos) gerada durante esse período foi preservada para histórico contínuo da operação, garantindo que nenhum conhecimento seja perdido.
 
 ---
 

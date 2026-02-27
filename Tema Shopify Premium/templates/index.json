@@ -14,39 +14,9 @@
                 "description": "O frescor absoluto, colhido hoje pela manhã."
             }
         },
-        "categories": {
-            "type": "categories-grid",
-            "settings": {
-                "title": "Explore Nossa Seleção",
-                "subtitle": "Do campo à sua mesa, com curadoria artesanal."
-            }
-        },
-        "bestsellers": {
-            "type": "bestsellers",
-            "settings": {
-                "title": "Os Favoritos da Safra",
-                "subtitle": "O que nossos clientes mais amam, semana após semana."
-            }
-        },
         "delivery_policy": {
             "type": "delivery-guarantee",
             "settings": {}
-        },
-        "tradition": {
-            "type": "tradition-story",
-            "settings": {
-                "eyebrow": "Nossa História",
-                "title": "Desde 1984, levando o melhor do Mercadão até você.",
-                "text": "A Raminho Importadora nasceu no coração do Mercado Municipal de São Paulo. Há mais de 40 anos, selecionamos artesanalmente as melhores frutas importadas e nacionais, com o rigor de quem construiu uma reputação servindo os paladares mais exigentes da cidade.",
-                "years": "40+"
-            }
-        },
-        "testimonials": {
-            "type": "testimonials",
-            "settings": {
-                "title": "O Que Nossos Clientes Dizem",
-                "subtitle": "A confiança de quem experimenta, permanece."
-            }
         },
         "subscription_teaser": {
             "type": "subscription-teaser",
@@ -60,11 +30,7 @@
     "order": [
         "hero",
         "frutas_da_estacao",
-        "categories",
-        "bestsellers",
         "delivery_policy",
-        "tradition",
-        "testimonials",
         "subscription_teaser",
         "newsletter"
     ]

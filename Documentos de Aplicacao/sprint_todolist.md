@@ -65,12 +65,12 @@
 | 2.8 | Criar bloco "Clube de Assinaturas" premium | ✅ | UI Teaser criado na home (`subscription-teaser.liquid`). |
 | 2.9 | Footer elegante (4 colunas) | ✅ | Cores dark e grids finalizados (`footer.liquid`). |
 | 2.10 | Newsletter section premium | ✅ | Formulário clean (`newsletter.liquid`). |
-| 2.11 | Seção "Mais Vendidos" com badges visuais | ✅ | `bestsellers.liquid` — grid com badges #1, #2, #3. |
-| 2.12 | Seção "40 Anos de Tradição" (storytelling) | ✅ | `tradition-story.liquid` — split layout com stats e imagem. |
-| 2.13 | Seção de Depoimentos de Clientes | ✅ | `testimonials.liquid` — cards com estrelas e avatares. |
-| 2.14 | Announcement Bar (Frete Grátis R$497) | ✅ | Barra creme no topo do header. |
+| 2.11 | Seção "Mais Vendidos" com badges visuais | ❌ | Rollback: Código revertido devido a refatoração arquitetural ruim. |
+| 2.12 | Seção "40 Anos de Tradição" (storytelling) | ❌ | Rollback: Código revertido. |
+| 2.13 | Seção de Depoimentos de Clientes | ❌ | Rollback: Código revertido. |
+| 2.14 | Announcement Bar (Frete Grátis R$497) | ❌ | Rollback: Código revertido. Estava chumbada no código. |
 
-**Resultado:** Homepage completa nível Apple com todas as seções do fluxo ideal DOC-011.
+**Resultado:** Homepage rollback para estado 100% estável (pré-refatoração ruim).
 
 ---
 
@@ -110,8 +110,8 @@
 |---|---|---|---|
 | 4.1 | Atualizar fotos de TODOS os 145+ produtos (Freepik) | ⬜ | Substituir IA por fotos premium (inclui tasks 1.6 e 1.7) |
 | 4.2 | Configurar variantes grama/unidade nos produtos | ⬜ | Produto a produto via Shopify admin (browser) |
-| 4.3 | Populer seção "40 Anos de Tradição" com fotos reais | ⬜ | Section `tradition-story.liquid` já criada, falta conteúdo real |
-| 4.4 | Populer seção de depoimentos com reviews reais | ⬜ | Section `testimonials.liquid` já criada, falta conteúdo real |
+| 4.3 | Populer seção "40 Anos de Tradição" com fotos reais | ⬜ | Rollback: Criar seção "40 Anos de Tradição" (Storytelling visual) |
+| 4.4 | Populer seção de depoimentos com reviews reais | ⬜ | Rollback: Criar seção de depoimentos (Minimalista) |
 | 4.5 | Criar página de política de garantia | ⬜ | Seguro + reposição grátis |
 | 4.6 | Personalizar checkout Yampi (visual da marca) | ⬜ | Cores e fontes alinhadas |
 | 4.7 | Páginas de coleção (design custom) | ⬜ | Grid premium com filtros |
@@ -149,11 +149,11 @@
 | Sprint | Tasks | Concluídas | % |
 |---|---|---|---|
 | Sprint 1 — Setup & Design System | 7 | 5 | 71% |
-| Sprint 2 — Homepage Premium | 14 | 14 | 100% |
-| Sprint 3 — Produto & Carrinho | 13 | 9 | 69% |
+| Sprint 2 — Homepage Premium | 14 | 10 | 71% |
+| Sprint 3 — Produto & Carrinho | 13 | 7 | 53% |
 | Sprint 4 — Conteúdo & Produtos | 9 | 0 | 0% |
 | Sprint 5 — Polish & QA | 9 | 0 | 0% |
-| **Total** | **52** | **28** | **54%** |
+| **Total** | **52** | **22** | **42%** |
 
 ---
 
@@ -164,6 +164,10 @@
 
 > [!NOTE]
 > **Workflow de desenvolvimento:** Todo o código Liquid é escrito localmente nesta workspace. Depois de pronto, o tema é empacotado e enviado para a Shopify. A edição de produtos (fotos, descrições, variantes) é feita via browser no admin da Shopify.
+
+> [!WARNING]
+> **Rollback Arquitetural (27/02/2026):** Uma refatoração recente inseriu graves bugs (Carrinho quebrando e CSS de produtos apagados). A pedido do usuário, o código do `Tema Shopify Premium` foi 100% revertido para o commit seguro `393480a`, porém a documentação (estudos frete, novas revisões e este todolist) foi mantida para histórico. A branch do código descartado é a `refatoracao-codigo-rejeitada`.
+
 
 ---
 
