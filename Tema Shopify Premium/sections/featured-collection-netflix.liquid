@@ -25,10 +25,8 @@
 
   .netflix-track-container {
     width: 100%;
-    max-width: 1440px;
-    margin: 0 auto;
     position: relative;
-    padding: 0 1.5rem;
+    padding-left: max(1.5rem, calc((100vw - 1440px) / 2 + 1.5rem));
   }
 
   .netflix-track {
@@ -36,18 +34,10 @@
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     gap: 1.5rem;
-    padding: 0 0 2.5rem 0;
+    padding: 0 1.5rem 2.5rem 0;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    justify-content: center; /* Mantém centralizado por padrão */
-  }
-
-  /* Se os produtos estourarem a largura, o justify-content: center pode quebrar o início,
-     então usamos flex-start apenas quando há overflow */
-  @media (max-width: 1440px) {
-    .netflix-track {
-      justify-content: flex-start;
-    }
+    justify-content: flex-start;
   }
 
   .netflix-track::-webkit-scrollbar {
@@ -62,11 +52,11 @@
 
   @media (max-width: 768px) {
     .netflix-track-container {
-      padding: 0 1rem;
+      padding-left: 1rem;
     }
     .netflix-track {
       gap: 1rem;
-      justify-content: flex-start;
+      padding-right: 1.5rem;
     }
     .netflix-slide {
       flex: 0 0 240px;
@@ -74,14 +64,13 @@
     }
   }
 
-
   /* Container Relativo para setas Absolutas */
   .netflix-carousel-wrapper {
     position: relative;
     width: 100%;
   }
 
-  /* Setas Navegação */
+  /* Setas Navegação - Estilo Hover */
   .netflix-nav-btn {
     width: 44px;
     height: 44px;
@@ -93,31 +82,25 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     color: var(--color-primary-dark);
     position: absolute;
-    top: 40%;
-    transform: translateY(-50%);
     z-index: 10;
+    opacity: 0; /* Invisível por padrão */
+    pointer-events: none;
   }
+
+  .netflix-carousel-wrapper:hover .netflix-nav-btn {
+    opacity: 1; /* Aparece no hover */
+    pointer-events: auto;
+  }
+
   .netflix-nav-btn:hover {
     background: var(--color-primary);
     color: #fff;
-    transform: translateY(-50%) scale(1.05);
+    transform: translateY(-50%) scale(1.1) !important;
   }
-  
-  .netflix-nav-btn.btn-prev { left: -22px; }
-  .netflix-nav-btn.btn-next { right: -22px; }
 
-  @media (max-width: 768px) {
-    /* Mantém as setas visíveis por acessibilidade (Público Sênior) mas traz elas para dentro do carrossel */
-    .netflix-nav-btn {
-      width: 38px;
-      height: 38px;
-    }
-    .netflix-nav-btn.btn-prev { left: 4px; }
-    .netflix-nav-btn.btn-next { right: 4px; }
-  }
 </style>
 
 <section class="netflix-slider-section" style="background-color: var(--color-background);">
