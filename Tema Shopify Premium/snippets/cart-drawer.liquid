@@ -1,0 +1,27 @@
+<div id="CartDrawer" class="cart-drawer">
+  <div id="CartDrawerOverlay" class="cart-drawer-overlay"></div>
+  <div class="cart-drawer-inner">
+    
+    <div class="cart-drawer-header flex justify-between items-center">
+      <h2 class="font-heading" style="font-size: 1.8rem;">Sua Colheita</h2>
+      <button type="button" id="CartDrawerClose" class="drawer-close-btn" aria-label="Fechar Carrinho">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div id="CartDrawerContent" class="cart-drawer-content">
+      <!-- AJAX Content here -->
+      <div class="drawer-loading">
+        <div class="spinner"></div>
+      </div>
+    </div>
+
+    <div class="cart-drawer-footer">
+       <!-- Totals and Checkout -->
+       <div id="CartDrawerFooterContent"></div>
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
+{{ 'cart-drawer.css' | asset_url | stylesheet_tag }}

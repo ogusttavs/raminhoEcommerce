@@ -259,7 +259,10 @@ class SmartAddToCart extends HTMLElement {
     })
       .then(response => response.json())
       .then(data => {
-        // Forçado via Yampi snippet posteriormente se necessário
+        // Trigger Cart Drawer Refresh
+        document.dispatchEvent(new CustomEvent('cart:refresh'));
+
+        // UI Feedback on button
         if (this.btnText) {
           this.btnText.innerHTML = '<span style="display:inline-flex; align-items:center; gap:6px; font-weight:700;"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Adicionado</span>';
         }

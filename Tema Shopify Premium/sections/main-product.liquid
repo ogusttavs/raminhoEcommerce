@@ -134,11 +134,28 @@
 
             {%- when 'description' -%}
               {%- if product.description != blank -%}
-                <div class="product-description-container" {{ block.shopify_attributes }}>
-                   <h3 class="font-heading" style="margin-bottom: 1rem; font-size: 1.4rem;">Sobre esta colheita</h3>
-                   <div class="product-description font-body">
+                <div class="product-accordions-group" {{ block.shopify_attributes }}>
+                  
+                  <details class="product-accordion" open>
+                    <summary class="accordion-header">
+                      <span class="font-heading">Sobre esta Colheita</span>
+                      <svg class="icon-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </summary>
+                    <div class="accordion-content font-body">
                       {{ product.description }}
-                   </div>
+                    </div>
+                  </details>
+
+                  <details class="product-accordion">
+                    <summary class="accordion-header">
+                      <span class="font-heading">Entrega & Frescor</span>
+                      <svg class="icon-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </summary>
+                    <div class="accordion-content font-body">
+                      <p>Sua encomenda é colhida no ponto perfeito de maturação. Entregamos em até 24h (D+1) em embalagens térmicas sustentáveis que garantem que a fruta chegue à sua mesa como se tivesse acabado de sair do pé.</p>
+                    </div>
+                  </details>
+
                 </div>
               {%- endif -%}
 
