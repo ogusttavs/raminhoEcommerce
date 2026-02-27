@@ -1,0 +1,109 @@
+{% comment %}
+  Template para Predictive Search (Busca Preditiva)
+  Renderiza resultados rápidos (Produtos, Coleções, Páginas) para o dropdown de busca.
+{% endcomment %}
+
+{%- if predictive_search.performed -%}
+  <div id="predictive-search-results">
+    {%- if predictive_search.resources.products.size > 0 -%}
+      <h3 id="predictive-search-products" class="predictive-search__heading font-heading">
+        Produtos
+      </h3>
+      <ul role="listbox" aria-labelledby="predictive-search-products" class="predictive-search__results-list">
+        {%- for product in predictive_search.resources.products -%}
+          <li role="option" class="predictive-search__list-item">
+            <a href="{{ product.url }}" class="predictive-search__item" tabindex="-1">
+              {%- if product.featured_media != blank -%}
+                <img class="predictive-search__item-image"
+                  src="{{ product.featured_media | image_url: width: 150 }}"
+                  alt="{{ product.featured_media.alt }}"
+                  width="50"
+                  height="{{ 50 | divided_by: product.featured_media.aspect_ratio | ceil }}"
+                >
+              {%- endif -%}
+              <div class="predictive-search__item-content text-left">
+                <span class="predictive-search__item-heading">{{ product.title }}</span>
+                <span class="predictive-search__item-price">{{ product.price | money }}</span>
+              </div>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if predictive_search.resources.collections.size > 0 -%}
+       <h3 id="predictive-search-collections" class="predictive-search__heading font-heading">
+        Coleções
+      </h3>
+      <ul role="listbox" aria-labelledby="predictive-search-collections" class="predictive-search__results-list">
+        {%- for collection in predictive_search.resources.collections -%}
+          <li role="option" class="predictive-search__list-item">
+            <a href="{{ collection.url }}" class="predictive-search__item" tabindex="-1">
+              <span class="predictive-search__item-heading">{{ collection.title }}</span>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if predictive_search.resources.products.size == 0 and predictive_search.resources.collections.size == 0 -%}
+      <div class="predictive-search__no-results text-center" style="padding: 2rem;">
+        <p>Nenhum resultado encontrado para "{{ predictive_search.terms }}".</p>
+      </div>
+    {%- endif -%}
+
+    <div class="predictive-search__view-all text-center" style="margin-top: 1rem; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 1rem;">
+      <button class="btn-text" onclick="this.closest('form').submit();">
+        Ver todos os resultados para "{{ predictive_search.terms }}"
+      </button>
+    </div>
+  </div>
+{%- endif -%}
+
+<style>
+  .predictive-search__heading {
+    font-size: 1.2rem;
+    padding: 1rem;
+    margin: 0;
+    color: var(--color-primary-dark);
+    background: var(--color-background-alt);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .predictive-search__results-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .predictive-search__item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem;
+    text-decoration: none;
+    color: var(--color-text);
+    transition: background 0.2s;
+  }
+  .predictive-search__item:hover {
+    background: var(--color-background-alt);
+  }
+  .predictive-search__item-image {
+    object-fit: cover;
+    border-radius: 4px;
+    background: #f9f9f9;
+  }
+  .predictive-search__item-heading {
+    display: block;
+    font-weight: 500;
+  }
+  .predictive-search__item-price {
+    font-size: 0.9rem;
+    opacity: 0.7;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Predictive Search",
+  "settings": []
+}
+{% endschema %}
