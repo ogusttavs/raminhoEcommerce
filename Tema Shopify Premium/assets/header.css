@@ -13,21 +13,32 @@
     padding: 1.5rem 0;
 }
 
-/* Floating Detached Bar on Scroll */
-.header-premium.is-sticky {
-    padding: 0.8rem 0;
+/* Floating Detached Bar - ALWAYS PILL STYLE (Apple Premium) */
+.header-inner {
+    background-color: rgba(255, 255, 255, 0.05);
+    /* Very subtle on green */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 40px;
+    max-width: 95%;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 70px;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 .header-premium.is-sticky .header-inner {
     background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 40px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-    max-width: 95%;
-    margin: 0 auto;
-    padding: 0 2rem;
+}
+
+.header-premium.is-on-product .header-inner {
+    border-color: rgba(255, 255, 255, 0.15);
 }
 
 .header-premium.is-hidden {
@@ -72,18 +83,15 @@
     stroke: #F7F3EB !important;
 }
 
-/* Product Page specific: Header is initially Green */
+/* Product Page specific: Header is initially Green but now as a Pill */
 .header-premium.is-on-product:not(.is-sticky) {
-    background: var(--color-primary-dark);
-    padding: 1rem 0;
-    /* Tighten briefly for static state */
+    background: transparent;
+    padding: 1.5rem 0;
 }
 
 .header-premium.is-on-product:not(.is-sticky) .header-inner {
-    background: transparent;
-    backdrop-filter: none;
-    border: none;
-    box-shadow: none;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .header-logo-text {

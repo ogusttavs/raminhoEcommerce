@@ -4,8 +4,8 @@
 */
 
 .product-section {
-    padding: 120px 0 6rem;
-    /* Space for the initial green header */
+    padding: 140px 0 6rem;
+    /* Extra space to not cover product under floating header */
     background-color: var(--color-background);
 }
 
