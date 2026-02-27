@@ -3,10 +3,10 @@
 | Metadado | Detalhe |
 |---|---|
 | **Nº do Documento** | DOC-009 |
-| **Versão** | 2.0 — Full Custom Build |
+| **Versão** | 3.0 — Revisão Corretiva Completa |
 | **Data de criação** | 26/02/2026 |
-| **Última atualização** | 26/02/2026 |
-| **Status geral** | ⬜ Aguardando aprovação do plano |
+| **Última atualização** | 27/02/2026 |
+| **Status geral** | 🔄 Em andamento |
 | **Plano Shopify** | Basic |
 | **Workflow** | Código feito localmente → Upload para Shopify → Produtos editados via browser |
 | **Docs relacionados** | [DOC-005 — Plano de Ação](./plano_de_acao_sprints.md) · [DOC-004 — Documento Principal](./documento_principal_projeto.md) |
@@ -28,9 +28,9 @@
 ---
 
 ## Sprint 1 — "Setup & Design System"
-**Status:** ✅ Concluída  
-**Estimativa:** 1.5 semanas  
-**Início:** 26/02/2026  
+**Status:** ✅ Concluída
+**Estimativa:** 1.5 semanas
+**Início:** 26/02/2026
 **Término:** 26/02/2026
 
 | # | Task | Status | Notas |
@@ -39,57 +39,60 @@
 | 1.2 | Design system: CSS variables (cores, fontes, espaçamentos, grid) | ✅ | Paleta verde/marrom/creme do DOC-002 |
 | 1.3 | Google Fonts: Playfair Display + DM Sans | ✅ | Em `theme.liquid` |
 | 1.4 | Migrar YampiSnippet para tema novo | ✅ | Copiado `snippets/YampiSnippet.liquid` antigo pro novo |
-| 1.5 | Configurar pedido mínimo R$129,90 | ✅ | `snippets/cart-validation.liquid` via JS com UI elegante |
-| 1.6 | Baixar fotos Freepik Premium para catálogo | ⏸️ | A ser feito paralelo ao design |
-| 1.7 | Tratar fotos (mesma consistência visual) | ⏸️ | A ser feito paralelo ao design |
+| 1.5 | Configurar pedido mínimo R$129,90 | ✅ | `snippets/cart-validation.liquid` via modal premium |
+| 1.6 | Baixar fotos Freepik Premium para catálogo | ⏸️ | Adiada para Sprint 4 (task 4.1). Depende de curadoria manual de produto. |
+| 1.7 | Tratar fotos (mesma consistência visual) | ⏸️ | Adiada para Sprint 4 (task 4.1). Depende das fotos da 1.6. |
 
 **Resultado:** Tema base (layout, reset CSS dinâmico, checkout yampi, validador de preço mínimo) estruturado no workspace.
 
 ---
 
 ## Sprint 2 — "Homepage Premium"
-**Status:** ✅ Concluída (Fase Código)  
-**Status:** 🔄 Em andamento  
-**Estimativa:** 1.5 semanas  
-**Início:** 26/02/2026  
-**Término:** 26/02/2026
+**Status:** ✅ Concluída
+**Estimativa:** 1.5 semanas
+**Início:** 26/02/2026
+**Término:** 27/02/2026
 
 | # | Task | Status | Notas |
 |---|---|---|---|
-| 2.1 | Códar base `templates/index.json` (OS 2.0) | ✅ | Estrutura modular da Homepage completada. |
-| 2.2 | Section: Header Premium Sticky (`header.liquid`) | ✅ | Comporta a logo, busca, e esconde no scroll down. |
-| 2.3 | Section: Immersive Hero Banner (`hero-banner.liquid`) | ✅ | Título impactante com efeito javascript Parallax sutil. |
-| 2.4 | Snippet: Product Card Premium | ✅ | Design clean, imagem dupla no hover, preparado pra grama/unid. |
-| 2.5 | Grid de categorias com hover animado | ✅ | Carrossel horizontal Netflix-style (`featured-collection-netflix`) implementado em CSS puro. |
-| 2.6 | Seção "Nossa Entrega" dark (motoboys + seguro + garantia) | ✅ | Construído em React/Liquid como `delivery-guarantee.liquid`. |
-| 2.7 | Comunicar pedido mínimo R$129,90 de forma elegante | ✅ | Presente do CSS Master até a listagem e no footer. |
+| 2.1 | Códar base `templates/index.json` (OS 2.0) | ✅ | Estrutura modular da Homepage completada (9 seções). |
+| 2.2 | Section: Header Premium Sticky (`header.liquid`) | ✅ | Logo centrado, menu mobile, busca, announcement bar. |
+| 2.3 | Section: Immersive Hero Banner (`hero-banner.liquid`) | ✅ | Título `<h1>` com efeito Parallax sutil. |
+| 2.4 | Snippet: Product Card Premium | ✅ | Design clean, preparado pra grama/unid. CSS/JS carregados pela section pai. |
+| 2.5 | Grid de categorias com hover animado | ✅ | `categories-grid.liquid` — grid 3 colunas com overlay e animação hover. |
+| 2.6 | Seção "Nossa Entrega" dark (motoboys + seguro + garantia) | ✅ | `delivery-guarantee.liquid` com D+1, reposição e pedido mínimo. |
+| 2.7 | Comunicar pedido mínimo R$129,90 de forma elegante | ✅ | Presente no delivery-guarantee, footer e cart-drawer. |
 | 2.8 | Criar bloco "Clube de Assinaturas" premium | ✅ | UI Teaser criado na home (`subscription-teaser.liquid`). |
 | 2.9 | Footer elegante (4 colunas) | ✅ | Cores dark e grids finalizados (`footer.liquid`). |
-| 2.10 | Newsletter section premium | ✅ | Formulário clean "Entre para o Culto" (`newsletter.liquid`). |
+| 2.10 | Newsletter section premium | ✅ | Formulário clean (`newsletter.liquid`). |
+| 2.11 | Seção "Mais Vendidos" com badges visuais | ✅ | `bestsellers.liquid` — grid com badges #1, #2, #3. |
+| 2.12 | Seção "40 Anos de Tradição" (storytelling) | ✅ | `tradition-story.liquid` — split layout com stats e imagem. |
+| 2.13 | Seção de Depoimentos de Clientes | ✅ | `testimonials.liquid` — cards com estrelas e avatares. |
+| 2.14 | Announcement Bar (Frete Grátis R$497) | ✅ | Barra creme no topo do header. |
 
-**Resultado:** Homepage completa nível Apple elaborada estruturalmente. Pronta para renderização local.
+**Resultado:** Homepage completa nível Apple com todas as seções do fluxo ideal DOC-011.
 
 ---
 
 ## Sprint 3 — "Produto & Carrinho"
-**Status:** ⬜ Não iniciada  
-**Estimativa:** 1.5 semanas  
-**Início:** *A definir*  
-**Término:** *A definir*
+**Status:** 🔄 Em andamento
+**Estimativa:** 1.5 semanas
+**Início:** 26/02/2026
+**Término:** *Em andamento*
 
 | # | Task | Status | Notas |
 |---|---|---|---|
 | 3.1 | Galeria de fotos estilo Apple (grande, zoom suave) | ✅ | Imagens responsivas empilhadas em split-screen |
 | 3.2 | Seletor Grama/Unidade (segmented control iOS-style) | ✅ | Vanilla JS `variant-selects` implementado com visual iOS |
-| 3.3 | Botão de compra sticky no mobile | ⬜ | Fixo ao scrollar |
+| 3.3 | Botão de compra sticky no mobile | ✅ | Fixo ao scrollar (Sticky Buy Bar). `product_form_id` declarado no escopo global. |
 | 3.4 | Selo de garantia sutil (design, não gritante) | ✅ | Injetado como bloco OS 2.0 |
-| 3.5 | Accordion clean para descrição | ⬜ | Expandível |
+| 3.5 | Accordion clean para descrição | ✅ | Expandível em main-product.liquid |
 | 3.6 | Seção de Reviews/Avaliações (design próprio) | ⬜ | Integrado ao tema |
-| 3.7 | Cross-sell "Combina com..." | ⬜ | Recomendações visuais elegantes |
+| 3.7 | Cross-sell "Combina com..." | ✅ | Recomendados unificados com estilo Flagship |
 | 3.8 | "Vistos recentemente" (carousel discreto) | ⬜ | Reengajamento |
-| 3.9 | Drawer cart premium (lateral, thumbnails, animado) | ⬜ | UX fluida |
-| 3.10 | Barra progresso frete grátis | ⬜ | "Faltam R$X para frete grátis" |
-| 3.11 | Bloqueio carrinho < R$129,90 com mensagem premium | ⬜ | Mensagem elegante, não agressiva |
+| 3.9 | Drawer cart premium (lateral, thumbnails, animado) | ✅ | UX fluida com AJAX |
+| 3.10 | Barra progresso frete grátis (R$ 497) | ✅ | `shippingThreshold = 49700` no cart-drawer.js |
+| 3.11 | Bloqueio carrinho < R$ 129,90 com mensagem premium | ✅ | `minOrderThreshold = 12990` no cart-drawer.js + modal premium no cart-validation |
 | 3.12 | Upsell discreto no carrinho | ⬜ | "Aproveite e leve também" |
 | 3.13 | Popup Validador de CEP (Gated Checkout) | ⬜ | Exigir CEP antes do botão Finalizar para barrar áreas não cobertas |
 
@@ -98,17 +101,17 @@
 ---
 
 ## Sprint 4 — "Conteúdo, Fotos & Produtos"
-**Status:** ⬜ Não iniciada  
-**Estimativa:** 1 semana  
-**Início:** *A definir*  
+**Status:** ⬜ Não iniciada
+**Estimativa:** 1 semana
+**Início:** *A definir*
 **Término:** *A definir*
 
 | # | Task | Status | Notas |
 |---|---|---|---|
-| 4.1 | Atualizar fotos de TODOS os 145+ produtos (Freepik) | ⬜ | Substituir IA por fotos premium |
+| 4.1 | Atualizar fotos de TODOS os 145+ produtos (Freepik) | ⬜ | Substituir IA por fotos premium (inclui tasks 1.6 e 1.7) |
 | 4.2 | Configurar variantes grama/unidade nos produtos | ⬜ | Produto a produto via Shopify admin (browser) |
-| 4.3 | Criar seção "40 Anos de Tradição" | ⬜ | Storytelling visual |
-| 4.4 | Criar seção de depoimentos | ⬜ | Minimalista |
+| 4.3 | Populer seção "40 Anos de Tradição" com fotos reais | ⬜ | Section `tradition-story.liquid` já criada, falta conteúdo real |
+| 4.4 | Populer seção de depoimentos com reviews reais | ⬜ | Section `testimonials.liquid` já criada, falta conteúdo real |
 | 4.5 | Criar página de política de garantia | ⬜ | Seguro + reposição grátis |
 | 4.6 | Personalizar checkout Yampi (visual da marca) | ⬜ | Cores e fontes alinhadas |
 | 4.7 | Páginas de coleção (design custom) | ⬜ | Grid premium com filtros |
@@ -120,9 +123,9 @@
 ---
 
 ## Sprint 5 — "Polish, Performance & QA"
-**Status:** ⬜ Não iniciada  
-**Estimativa:** 1 semana  
-**Início:** *A definir*  
+**Status:** ⬜ Não iniciada
+**Estimativa:** 1 semana
+**Início:** *A definir*
 **Término:** *A definir*
 
 | # | Task | Status | Notas |
@@ -146,11 +149,11 @@
 | Sprint | Tasks | Concluídas | % |
 |---|---|---|---|
 | Sprint 1 — Setup & Design System | 7 | 5 | 71% |
-| Sprint 2 — Homepage Premium | 10 | 10 | 100% |
-| Sprint 3 — Produto & Carrinho | 13 | 0 | 0% |
-| Sprint 4 — Conteúdo & Produtos | 7 | 0 | 0% |
+| Sprint 2 — Homepage Premium | 14 | 14 | 100% |
+| Sprint 3 — Produto & Carrinho | 13 | 9 | 69% |
+| Sprint 4 — Conteúdo & Produtos | 9 | 0 | 0% |
 | Sprint 5 — Polish & QA | 9 | 0 | 0% |
-| **Total** | **46** | **15** | **32%** |
+| **Total** | **52** | **28** | **54%** |
 
 ---
 
@@ -164,4 +167,4 @@
 
 ---
 
-> **Última atualização:** 26/02/2026 — Documentação v2.0 criada (Full Custom Build), aguardando aprovação para iniciar Sprint 1.
+> **Última atualização:** 27/02/2026 — Revisão corretiva v3.0. Todas as seções ausentes da homepage criadas. Percentuais recalculados com precisão.

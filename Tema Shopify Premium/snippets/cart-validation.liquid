@@ -1,28 +1,133 @@
-<!-- Minimum Order Validation Logic (R$ 129,90) -->
+<!-- Minimum Order Validation Logic (R$ 129,90) — Modal Premium Apple Style -->
+<div id="MinOrderModal" class="min-order-modal" style="display:none;">
+  <div class="min-order-modal-overlay"></div>
+  <div class="min-order-modal-content">
+    <button type="button" class="min-order-modal-close" aria-label="Fechar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="min-order-modal-icon">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+    </div>
+    <h3 class="min-order-modal-title font-heading">Qualidade premium até na entrega</h3>
+    <p class="min-order-modal-text font-body" id="MinOrderModalText"></p>
+    <a href="/collections/all" class="min-order-modal-btn btn-primary-apple">Continuar Comprando</a>
+  </div>
+</div>
+
+<style>
+  .min-order-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .min-order-modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(7, 61, 36, 0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .min-order-modal-content {
+    position: relative;
+    background: #fff;
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    animation: modalSlideUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  @keyframes modalSlideUp {
+    from { opacity: 0; transform: translateY(20px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .min-order-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: opacity 0.2s;
+    padding: 4px;
+  }
+
+  .min-order-modal-close:hover {
+    opacity: 1;
+  }
+
+  .min-order-modal-icon {
+    margin-bottom: 1.2rem;
+  }
+
+  .min-order-modal-title {
+    font-size: 1.3rem;
+    color: var(--color-primary-dark);
+    margin-bottom: 0.8rem;
+  }
+
+  .min-order-modal-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    opacity: 0.75;
+    margin-bottom: 1.5rem;
+  }
+
+  .min-order-modal-btn {
+    display: inline-block;
+    padding: 0.9rem 2rem;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+</style>
+
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // 12990 centavos = R$ 129,90
     const MINIMUM_ORDER_CENTS = 12990;
-    
-    // Formatar moeda (ex: R$ 129,90)
+
     const formatMoney = (cents) => {
-      return 'R$ ' + (cents / 100).toFixed(2).replace('.', ',');
+      return (cents / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     };
 
     const cartTotalCents = {{ cart.total_price | default: 0 }};
     const diffCents = MINIMUM_ORDER_CENTS - cartTotalCents;
+    const modal = document.getElementById('MinOrderModal');
+    const modalText = document.getElementById('MinOrderModalText');
+    const overlay = modal.querySelector('.min-order-modal-overlay');
+    const closeBtn = modal.querySelector('.min-order-modal-close');
 
-    // Busca botões de finalização de compra na página
+    function openModal() {
+      modalText.textContent = 'Nosso pedido mínimo é de ' + formatMoney(MINIMUM_ORDER_CENTS) + ' para cobrir o envio com motoboys próprios, seguro contra danos e garantia de reposição gratuita. Falta apenas ' + formatMoney(diffCents) + ' para finalizar.';
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    overlay.addEventListener('click', closeModal);
+    closeBtn.addEventListener('click', closeModal);
+
     const checkoutButtons = document.querySelectorAll('button[name="checkout"], input[name="checkout"], a[href="/checkout"], .btn-checkout-yampi');
-    
+
     if (checkoutButtons.length > 0 && cartTotalCents > 0 && cartTotalCents < MINIMUM_ORDER_CENTS) {
       checkoutButtons.forEach(btn => {
         btn.addEventListener('click', function(e) {
           e.preventDefault();
-          alert(`Qualidade premium até na porta da sua casa! 🍏\n\nNosso pedido mínimo é de ${formatMoney(MINIMUM_ORDER_CENTS)} para cobrir o envio com motoboys próprios, seguro contra danos físicos e garantia de reposição gratuita em caso de frutas fora do padrão.\n\nFalta apenas ${formatMoney(diffCents)} para você finalizar o seu pedido. Aproveite nossas novidades!`);
+          openModal();
         });
-        
-        // Estilização visual (opcional) indicando bloqueio
         btn.style.opacity = '0.5';
         btn.style.cursor = 'not-allowed';
       });

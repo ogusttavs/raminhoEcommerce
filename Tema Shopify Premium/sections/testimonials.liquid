@@ -1,0 +1,221 @@
+<style>
+  .testimonials-section {
+    padding: 5rem 0;
+    background-color: var(--color-background-alt, #faf8f4);
+  }
+
+  .testimonials-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .testimonials-title {
+    font-size: 2.2rem;
+    color: var(--color-primary-dark);
+    margin-bottom: 0.5rem;
+  }
+
+  .testimonials-subtitle {
+    font-size: 1rem;
+    opacity: 0.6;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .testimonials-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .testimonial-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .testimonial-stars {
+    display: flex;
+    gap: 2px;
+    color: var(--color-accent, #E87A2D);
+  }
+
+  .testimonial-text {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--color-text-main);
+    flex: 1;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .testimonial-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .testimonial-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-primary-dark);
+  }
+
+  .testimonial-location {
+    font-size: 0.8rem;
+    opacity: 0.5;
+  }
+</style>
+
+<section class="testimonials-section">
+  <div class="container">
+    <div class="testimonials-header">
+      <h2 class="testimonials-title font-heading">{{ section.settings.title }}</h2>
+      {% if section.settings.subtitle != blank %}
+        <p class="testimonials-subtitle font-body">{{ section.settings.subtitle }}</p>
+      {% endif %}
+    </div>
+
+    <div class="testimonials-grid">
+      {% for block in section.blocks %}
+        <div class="testimonial-card" {{ block.shopify_attributes }}>
+          <div class="testimonial-stars">
+            {% assign stars = block.settings.rating | default: 5 %}
+            {% for i in (1..5) %}
+              {% if i <= stars %}
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              {% else %}
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <p class="testimonial-text font-body">"{{ block.settings.text }}"</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar font-body">
+              {{ block.settings.name | slice: 0 }}
+            </div>
+            <div>
+              <span class="testimonial-name font-body">{{ block.settings.name }}</span>
+              {% if block.settings.location != blank %}
+                <p class="testimonial-location font-body">{{ block.settings.location }}</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Depoimentos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "O Que Nossos Clientes Dizem"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "A confiança de quem experimenta, permanece."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Depoimento",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nome do Cliente",
+          "default": "Maria S."
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Bairro / Cidade",
+          "default": "Jardins, SP"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Depoimento",
+          "default": "As frutas chegaram perfeitas, como se eu tivesse escolhido pessoalmente no Mercadão. Qualidade absurda e entrega impecável."
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "label": "Avaliação (Estrelas)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Depoimentos",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "name": "Maria S.",
+            "location": "Jardins, SP",
+            "text": "As frutas chegaram perfeitas, como se eu tivesse escolhido pessoalmente no Mercadão. Qualidade absurda e entrega impecável.",
+            "rating": 5
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "name": "Roberto M.",
+            "location": "Moema, SP",
+            "text": "Peço toda semana. A comodidade de receber frutas premium em casa sem sair do sofá não tem preço. E quando veio uma fruta com marca, mandei foto e no mesmo dia já tinham reposto.",
+            "rating": 5
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "name": "Ana Paula C.",
+            "location": "Alphaville, SP",
+            "text": "Minha mãe não entendia muito de comprar online, mas o site é tão fácil que ela mesma fez o pedido. Chegou tudo lindo no dia seguinte.",
+            "rating": 5
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
