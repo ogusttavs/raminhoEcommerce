@@ -77,11 +77,12 @@
                     {{ product.variants | json }}
                   </script>
                 </variant-selects>
+              <!-- Variante Picker Fim -->
               {%- endunless -%}
             
+            {%- when 'buy_buttons' -%}
               <div {{ block.shopify_attributes }} style="margin-bottom: 2.5rem;">
                 <smart-add-to-cart data-section="{{ section.id }}">
-                  {%- assign product_form_id = 'product-form-' | append: section.id -%}
                   {%- form 'product', product, id: product_form_id, class: 'product-form' -%}
                     <input type="hidden" name="id" class="variant-id-input" value="{{ cheapest_variant.id }}">
                     
@@ -277,6 +278,11 @@
     {
       "type": "variant_picker",
       "name": "Seletor de Variantes",
+      "limit": 1
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Botão de Compra",
       "limit": 1
     },
     {

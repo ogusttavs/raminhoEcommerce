@@ -26,6 +26,12 @@
     <!-- Design System (Cores Dinâmicas via Painel Admin) -->
     {% render 'css-variables' %}
     {{ 'design-system.css' | asset_url | stylesheet_tag }}
+    {{ 'cart-drawer.css' | asset_url | stylesheet_tag }}
+    {{ 'product-page.css' | asset_url | stylesheet_tag }}
+
+    <!-- Global Utilities & Cart Logic -->
+    <script src="{{ 'raminho-utils.js' | asset_url }}"></script>
+    <script src="{{ 'smart-add-to-cart.js' | asset_url }}" defer="defer"></script>
 
     {{ content_for_header }}
     

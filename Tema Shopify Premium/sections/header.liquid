@@ -7,6 +7,15 @@
 
 {{ 'header.css' | asset_url | stylesheet_tag }}
 
+<!-- Announcement Bar — Controlada via Schema -->
+{% if section.settings.show_announcement %}
+<div class="announcement-bar" id="AnnouncementBar">
+  <div class="container">
+    <p class="announcement-bar-text font-body">{{ section.settings.announcement_text }}</p>
+  </div>
+</div>
+{% endif %}
+
 <header class="header-premium {% if template.name == 'product' %}is-on-product{% endif %}" id="SiteHeader">
   <div class="container header-inner flex justify-between items-center">
     
@@ -66,9 +75,7 @@
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M6 19L3 6h18l-3 13H6zM9 6V4a3 3 0 0 1 6 0v2M4 10h16"/>
         </svg>
-        {% if cart.item_count > 0 %}
-          <span class="cart-count">{{ cart.item_count }}</span>
-        {% endif %}
+        <span class="cart-count" {% if cart.item_count == 0 %}style="display:none;"{% endif %}>{{ cart.item_count }}</span>
       </a>
     </div>
   </div>
@@ -231,6 +238,22 @@
       "default": 100,
       "unit": "px",
       "label": "Largura da Logo"
+    },
+    {
+      "type": "header",
+      "content": "Barra de Anúncio"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Mostrar barra de anúncio",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Texto do anúncio",
+      "default": "Frete grátis acima de R$ 497 para toda Grande SP"
     }
   ]
 }
