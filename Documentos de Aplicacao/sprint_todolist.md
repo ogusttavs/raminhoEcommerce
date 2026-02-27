@@ -9,6 +9,7 @@
 | **Status geral** | 🔄 Em andamento |
 | **Plano Shopify** | Basic |
 | **Workflow** | Código feito localmente → Upload para Shopify → Produtos editados via browser |
+| **Links Rápidos** | [🔗 Editor Visual da Shopify](https://admin.shopify.com/store/cd592c-2/themes/169549693205/editor) <br> [🌐 Loja ao Vivo](https://cd592c-2.myshopify.com) |
 | **Docs relacionados** | [DOC-005 — Plano de Ação](../Estudos e Plano de Acao/plano_de_acao_sprints.md) · [DOC-004 — Documento Principal](./documento_principal_projeto.md) |
 
 > ⚠️ Este documento é **vivo** — deve ser atualizado ao final de cada tarefa/sprint.
