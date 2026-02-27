@@ -100,8 +100,8 @@ class CartDrawer {
         this.content.innerHTML = html;
 
         // Shipping Progress & Minimum Order Logic
-        const shippingThreshold = 59700; // R$ 597
-        const minOrderThreshold = 10990; // R$ 109,90
+        const shippingThreshold = 49700; // R$ 497,00 (Official per DOC-004)
+        const minOrderThreshold = 12990; // R$ 129,90 (Official per DOC-004)
 
         const remainingShipping = shippingThreshold - cart.total_price;
         const remainingMinOrder = minOrderThreshold - cart.total_price;
@@ -154,7 +154,7 @@ class CartDrawer {
             <a href="${isMinOrderMet ? '/checkout' : '#'}" 
                class="btn-primary-apple" 
                style="width: 100%; display: flex; justify-content: center; font-size: 1.1rem; ${!isMinOrderMet ? 'opacity: 0.2; cursor: not-allowed; filter: grayscale(1); pointer-events: none;' : ''}">
-               ${isMinOrderMet ? 'Finalizar Compra' : 'Mínimo R$ 109,90'}
+               ${isMinOrderMet ? 'Finalizar Compra' : 'Mínimo R$ 129,90'}
             </a>
             <p class="font-body" style="text-align: center; font-size: 0.8rem; margin-top: 1rem; opacity: 0.5;">
                ${isMinOrderMet ? 'Sua colheita está pronta!' : 'Adicione mais itens para prosseguir.'}

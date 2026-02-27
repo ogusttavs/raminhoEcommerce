@@ -1,6 +1,7 @@
 {{ 'product-page.css' | asset_url | stylesheet_tag }}
 
 <section class="product-section">
+  {%- assign product_form_id = 'product-form-' | append: section.id -%}
   <div class="container">
     <div class="product-grid">
       
