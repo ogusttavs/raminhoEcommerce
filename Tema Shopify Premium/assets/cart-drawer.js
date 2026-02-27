@@ -100,7 +100,7 @@ class CartDrawer {
         this.content.innerHTML = html;
 
         // Shipping Progress & Minimum Order Logic
-        const shippingThreshold = 25000; // R$ 250
+        const shippingThreshold = 59700; // R$ 597
         const minOrderThreshold = 10990; // R$ 109,90
 
         const remainingShipping = shippingThreshold - cart.total_price;

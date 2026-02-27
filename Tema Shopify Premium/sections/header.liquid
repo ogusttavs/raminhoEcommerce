@@ -12,7 +12,7 @@
     
     <!-- Esquerda: Menu Hamburger (Mobile) & Busca -->
     <div class="header-left flex items-center">
-      <button class="header-icon-btn hidden-desktop" aria-label="Menu">
+      <button class="header-icon-btn hidden-desktop" aria-label="Menu" onclick="openMenu()">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
       <button class="header-icon-btn hidden-mobile" aria-label="Buscar" onclick="openSearch()">
@@ -52,6 +52,33 @@
         {% endif %}
       </a>
     </div>
+  </div>
+
+  <!-- Menu Drawer (Mobile) -->
+  <div id="MenuDrawer" class="menu-drawer">
+    <div class="menu-drawer-inner">
+       <div class="menu-drawer-header flex justify-between items-center">
+          <h2 class="font-heading" style="font-size: 1.5rem;">Menu</h2>
+          <button class="header-icon-btn" onclick="closeMenu()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+       </div>
+       <nav class="menu-drawer-nav">
+          <ul class="menu-drawer-links no-bullets">
+             <li><a href="/" class="font-body">Início</a></li>
+             <li><a href="/collections/all" class="font-body">Produtos</a></li>
+             <li><a href="/collections" class="font-body">Coleções</a></li>
+             <li><a href="/pages/sobre-nos" class="font-body">Nossa Safra</a></li>
+             <li><a href="/pages/contato" class="font-body">Suporte</a></li>
+          </ul>
+       </nav>
+       <div class="menu-drawer-footer">
+          <a href="{{ routes.account_url }}" class="btn-primary-apple" style="width: 100%; display: flex; justify-content: center; font-size: 0.9rem;">
+             Minha Conta
+          </a>
+       </div>
+    </div>
+    <div class="menu-drawer-overlay" onclick="closeMenu()"></div>
   </div>
 
   <!-- Search Drawer -->
@@ -107,6 +134,19 @@
       lastScrollY = window.scrollY;
     }, { passive: true });
   });
+
+  // Menu Toggle
+  function openMenu() {
+    const drawer = document.getElementById('MenuDrawer');
+    drawer.classList.add('is-active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    const drawer = document.getElementById('MenuDrawer');
+    drawer.classList.remove('is-active');
+    document.body.style.overflow = '';
+  }
 
   // Search Toggle
   function openSearch() {
