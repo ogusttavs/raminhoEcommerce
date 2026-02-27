@@ -10,11 +10,13 @@
       </div>
     </div>
 
-    <div class="product-recommendations" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=4">
+    <div class="product-recommendations" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=6">
       {%- if recommendations.performed and recommendations.products_count > 0 -%}
         <div class="product-grid-netflix">
           {%- for recommended_product in recommendations.products -%}
-            {% render 'product-card-premium', product: recommended_product, section: section %}
+            <div class="netflix-item" style="min-width: 280px; flex-shrink: 0;">
+              {% render 'product-card-premium', product: recommended_product, section: section %}
+            </div>
           {%- endfor -%}
         </div>
       {%- endif -%}

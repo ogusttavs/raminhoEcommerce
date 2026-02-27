@@ -112,7 +112,7 @@
                       <button type="submit" 
                               name="add" 
                               class="product-add-to-cart font-body"
-                              style="display: flex; justify-content: space-between; align-items: center; width: 100%; border:none; outline:none; box-shadow: 0 8px 20px rgba(13, 124, 74, 0.2);"
+                              style="display: flex; justify-content: space-between; align-items: center; width: 100%; border:none; outline:none; background-color: var(--color-primary); color: #fff; border-radius: 50px; padding: 1.2rem 2rem; box-shadow: 0 8px 20px rgba(13, 124, 74, 0.2); cursor: pointer;"
                               {% if cheapest_variant.available == false %}disabled{% endif %}>
                         <span class="btn-text" style="font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">
                           {% if cheapest_variant.available %}
