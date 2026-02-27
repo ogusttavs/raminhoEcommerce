@@ -122,28 +122,27 @@
     let lastScrollY = window.scrollY;
 
     window.addEventListener('scroll', () => {
-      // Toggle color based on scroll (out of hero)
-      if (window.scrollY > 100) {
+      const scrollPos = window.scrollY;
+      
+      // 1. Color Change (Soon after start)
+      if (scrollPos > 100) {
         header.classList.add('is-scrolled');
       } else {
         header.classList.remove('is-scrolled');
       }
 
-      // Sticky floating logic: appears when leaving hero, stays until back to top
-      if (window.scrollY > 400) {
+      // 2. Floating Pill Logic (Once out of Hero)
+      // We use a threshold of 300px to ensure we are clearly out of the first section
+      if (scrollPos > 300) {
         header.classList.add('is-sticky');
-        
-        // Hide only if scrolling deep, otherwise stay
-        if (window.scrollY > lastScrollY && window.scrollY > 800) {
-          header.classList.add('is-hidden');
-        } else {
-          header.classList.remove('is-hidden');
-        }
       } else {
         header.classList.remove('is-sticky');
-        header.classList.remove('is-hidden');
       }
-      lastScrollY = window.scrollY;
+      
+      // Removed the 'is-hidden' logic that was hiding it on scroll down,
+      // as per user request to have constant access until back to the start.
+      
+      lastScrollY = scrollPos;
     }, { passive: true });
   });
 
