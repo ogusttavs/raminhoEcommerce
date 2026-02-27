@@ -55,10 +55,16 @@
     transition: filter 0.3s ease;
 }
 
-/* Heritage Color Mode for Green Section (Cream/Beige) */
-.header-premium:not(.is-scrolled) .header-logo-img.header--white,
+/* Initial Heritage Color State (Cream/Beige) over Green Hero */
+.header-premium:not(.is-scrolled) .header-logo img,
 .header-premium:not(.is-scrolled) .header-icon-btn {
-    filter: invert(93%) sepia(5%) saturate(543%) hue-rotate(345deg) brightness(101%) contrast(94%);
+    color: #F7F3EB !important;
+    /* Beige da marca */
+}
+
+.header-premium:not(.is-scrolled) .header-logo img {
+    /* Since the logo is an SVG/IMG, we use brightness/sepia filters specifically to reach the beige #F7F3EB */
+    filter: invert(93%) sepia(23%) saturate(163%) hue-rotate(345deg) brightness(101%) contrast(96%) !important;
 }
 
 .header-logo-text {
@@ -95,7 +101,7 @@
     top: 0px;
     right: -2px;
     background-color: var(--color-primary);
-    color: #fff;
+    color: #fff !important;
     font-size: 0.65rem;
     font-weight: 700;
     height: 16px;
@@ -107,6 +113,11 @@
     padding: 0 4px;
     line-height: 1;
     font-family: var(--font-body);
+}
+
+/* Ensure hamburger and other icons are beige on green */
+.header-premium:not(.is-scrolled) .header-icon-btn svg {
+    stroke: #F7F3EB !important;
 }
 
 /* Utilities inside header */
