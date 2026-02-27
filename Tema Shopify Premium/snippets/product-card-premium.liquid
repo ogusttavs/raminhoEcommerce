@@ -19,16 +19,6 @@
              width="600" 
              height="600" 
              class="product-img">
-             
-        <!-- Hover Image (if second image exists) -->
-        {% if product.images.size > 1 %}
-          <img src="{{ product.images[1] | image_url: width: 600 }}" 
-               alt="{{ product.title | escape }}" 
-               loading="lazy" 
-               width="600" 
-               height="600" 
-               class="product-img-hover">
-        {% endif %}
       {% else %}
         <div class="product-placeholder"></div>
       {% endif %}
