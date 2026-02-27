@@ -19,7 +19,8 @@
       </div>
 
       <!-- Lado Direito: Informações Fixas (Sticky) -->
-      <div class="product-form-container">
+      <div class="product-info-sticky">
+        <div class="product-info-inner">
         {% assign cheapest_variant = product.variants | sort: 'price' | first %}
         
         <!-- Renderiza os blocos na ordem que o lojista definiu no painel da Shopify -->
@@ -30,11 +31,15 @@
               {% render block %}
             
             {%- when 'title' -%}
-              <h1 class="product-title font-heading" {{ block.shopify_attributes }}>{{ product.title }}</h1>
+              <div class="product-header-group" {{ block.shopify_attributes }}>
+                <span class="product-eyebrow font-body">Safra Especial Raminho</span>
+                <h1 class="product-title font-heading">{{ product.title }}</h1>
+              </div>
             
             {%- when 'price' -%}
               <div class="product-price-wrapper" id="price-{{ section.id }}" {{ block.shopify_attributes }}>
-                <span class="product-price">{{ cheapest_variant.price | money }}</span>
+                <span class="product-price-label font-body">A partir de</span>
+                <span class="product-price price-current">{{ cheapest_variant.price | money }}</span>
               </div>
             
             {%- when 'variant_picker' -%}
@@ -42,9 +47,9 @@
               {%- unless product.has_only_default_variant -%}
                 <variant-selects data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
                   {%- for option in product.options_with_values -%}
-                    <div class="variant-selector-wrapper" {% if forloop.index0 > 0 %}style="display:none;"{% else %}style="margin-bottom: 1.5rem;"{% endif %}>
+                    <div class="variant-selector-wrapper" {% if forloop.index0 > 0 %}style="display:none;"{% else %}style="margin-bottom: 2rem;"{% endif %}>
                       <label class="variant-label font-body">{{ option.name }}</label>
-                      <div class="segmented-control" style="background: rgba(0,0,0,0.04); padding: 4px; border-radius: 12px;">
+                      <div class="segmented-control">
                         {%- for value in option.values -%}
                           {% assign is_checked = false %}
                           {% if cheapest_variant.options[forloop.parentloop.index0] == value %}
@@ -56,7 +61,6 @@
                                  class="variant-radio"
                                  name="options[{{ option.name | escape }}]"
                                  value="{{ value | escape }}"
-                                 form="product-form-{{ section.id }}"
                                  {% if is_checked %}checked{% endif %}
                           >
                           <label class="segmented-btn" style="user-select: none;" for="Option-{{ section.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}">
@@ -74,28 +78,32 @@
                 </variant-selects>
               {%- endunless -%}
             
-            {%- when 'buy_buttons' -%}
-              <div {{ block.shopify_attributes }} style="margin-bottom: 2rem;">
+              <div {{ block.shopify_attributes }} style="margin-bottom: 2.5rem;">
                 <smart-add-to-cart data-section="{{ section.id }}">
-                  {%- form 'product', product, id: 'product-form-' | append: section.id, class: 'product-form' -%}
+                  {%- assign product_form_id = 'product-form-' | append: section.id -%}
+                  {%- form 'product', product, id: product_form_id, class: 'product-form' -%}
                     <input type="hidden" name="id" class="variant-id-input" value="{{ cheapest_variant.id }}">
                     
+                    <div class="buy-section-labels flex justify-between items-end" style="margin-bottom: 0.8rem;">
+                       <span class="font-body" style="font-size: 0.85rem; opacity: 0.6; text-transform: uppercase; font-weight: 600;">Quantidade</span>
+                       <span class="font-body" style="font-size: 0.85rem; opacity: 0.6; text-transform: uppercase; font-weight: 600;">Subtotal</span>
+                    </div>
+
                     <!-- Smart Quantity Stepper iOS Style -->
-                    <div class="product-qty-stepper flex items-center justify-between" style="background: #fff; padding: 0.5rem; border-radius: 12px; margin-bottom: 1rem; border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
-                      <button type="button" class="stepper-btn stepper-minus text-dark" style="width: 50px; height: 50px; border:none; background:transparent; font-size:1.8rem; cursor:pointer; outline:none;" aria-label="Diminuir">
+                    <div class="product-qty-stepper flex items-center justify-between">
+                      <button type="button" class="stepper-btn stepper-minus text-dark" aria-label="Diminuir">
                         &minus;
                       </button>
                       
                       <input type="number" name="quantity" class="stepper-input hidden" value="1" min="1" style="display:none;">
                       
-                      <div class="stepper-display" style="flex:1; display:flex; justify-content:center; align-items:center;">
-                        <span class="stepper-text font-body text-dark" style="font-weight: 600; font-size: 1.2rem; line-height: 1;">
-                          <!-- JS Init -->
+                      <div class="stepper-display">
+                        <span class="stepper-text font-body text-dark">
                           1 un
                         </span>
                       </div>
 
-                      <button type="button" class="stepper-btn stepper-plus text-dark" style="width: 50px; height: 50px; border:none; background:transparent; font-size:1.8rem; cursor:pointer; outline:none;" aria-label="Aumentar">
+                      <button type="button" class="stepper-btn stepper-plus text-dark" aria-label="Aumentar">
                         &plus;
                       </button>
                     </div>
@@ -126,20 +134,23 @@
 
             {%- when 'description' -%}
               {%- if product.description != blank -%}
-                <div class="product-description" {{ block.shopify_attributes }}>
-                  {{ product.description }}
+                <div class="product-description-container" {{ block.shopify_attributes }}>
+                   <h3 class="font-heading" style="margin-bottom: 1rem; font-size: 1.4rem;">Sobre esta colheita</h3>
+                   <div class="product-description font-body">
+                      {{ product.description }}
+                   </div>
                 </div>
               {%- endif -%}
 
             {%- when 'trust_badge' -%}
-              <div class="trust-badge flex items-center" style="gap: 1rem; margin-top: 2rem; opacity: 0.8;" {{ block.shopify_attributes }}>
+              <div class="trust-badge flex items-center" style="gap: 1rem; margin-top: 3rem; opacity: 0.8;" {{ block.shopify_attributes }}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-primary);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                 <span class="font-body" style="font-size: 0.9rem;">Entrega D+1 Cuidadosa. Frescor Garantido Raminho.</span>
               </div>
               
           {%- endcase -%}
         {%- endfor -%}
-
+        </div>
       </div>
     </div>
   </div>
