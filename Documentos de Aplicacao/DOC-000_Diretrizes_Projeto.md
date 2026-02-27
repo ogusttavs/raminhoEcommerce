@@ -71,7 +71,14 @@ A pasta principal de inteligência do projeto é a **`Documentos de Aplicacao/`*
 1. **`LOG-001_Registro_de_Acoes.md`**: O que aconteceu, hoje.
 2. **`sprint_todolist.md`** (DOC-009): Para onde vamos amanhã (checklists).
 3. **`documento_principal_projeto.md`** (DOC-004): Regras do Negócio.
-4. **`direcao_criativa_referencias.md`** (DOC-011): A estética visual do projeto.
+---
+## 5. Público Alvo e Acessibilidade (O Perfil "Avó")
 
+É crucial que TODO elemento interativo seja desenhado pensando na **acessibilidade de um público mais sênior (Idoso)**. Ter um poder aquisitivo alto para gastar "R$ 100 no kilo do morango" denota que frequentemente nossos compradores não são "jovens de 21 anos super integrados a tecnologia".
+
+> 👵 **REGRA DA AVÓ:**
+> 1. Se uma funcionalidade for desenhada apenas com "Swipe" (deslizar) ou Gestos Complexos (duplo clique), ela é inválida. Tudo deve ter **botões físicos claros** (exemplo: Setas de Carrossel explicitamente à mostra no celular).
+> 2. Fontes não podem ser minúsculas e cores precisam ter alto contraste.
+> 3. Menus e caminhos de chekout não podem ter "surpresas escondidas" ou exigirem adivinhação. O carrinho de compra deve fazer o usuário se sentir no mais perfeito controle do que ele está inserindo.
 ---
 **Fim das Diretrizes.** Com a aprovação destas regras e com o Git inicializado, a Sprint 1 (Design System & Infraestrutura CSS) tem autorização para começar.

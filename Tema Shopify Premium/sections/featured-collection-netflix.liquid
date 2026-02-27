@@ -102,10 +102,13 @@
   .netflix-nav-btn.btn-next { right: -22px; }
 
   @media (max-width: 768px) {
-    /* Esconde as setas no Mobile porque usamos Swipe natural com Peeking out */
+    /* Mantém as setas visíveis por acessibilidade (Público Sênior) mas traz elas para dentro do carrossel */
     .netflix-nav-btn {
-      display: none !important;
+      width: 38px;
+      height: 38px;
     }
+    .netflix-nav-btn.btn-prev { left: 4px; }
+    .netflix-nav-btn.btn-next { right: 4px; }
   }
 </style>
 
@@ -166,13 +169,15 @@
     const btnNext = document.getElementById('next-{{ section.id }}');
 
     if(track && btnPrev && btnNext) {
-      const scrollAmount = window.innerWidth > 768 ? 320 + 24 : 280 + 24; // width + gap
-      
       btnNext.addEventListener('click', () => {
+        const slide = track.querySelector('.netflix-slide');
+        const scrollAmount = slide ? slide.offsetWidth + 24 : 344;
         track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
       });
 
       btnPrev.addEventListener('click', () => {
+        const slide = track.querySelector('.netflix-slide');
+        const scrollAmount = slide ? slide.offsetWidth + 24 : 344;
         track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
       });
     }
