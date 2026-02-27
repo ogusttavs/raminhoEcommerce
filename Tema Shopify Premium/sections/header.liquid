@@ -30,7 +30,12 @@
                height="auto" 
                loading="eager">
         {% else %}
-          <span class="font-heading header-logo-text">{{ shop.name }}</span>
+          <img src="{{ 'logo_heritage_moderna.png' | asset_url }}" 
+               alt="{{ shop.name }}" 
+               width="{{ section.settings.logo_width | default: 120 }}" 
+               height="auto" 
+               loading="eager"
+               style="border-radius: 4px; mix-blend-mode: multiply;">
         {% endif %}
       </a>
     </div>
