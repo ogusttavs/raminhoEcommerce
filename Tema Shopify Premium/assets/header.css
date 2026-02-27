@@ -62,9 +62,9 @@
     /* Beige Oficial */
 }
 
-/* Precise filter to achieve #F7F3EB starting from Green/Black base */
+/* Precise filter to achieve #F7F3EB starting from ANY base color (forces black first) */
 .header-premium:not(.is-scrolled) .header-logo img {
-    filter: invert(98%) sepia(3%) saturate(1007%) hue-rotate(303deg) brightness(102%) contrast(97%) !important;
+    filter: brightness(0) invert(97%) sepia(4%) saturate(738%) hue-rotate(345deg) brightness(105%) contrast(94%) !important;
 }
 
 /* Fallback for icons stroke */
