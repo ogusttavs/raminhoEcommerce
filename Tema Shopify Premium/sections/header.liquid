@@ -20,9 +20,9 @@
       </button>
     </div>
 
-    <!-- Centro: Logo -->
-    <div class="header-center">
-      <a href="{{ routes.root_url }}" class="header-logo">
+    <!-- Centro: Logo & Desktop Nav -->
+    <div class="header-center flex flex-col items-center">
+      <a href="{{ routes.root_url }}" class="header-logo" style="margin-bottom: 0.5rem;">
         {% if section.settings.logo != blank %}
           <img src="{{ section.settings.logo | image_url: width: 300 }}" 
                alt="{{ shop.name }}" 
@@ -40,6 +40,15 @@
                style="border-radius: 4px;">
         {% endif %}
       </a>
+      <nav class="header-nav hidden-mobile">
+        <ul class="flex gap-8 no-bullets font-body" style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
+          <li><a href="/collections/frutas-epoca">Frutas de Época</a></li>
+          <li><a href="/collections/cestas-premium">Cestas Raminho</a></li>
+          <li><a href="/collections/colheita-dia">Colheita do Dia</a></li>
+          <li><a href="/pages/assinaturas">Assinaturas</a></li>
+          <li><a href="/pages/sobre-nos">Nossa Safra</a></li>
+        </ul>
+      </nav>
     </div>
 
     <!-- Direita: Conta & Carrinho -->
@@ -48,12 +57,11 @@
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       </a>
       <a href="{{ routes.cart_url }}" class="header-icon-btn cart-btn" aria-label="Carrinho">
-        <!-- Sacola de Feira (Market Bag) SVG -->
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M6 19L3 6h18l-3 13H6zM9 6V4a3 3 0 0 1 6 0v2M4 10h16"/>
         </svg>
         {% if cart.item_count > 0 %}
-          <span class="cart-count" style="background-color: var(--color-primary); color: white;">{{ cart.item_count }}</span>
+          <span class="cart-count">{{ cart.item_count }}</span>
         {% endif %}
       </a>
     </div>
@@ -63,18 +71,19 @@
   <div id="MenuDrawer" class="menu-drawer">
     <div class="menu-drawer-inner">
        <div class="menu-drawer-header flex justify-between items-center">
-          <h2 class="font-heading" style="font-size: 1.5rem;">Menu</h2>
+          <h2 class="font-heading" style="font-size: 1.5rem; color: var(--color-primary-dark);">Menu</h2>
           <button class="header-icon-btn" onclick="closeMenu()">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
           </button>
        </div>
        <nav class="menu-drawer-nav">
           <ul class="menu-drawer-links no-bullets">
-             <li><a href="/" class="font-body">Início</a></li>
-             <li><a href="/collections/all" class="font-body">Produtos</a></li>
-             <li><a href="/collections" class="font-body">Coleções</a></li>
-             <li><a href="/pages/sobre-nos" class="font-body">Nossa Safra</a></li>
-             <li><a href="/pages/contato" class="font-body">Suporte</a></li>
+             <li><a href="/collections/frutas-epoca" class="font-heading">Frutas de Época</a></li>
+             <li><a href="/collections/cestas-premium" class="font-heading">Cestas Raminho</a></li>
+             <li><a href="/collections/colheita-dia" class="font-heading">Colheita do Dia</a></li>
+             <li><a href="/pages/assinaturas" class="font-heading">Assinaturas</a></li>
+             <li style="margin-top: 2rem;"><a href="/pages/sobre-nos" class="font-body" style="font-size: 1rem; opacity: 0.7;">Nossa Safra</a></li>
+             <li><a href="/pages/contato" class="font-body" style="font-size: 1rem; opacity: 0.7;">Suporte</a></li>
           </ul>
        </nav>
        <div class="menu-drawer-footer">

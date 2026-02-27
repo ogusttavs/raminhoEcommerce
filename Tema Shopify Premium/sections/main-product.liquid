@@ -196,12 +196,13 @@
 
 <script>
   window.addEventListener('scroll', function() {
-    const mainBtn = document.querySelector('.product-add-to-cart');
+    const triggerElement = document.querySelector('.product-accordions-group') || document.querySelector('.product-add-to-cart');
     const stickyBar = document.getElementById('sticky-add-to-cart');
-    if(!mainBtn || !stickyBar) return;
+    if(!triggerElement || !stickyBar) return;
     
-    const mainBtnRect = mainBtn.getBoundingClientRect();
-    if (mainBtnRect.bottom < 0) {
+    const triggerRect = triggerElement.getBoundingClientRect();
+    // Start appearing when the 'Sobre esta colheita' group is near the top or when the main button is gone
+    if (triggerRect.top < 150) {
       stickyBar.classList.add('is-active');
     } else {
       stickyBar.classList.remove('is-active');

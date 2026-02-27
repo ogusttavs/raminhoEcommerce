@@ -66,14 +66,23 @@
     transition: filter 0.3s ease;
 }
 
-/* Heritage Color State (Cream/Beige #F7F3EB) - ONLY on Home Hero (not scrolled, not product) */
-.header-premium:not(.is-scrolled):not(.is-on-product) .header-logo img,
-.header-premium:not(.is-scrolled):not(.is-on-product) .header-icon-btn {
-    color: #F7F3EB !important;
+/* Header Colors: EVERYTHING GREEN except on Home Hero */
+.header-premium .header-icon-btn,
+.header-premium .header-logo img {
+    color: var(--color-primary-dark) !important;
 }
 
+.header-premium .header-logo img {
+    filter: none !important;
+    /* Keep original green logo */
+}
+
+.header-premium .header-icon-btn svg {
+    stroke: var(--color-primary-dark) !important;
+}
+
+/* EXCEPT on Home Hero (not scrolled, not product) */
 .header-premium:not(.is-scrolled):not(.is-on-product) .header-logo img {
-    /* Heritage Beige Filter */
     filter: brightness(0) invert(97%) sepia(4%) saturate(738%) hue-rotate(345deg) brightness(105%) contrast(94%) !important;
 }
 
@@ -81,21 +90,22 @@
     stroke: #F7F3EB !important;
 }
 
-/* Green Color State - When Scrolled OR on Product Page */
-.header-premium.is-scrolled .header-icon-btn,
-.header-premium.is-on-product .header-icon-btn {
+.header-premium:not(.is-scrolled):not(.is-on-product) .header-icon-btn {
+    color: #F7F3EB !important;
+}
+
+/* CAR COUNT: "Tudo verde menos o número" -> Badge Beige, Number Green */
+.cart-count {
+    background-color: #F7F3EB !important;
+    /* Heritage Beige */
     color: var(--color-primary-dark) !important;
+    /* Green Number */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.header-premium.is-scrolled .header-logo img,
-.header-premium.is-on-product .header-logo img {
-    filter: none !important;
-    /* Returns to original green logo */
-}
-
-.header-premium.is-scrolled .header-icon-btn svg,
-.header-premium.is-on-product .header-icon-btn svg {
-    stroke: var(--color-primary-dark) !important;
+/* Sticky State (Scrolled) - High Contrast Green */
+.header-premium.is-sticky .header-inner {
+    background-color: rgba(255, 255, 255, 0.95);
 }
 
 /* Product Page specific: Header is initially Green but now as a Pill */
@@ -105,9 +115,8 @@
 }
 
 .header-premium.is-on-product:not(.is-sticky) .header-inner {
-    background-color: rgba(255, 255, 255, 0.75);
-    /* Mais visível sobre o produto */
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .header-logo-text {
@@ -311,17 +320,18 @@
     margin-top: 1rem;
 }
 
-/* Menu Drawer Styles (Mobile) */
+/* Menu Drawer Styles (Mobile) - Apple Glass Style */
 .menu-drawer {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 2100;
+    z-index: 2500;
+    /* Over everything */
     visibility: hidden;
     pointer-events: none;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .menu-drawer.is-active {
@@ -333,15 +343,16 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 280px;
+    width: 85%;
+    max-width: 320px;
     height: 100%;
     background: var(--color-background);
     z-index: 2;
     transform: translateX(-100%);
-    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
     display: flex;
     flex-direction: column;
-    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.15);
 }
 
 .menu-drawer.is-active .menu-drawer-inner {
@@ -354,12 +365,13 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(7, 61, 36, 0.2);
+    /* Raminho Dark Green tint */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     z-index: 1;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
 }
 
 .menu-drawer.is-active .menu-drawer-overlay {
@@ -367,7 +379,7 @@
 }
 
 .menu-drawer-header {
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
