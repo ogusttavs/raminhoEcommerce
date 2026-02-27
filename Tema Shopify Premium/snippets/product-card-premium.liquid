@@ -1,12 +1,9 @@
 {% comment %}
   Product Card Premium
   Requires: `product` object
+  pela section pai (featured-collection-netflix, bestsellers, etc.) para
+  evitar duplicação de tags no DOM.
 {% endcomment %}
-
-<!-- Require CSS for Segmented Selectors inside cards -->
-{{ 'product-page.css' | asset_url | stylesheet_tag }}
-<!-- Require JS for Smart Stepper and Ajax Cart -->
-<script src="{{ 'smart-add-to-cart.js' | asset_url }}" defer="defer"></script>
 
 <div class="product-card">
   <a href="{{ product.url }}" class="product-card-link">

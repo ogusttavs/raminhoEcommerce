@@ -1,0 +1,144 @@
+{{ 'product-card.css' | asset_url | stylesheet_tag }}
+{{ 'product-page.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .bestsellers-section {
+    padding: 5rem 0;
+    background-color: var(--color-background-alt, #faf8f4);
+  }
+
+  .bestsellers-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .bestsellers-title {
+    font-size: 2.2rem;
+    color: var(--color-primary-dark);
+  }
+
+  .bestsellers-subtitle {
+    font-size: 1rem;
+    opacity: 0.6;
+    margin-top: 0.5rem;
+  }
+
+  .bestsellers-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .bestsellers-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .bestseller-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--color-accent, #E87A2D);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 6px;
+    z-index: 2;
+  }
+</style>
+
+<section class="bestsellers-section">
+  <div class="container">
+    <div class="bestsellers-header">
+      <h2 class="bestsellers-title font-heading">{{ section.settings.title }}</h2>
+      {% if section.settings.subtitle != blank %}
+        <p class="bestsellers-subtitle font-body">{{ section.settings.subtitle }}</p>
+      {% endif %}
+    </div>
+
+    <div class="bestsellers-grid">
+      {% assign collection = collections[section.settings.collection] %}
+      {% if collection != blank and collection.products_count > 0 %}
+        {% for product in collection.products limit: section.settings.limit %}
+          <div style="position: relative;">
+            {% if section.settings.show_badges and forloop.index <= 3 %}
+              <span class="bestseller-badge">
+                {% case forloop.index %}
+                  {% when 1 %}#1 Favorito
+                  {% when 2 %}#2 Favorito
+                  {% when 3 %}#3 Favorito
+                {% endcase %}
+              </span>
+            {% endif %}
+            {% render 'product-card-premium', product: product %}
+          </div>
+        {% endfor %}
+      {% else %}
+        {% for i in (1..4) %}
+          <div style="position: relative;">
+            {% if i <= 3 %}
+              <span class="bestseller-badge">#{{ i }} Favorito</span>
+            {% endif %}
+            <div class="product-card" style="opacity: 0.7;">
+              <div style="background: #f0f0f0; height: 300px; border-radius: 12px; display:flex; align-items:center; justify-content:center;">
+                <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1"><circle cx="12" cy="12" r="10"/><path d="m16 10-4 4-4-4"/></svg>
+              </div>
+              <div style="padding: 1rem; text-align: center;">
+                <h3 class="font-heading" style="font-size: 1.1rem;">Produto Exemplo {{ i }}</h3>
+                <p style="color: var(--color-primary); font-weight: 700;">R$ 49,99</p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Mais Vendidos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Os Favoritos da Safra"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "O que nossos clientes mais amam, semana após semana."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Coleção de Mais Vendidos"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 4,
+      "max": 8,
+      "step": 1,
+      "default": 4,
+      "label": "Quantidade de Produtos"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badges",
+      "label": "Mostrar badges de ranking (#1, #2, #3)",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mais Vendidos"
+    }
+  ]
+}
+{% endschema %}
