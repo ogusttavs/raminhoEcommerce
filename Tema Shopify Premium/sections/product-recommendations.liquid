@@ -10,11 +10,40 @@
       </div>
     </div>
 
+    <style>
+      .product-grid-netflix {
+        display: flex;
+        gap: 1.5rem;
+        overflow-x: auto;
+        padding: 0.5rem 0.5rem 2rem;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE 10+ */
+      }
+      .product-grid-netflix::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+      }
+      .netflix-item {
+        flex: 0 0 280px;
+        scroll-snap-align: start;
+        transition: transform 0.3s ease;
+      }
+      @media (max-width: 768px) {
+        .netflix-item {
+          flex: 0 0 240px;
+          gap: 1rem;
+        }
+        .product-grid-netflix {
+          gap: 1rem;
+        }
+      }
+    </style>
+
     <div class="product-recommendations" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=6">
       {%- if recommendations.performed and recommendations.products_count > 0 -%}
         <div class="product-grid-netflix">
           {%- for recommended_product in recommendations.products -%}
-            <div class="netflix-item" style="min-width: 280px; flex-shrink: 0;">
+            <div class="netflix-item">
               {% render 'product-card-premium', product: recommended_product, section: section %}
             </div>
           {%- endfor -%}
