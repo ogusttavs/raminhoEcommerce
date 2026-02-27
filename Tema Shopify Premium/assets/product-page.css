@@ -294,7 +294,7 @@
 /* Mobile Adjustments */
 @media (max-width: 768px) {
     .product-section {
-        padding: 2rem 0;
+        padding: 100px 0 2rem;
     }
 
     .product-title {
