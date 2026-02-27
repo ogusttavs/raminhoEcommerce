@@ -180,40 +180,52 @@
     font-size: 1.25rem;
 }
 
-/* Apple Primary Button */
+/* Apple Primary Button - Bold & Dynamic */
 .btn-primary-apple {
     width: 100%;
     background: var(--color-primary);
     color: #fff;
     border: none;
-    padding: 1.4rem 2rem;
-    border-radius: 16px;
-    font-size: 1.15rem;
-    font-weight: 700;
+    padding: 1.8rem 2rem;
+    /* Larger padding for high impact */
+    border-radius: 18px;
+    /* More rounded Apple style */
+    font-size: 1.3rem;
+    /* Larger font */
+    font-weight: 800;
+    /* Extra bold */
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    box-shadow: 0 10px 30px rgba(13, 124, 74, 0.15);
+    box-shadow: 0 12px 35px rgba(13, 124, 74, 0.25);
+    position: relative;
+    overflow: hidden;
 }
 
 .btn-primary-apple:hover {
     background: var(--color-primary-dark);
-    transform: translateY(-4px);
-    box-shadow: 0 15px 40px rgba(13, 124, 74, 0.25);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 45px rgba(13, 124, 74, 0.35);
+}
+
+.btn-primary-apple:active {
+    transform: translateY(-2px) scale(0.98);
 }
 
 .btn-price-divider {
-    width: 1px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.2);
-    margin: 0 1.5rem;
+    width: 2px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.25);
+    margin: 0 1.8rem;
 }
 
 .btn-price {
-    font-weight: 800;
-    font-size: 1.3rem;
+    font-weight: 900;
+    font-size: 1.4rem;
 }
 
 /* 
@@ -258,7 +270,7 @@
     }
 
     .btn-primary-apple {
-        padding: 1.2rem;
+        padding: 1.5rem;
     }
 }
 
@@ -304,10 +316,10 @@
 }
 
 .sticky-submit {
-    padding: 0.8rem 1.5rem !important;
-    font-size: 0.95rem !important;
+    padding: 1.1rem 2.2rem !important;
+    font-size: 1rem !important;
     width: auto !important;
-    border-radius: 12px !important;
+    border-radius: 14px !important;
 }
 
 .sticky-submit .btn-price-divider {
