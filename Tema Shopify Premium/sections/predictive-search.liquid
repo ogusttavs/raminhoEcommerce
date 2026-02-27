@@ -47,8 +47,39 @@
     {%- endif -%}
 
     {%- if predictive_search.resources.products.size == 0 and predictive_search.resources.collections.size == 0 -%}
-      <div class="predictive-search__no-results text-center" style="padding: 2rem;">
-        <p>Nenhum resultado encontrado para "{{ predictive_search.terms }}".</p>
+      <div class="predictive-search__demo-mode" style="padding: 1rem;">
+        <h3 class="predictive-search__heading font-heading" style="background: none; border: none; padding-left: 0;">Sugestões Premium (Demo)</h3>
+        <p class="text-secondary" style="font-size: 0.85rem; margin-bottom: 1rem;">Como você ainda não cadastrou produtos, aqui está uma prévia da experiência Apple que seus clientes terão:</p>
+        
+        <ul role="listbox" class="predictive-search__results-list">
+          <li class="predictive-search__list-item">
+            <div class="predictive-search__item">
+              <div style="width: 50px; height: 50px; background: #eee; border-radius: 4px; display: flex; align-items: center; justify-content: center;">🍓</div>
+              <div class="predictive-search__item-content text-left">
+                <span class="predictive-search__item-heading">Morango Hidropônico Selecionado</span>
+                <span class="predictive-search__item-price">R$ 24,90</span>
+              </div>
+            </div>
+          </li>
+          <li class="predictive-search__list-item">
+            <div class="predictive-search__item">
+              <div style="width: 50px; height: 50px; background: #eee; border-radius: 4px; display: flex; align-items: center; justify-content: center;">🫐</div>
+              <div class="predictive-search__item-content text-left">
+                <span class="predictive-search__item-heading">Mirtilo (Blueberry) Safra Especial</span>
+                <span class="predictive-search__item-price">R$ 32,00</span>
+              </div>
+            </div>
+          </li>
+          <li class="predictive-search__list-item">
+            <div class="predictive-search__item">
+              <div style="width: 50px; height: 50px; background: #eee; border-radius: 4px; display: flex; align-items: center; justify-content: center;">🧺</div>
+              <div class="predictive-search__item-content text-left">
+                <span class="predictive-search__item-heading">Cesta de Café da Manhã "Raminho Heritage"</span>
+                <span class="predictive-search__item-price">R$ 289,00</span>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
     {%- endif -%}
 

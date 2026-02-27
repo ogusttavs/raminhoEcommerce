@@ -145,11 +145,20 @@
             </div>
           {% endfor %}
         {% else %}
-          <!-- Modo Placeholder para visualização -->
+          <!-- Modo Placeholder para visualização Premium (Sem Produtos no Admin) -->
           {% for i in (1..6) %}
             <div class="netflix-slide">
-              <div style="background:var(--color-background-alt); border-radius:8px; padding:2rem; text-align:center; height:450px; display:flex; align-items:center; justify-content:center; color:var(--color-secondary);">
-                Produto Exemplo {{ i }}
+              <div class="product-card-premium" style="opacity: 0.8;">
+                <div class="product-card-image-wrapper" style="background: #f0f0f0; display:flex; align-items:center; justify-content:center; height: 350px;">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <div class="product-card-info" style="padding: 1.5rem;">
+                   <h3 class="font-heading" style="font-size: 1.2rem; margin-bottom: 0.5rem;">Fruta Premium Exemplo {{ i }}</h3>
+                   <p style="color: var(--color-primary); font-weight: 700;">R$ 29,99</p>
+                   <div style="margin-top: 1rem; padding: 0.8rem; border: 1px dashed #ccc; text-align: center; border-radius: 8px; font-size: 0.8rem;">
+                     Aguardando Cadastro no Admin
+                   </div>
+                </div>
               </div>
             </div>
           {% endfor %}
