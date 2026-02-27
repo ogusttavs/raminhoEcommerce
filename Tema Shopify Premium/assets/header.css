@@ -175,22 +175,25 @@
 }
 
 .header-center {
-    flex: 2;
+    flex: 4;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
+    gap: 2rem;
     min-width: 0;
 }
 
 .header-logo {
     display: flex;
     justify-content: center;
-    margin-bottom: 0.5rem;
+    margin: 0;
+    flex-shrink: 0;
 }
 
 .header-logo img {
-    max-width: 140px;
+    max-width: 100px;
+    /* Smaller, elegant logo for split layout */
     width: 100%;
     height: auto;
     transition: filter 0.3s ease;
@@ -214,8 +217,8 @@
 .header-nav a {
     text-decoration: none !important;
     color: var(--color-primary-dark) !important;
-    font-size: 0.8rem;
-    /* Standardized small uppercase font */
+    font-size: 0.75rem;
+    /* Slightly smaller for balance */
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -233,7 +236,6 @@
 @media (max-width: 1024px) {
     .header-nav {
         display: none !important;
-        /* Hide nav earlier to prevent squashing */
     }
 
     .header-center {
@@ -241,7 +243,7 @@
     }
 
     .header-logo img {
-        max-width: 110px;
+        max-width: 90px;
     }
 }
 
@@ -256,6 +258,11 @@
 
     .header-inner {
         padding: 0 0.8rem;
+    }
+
+    .header-logo img {
+        max-width: 85px;
+        /* Padrão antigo/compacto */
     }
 
     .header-premium.is-sticky .header-inner {
