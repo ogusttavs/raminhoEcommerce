@@ -210,14 +210,46 @@
   });
 
   // Sincronizar preços e variantes entre o form principal e o sticky
-  document.addEventListener('change', function(e) {
-     if(e.target.classList.contains('variant-radio')) {
-        setTimeout(() => {
-           const newPrice = document.querySelector('.product-price.price-current').textContent;
-           document.querySelectorAll('.btn-price').forEach(el => el.textContent = newPrice);
-           document.querySelector('.sticky-price').textContent = newPrice;
-        }, 50);
+  function updateStickyPrice() {
+     const mainPriceEl = document.querySelector('.product-price.price-current');
+     const qtyInput = document.querySelector('input[name="quantity"]');
+     if(!mainPriceEl || !qtyInput) return;
+
+     const priceText = mainPriceEl.textContent;
+     const unitPrice = parseFloat(priceText.replace('R$', '').replace('.', '').replace(',', '.').trim());
+     const quantity = parseInt(qtyInput.value) || 1;
+     
+     if (!isNaN(unitPrice)) {
+        const total = unitPrice * quantity;
+        const formattedTotal = 'R$ ' + total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        document.querySelectorAll('.btn-price').forEach(el => el.textContent = formattedTotal);
+        // A sticky-price menor continua mostrando o preço unitário para referência? 
+        // Não, o usuário quer que tudo atualize.
+        document.querySelectorAll('.sticky-price').forEach(el => el.textContent = formattedTotal);
+     } else {
+        document.querySelectorAll('.btn-price').forEach(el => el.textContent = priceText);
+        document.querySelectorAll('.sticky-price').forEach(el => el.textContent = priceText);
      }
+  }
+
+  document.addEventListener('change', function(e) {
+     if(e.target.classList.contains('variant-radio') || e.target.name === 'quantity') {
+        setTimeout(updateStickyPrice, 50);
+     }
+  });
+
+  // Observer para mudanças de texto no preço (caso o tema atualize via JS)
+  const priceObserver = new MutationObserver(updateStickyPrice);
+  const targetPrice = document.querySelector('.product-price.price-current');
+  if(targetPrice) {
+    priceObserver.observe(targetPrice, { childList: true, characterData: true, subtree: true });
+  }
+
+  // Listener para botões de quantidade (casos comuns de + / -)
+  document.addEventListener('click', function(e) {
+    if(e.target.closest('.qty-btn') || e.target.closest('.quantity-button')) {
+      setTimeout(updateStickyPrice, 100);
+    }
   });
 </script>
 

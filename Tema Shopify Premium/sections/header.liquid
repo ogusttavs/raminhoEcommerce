@@ -21,8 +21,8 @@
     </div>
 
     <!-- Centro: Logo & Desktop Nav -->
-    <div class="header-center flex flex-col items-center">
-      <a href="{{ routes.root_url }}" class="header-logo" style="margin-bottom: 0.5rem;">
+    <div class="header-center">
+      <a href="{{ routes.root_url }}" class="header-logo">
         {% if section.settings.logo != blank %}
           <img src="{{ section.settings.logo | image_url: width: 300 }}" 
                alt="{{ shop.name }}" 
@@ -41,7 +41,7 @@
         {% endif %}
       </a>
       <nav class="header-nav hidden-mobile">
-        <ul class="flex gap-8 no-bullets font-body" style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
+        <ul>
           <li><a href="/collections/frutas-epoca">Frutas de Época</a></li>
           <li><a href="/collections/cestas-premium">Cestas Raminho</a></li>
           <li><a href="/collections/colheita-dia">Colheita do Dia</a></li>

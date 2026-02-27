@@ -407,17 +407,49 @@
 }
 
 @media (max-width: 768px) {
+    .sticky-buy-bar {
+        width: 95%;
+        padding: 0.6rem 0.8rem;
+        bottom: 1rem;
+    }
+
     .sticky-product-info {
-        display: none;
-        /* Keep it clean on mobile, just the button */
+        display: flex;
+        /* Info visible on mobile */
+        gap: 0.6rem;
+    }
+
+    .sticky-thumb {
+        width: 38px;
+        height: 38px;
+    }
+
+    .sticky-title {
+        font-size: 0.8rem;
+        max-width: 80px;
+    }
+
+    .sticky-price {
+        font-size: 0.75rem;
+    }
+
+    .sticky-submit {
+        padding: 0.6rem 1rem !important;
+        font-size: 0.8rem !important;
+        width: auto !important;
+    }
+
+    .sticky-submit .btn-price-divider {
+        margin: 0 0.5rem;
+        height: 12px;
+    }
+
+    .sticky-submit .btn-price {
+        font-size: 0.85rem !important;
     }
 
     .sticky-actions {
         width: 100%;
         padding: 0 1rem;
-    }
-
-    .sticky-submit {
-        width: 100% !important;
     }
 }

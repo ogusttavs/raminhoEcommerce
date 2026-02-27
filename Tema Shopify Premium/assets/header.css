@@ -53,18 +53,9 @@
     width: 100%;
 }
 
-.header-logo {
-    display: block;
-    text-align: center;
-    text-decoration: none;
-}
 
-.header-logo img {
-    max-width: 100%;
-    display: block;
-    margin: 0 auto;
-    transition: filter 0.3s ease;
-}
+
+
 
 /* Header Colors: EVERYTHING GREEN except on Home Hero */
 .header-premium .header-icon-btn,
@@ -184,9 +175,56 @@
 }
 
 .header-center {
-    flex: 2;
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-logo {
     display: flex;
     justify-content: center;
+    margin-bottom: 0.4rem;
+}
+
+.header-logo img {
+    max-width: 130px;
+    /* Force consistent size on desktop with nav */
+    height: auto;
+    transition: filter 0.3s ease;
+}
+
+.header-nav ul {
+    list-style: none !important;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 2rem;
+}
+
+.header-nav li {
+    list-style: none !important;
+    margin: 0;
+    padding: 0;
+}
+
+.header-nav a {
+    text-decoration: none !important;
+    color: var(--color-primary-dark) !important;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: opacity 0.2s;
+}
+
+.header-nav a:hover {
+    opacity: 0.7;
+}
+
+.header-premium:not(.is-scrolled):not(.is-on-product) .header-nav a {
+    color: #F7F3EB !important;
 }
 
 @media (max-width: 768px) {
@@ -206,18 +244,16 @@
         max-width: 92%;
         padding: 0 1rem;
     }
+}
 
-    .header-logo-text {
-        font-size: 1.4rem;
+@media (min-width: 769px) {
+    .hidden-desktop {
+        display: none !important;
     }
-}
 
-.hidden-desktop {
-    display: none !important;
-}
-
-.hidden-mobile {
-    display: flex !important;
+    .hidden-mobile {
+        display: flex !important;
+    }
 }
 
 /* Search Drawer Styles */
