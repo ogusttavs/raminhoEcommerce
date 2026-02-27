@@ -25,9 +25,8 @@
   /* O container principal que tem overflow scroll */
   .netflix-track-container {
     width: 100%;
-    /* Margin negativa para permitir o slider encostar na borda da tela no mobile */
-    margin-right: calc(-50vw + 50%);
-    padding-right: calc(50vw - 50%);
+    margin: 0 auto;
+    position: relative;
   }
 
   /* O trilho invisivel onde os cards deslizam */
@@ -36,11 +35,18 @@
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     gap: 1.5rem;
-    padding-bottom: 2.5rem; /* Space for box-shadow hover */
-    padding-left: 1rem; /* Start padding for the tease */
-    padding-right: 1.5rem; /* End padding */
+    padding: 0 0 2.5rem 0; /* Space for box-shadow hover */
     -ms-overflow-style: none;
     scrollbar-width: none;
+    /* Allow bleed to the right on large screens */
+    margin-right: calc(-50vw + 50%);
+  }
+
+  /* Limit the bleed on ultrawide to prevent the "broken" look */
+  @media (min-width: 2000px) {
+    .netflix-track {
+        margin-right: -400px;
+    }
   }
 
   .netflix-track::-webkit-scrollbar {
@@ -49,23 +55,22 @@
 
   /* Os itens individuais (cards) */
   .netflix-slide {
-    flex: 0 0 auto;
-    width: 80vw; /* Mostra 80% do viewport, revelando o próximo sempre */
-    max-width: 280px; 
-    scroll-snap-align: center;
+    flex: 0 0 280px; 
+    scroll-snap-align: start;
   }
 
-  @media (min-width: 769px) {
+  @media (max-width: 768px) {
     .netflix-slide {
-      width: 320px; /* Desktop width fixo */
-      max-width: unset;
-      scroll-snap-align: start;
+      flex: 0 0 75vw;
+      max-width: 280px;
+      scroll-snap-align: center;
     }
     .netflix-track {
-      padding-left: 0;
-      padding-right: 0;
+       padding-left: 1rem;
+       margin-right: -1.5rem; /* Standard mobile bleed */
     }
   }
+
 
   /* Container Relativo para setas Absolutas */
   .netflix-carousel-wrapper {
