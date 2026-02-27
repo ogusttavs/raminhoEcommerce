@@ -105,10 +105,10 @@
 
 <section class="netflix-slider-section" style="background-color: var(--color-background);">
   <div class="container">
-    <div class="netflix-slider-header">
-      <h2 class="netflix-slider-title font-heading">{{ section.settings.title }}</h2>
+    <div class="netflix-slider-header" style="margin-bottom: 2rem;">
+      <h2 class="netflix-slider-title font-heading h2">{{ section.settings.title }}</h2>
       {% if section.settings.description != blank %}
-        <p class="netflix-slider-description">{{ section.settings.description }}</p>
+        <p class="netflix-slider-description" style="font-size: 1rem; opacity: 0.7; margin-top: 0.5rem;">{{ section.settings.description }}</p>
       {% endif %}
     </div>
   </div>
