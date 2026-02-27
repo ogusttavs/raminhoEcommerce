@@ -4,7 +4,8 @@
 */
 
 .product-section {
-    padding: 6rem 0;
+    padding: 120px 0 6rem;
+    /* Space for the initial green header */
     background-color: var(--color-background);
 }
 
@@ -322,39 +323,47 @@
 }
 
 /* 
-  Sticky Buy Bar (Apple Style) 
+  Sticky Buy Bar (Apple Style - Floating Pill) 
 */
 .sticky-buy-bar {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(150%);
+    width: 90%;
+    max-width: 500px;
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     z-index: 1000;
-    padding: 1rem 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
-    transform: translateY(100%);
-    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.05);
+    padding: 0.8rem 1.2rem;
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
 }
 
 .sticky-buy-bar.is-active {
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
 }
 
 .sticky-thumb {
-    border-radius: 8px;
+    border-radius: 12px;
     object-fit: cover;
     background: #fff;
+    width: 44px;
+    height: 44px;
 }
 
 .sticky-title {
     display: block;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--color-primary-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
 }
 
 .sticky-price {

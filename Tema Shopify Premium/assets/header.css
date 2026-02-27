@@ -55,16 +55,35 @@
     transition: filter 0.3s ease;
 }
 
-/* Initial Heritage Color State (Cream/Beige) over Green Hero */
+/* Heritage Color State (Cream/Beige #F7F3EB) over Green Sections */
 .header-premium:not(.is-scrolled) .header-logo img,
 .header-premium:not(.is-scrolled) .header-icon-btn {
     color: #F7F3EB !important;
-    /* Beige da marca */
+    /* Beige Oficial */
 }
 
+/* Precise filter to achieve #F7F3EB starting from Green/Black base */
 .header-premium:not(.is-scrolled) .header-logo img {
-    /* Since the logo is an SVG/IMG, we use brightness/sepia filters specifically to reach the beige #F7F3EB */
-    filter: invert(93%) sepia(23%) saturate(163%) hue-rotate(345deg) brightness(101%) contrast(96%) !important;
+    filter: invert(98%) sepia(3%) saturate(1007%) hue-rotate(303deg) brightness(102%) contrast(97%) !important;
+}
+
+/* Fallback for icons stroke */
+.header-premium:not(.is-scrolled) .header-icon-btn svg {
+    stroke: #F7F3EB !important;
+}
+
+/* Product Page specific: Header is initially Green */
+.header-premium.is-on-product:not(.is-sticky) {
+    background: var(--color-primary-dark);
+    padding: 1rem 0;
+    /* Tighten briefly for static state */
+}
+
+.header-premium.is-on-product:not(.is-sticky) .header-inner {
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
 }
 
 .header-logo-text {
