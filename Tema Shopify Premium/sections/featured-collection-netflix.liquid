@@ -131,7 +131,7 @@
 
 <!-- Script Navegação -->
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+  (function() {
     const track = document.getElementById('track-{{ section.id }}');
     const btnPrev = document.getElementById('prev-{{ section.id }}');
     const btnNext = document.getElementById('next-{{ section.id }}');
@@ -147,7 +147,7 @@
         track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
       });
     }
-  });
+  })();
 </script>
 
 {% schema %}
