@@ -130,14 +130,14 @@
     </div>
   </div>
 
-  <!-- Pista de Deslizamento Fora do Container para Bleed infinito -->
-  <div class="netflix-carousel-wrapper">
-    <div class="container" style="position:relative; height: 0; z-index: 10;">
-      <!-- Arrows alinhadas com o conteúdo -->
-      <button class="netflix-nav-btn btn-prev" aria-label="Anterior" id="prev-{{ section.id }}" style="left: -22px;">
+  <!-- Pista de Deslizamento -->
+  <div class="netflix-carousel-wrapper" style="position: relative;">
+    <div class="container" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); height: 100%; pointer-events: none; z-index: 10;">
+      <!-- Arrows alinhadas com o conteúdo e centralizadas verticalmente -->
+      <button class="netflix-nav-btn btn-prev" aria-label="Anterior" id="prev-{{ section.id }}" style="left: -22px; top: 50%; transform: translateY(-50%); pointer-events: auto;">
         <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
       </button>
-      <button class="netflix-nav-btn btn-next" aria-label="Próximo" id="next-{{ section.id }}" style="right: -22px;">
+      <button class="netflix-nav-btn btn-next" aria-label="Próximo" id="next-{{ section.id }}" style="right: -22px; top: 50%; transform: translateY(-50%); pointer-events: auto;">
         <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
       </button>
     </div>
