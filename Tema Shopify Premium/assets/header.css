@@ -66,21 +66,36 @@
     transition: filter 0.3s ease;
 }
 
-/* Heritage Color State (Cream/Beige #F7F3EB) over Green Sections */
-.header-premium:not(.is-scrolled) .header-logo img,
-.header-premium:not(.is-scrolled) .header-icon-btn {
+/* Heritage Color State (Cream/Beige #F7F3EB) - ONLY on Home Hero (not scrolled, not product) */
+.header-premium:not(.is-scrolled):not(.is-on-product) .header-logo img,
+.header-premium:not(.is-scrolled):not(.is-on-product) .header-icon-btn {
     color: #F7F3EB !important;
-    /* Beige Oficial */
 }
 
-/* Precise filter to achieve #F7F3EB starting from ANY base color (forces black first) */
-.header-premium:not(.is-scrolled) .header-logo img {
+.header-premium:not(.is-scrolled):not(.is-on-product) .header-logo img {
+    /* Heritage Beige Filter */
     filter: brightness(0) invert(97%) sepia(4%) saturate(738%) hue-rotate(345deg) brightness(105%) contrast(94%) !important;
 }
 
-/* Fallback for icons stroke */
-.header-premium:not(.is-scrolled) .header-icon-btn svg {
+.header-premium:not(.is-scrolled):not(.is-on-product) .header-icon-btn svg {
     stroke: #F7F3EB !important;
+}
+
+/* Green Color State - When Scrolled OR on Product Page */
+.header-premium.is-scrolled .header-icon-btn,
+.header-premium.is-on-product .header-icon-btn {
+    color: var(--color-primary-dark) !important;
+}
+
+.header-premium.is-scrolled .header-logo img,
+.header-premium.is-on-product .header-logo img {
+    filter: none !important;
+    /* Returns to original green logo */
+}
+
+.header-premium.is-scrolled .header-icon-btn svg,
+.header-premium.is-on-product .header-icon-btn svg {
+    stroke: var(--color-primary-dark) !important;
 }
 
 /* Product Page specific: Header is initially Green but now as a Pill */
@@ -90,8 +105,9 @@
 }
 
 .header-premium.is-on-product:not(.is-sticky) .header-inner {
-    background-color: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.75);
+    /* Mais visível sobre o produto */
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .header-logo-text {
