@@ -18,9 +18,9 @@
 ### [Pré-Sprint] — Fase de Estudos e Planejamento
 - **[26/02/2026 - 16:30]** Criação do Estudo de Persona (DOC-001) e Identidade Visual (DOC-002).
 - **[26/02/2026 - 17:00]** Auditoria do tema atual Vision (DOC-003). Identificadas falhas críticas: bloqueadores de UX, imagens de IA, assets pesados.
-- **[26/02/2026 - 17:30]** *Mudança de Escopo Crítica:* Cliente solicitou nível "Apple/Disney" de UX. Aprovado build customizado 100% em Liquid; tema Vision foi descartado como base (DOC-004 e DOC-005 atualizados para v2.0).
-- **[26/02/2026 - 17:40]** Especificação da Feature "Venda por Grama / Unidade" elaborada (DOC-010) e validada compatibilidade com plano Shopify Basic (uso de *Variants*).
-- **[26/02/2026 - 17:55]** Criação de 4 Novas Propostas de Logotipo (Rebranding) + Versões Dark Mode. Geração e validação de "Heritage Logo" no documento DOC-012.
+- **[26/02/2026 - 23:59]** **Sticky Buy Bar Excellence:** Redesenhada a barra para padrão de luxo Apple; agora é uma pílula de alto contraste com botão bold e preço integrado. Gatilho de scroll ajustado para "Sobre esta Colheita".
+- **[26/02/2026 - 23:59]** **Header Branding Logic:** "Tudo Verde menos o Número". Ícones e logo agora são Verde Raminho por padrão. O contador do carrinho agora é Bege Heritage com número verde (alto contraste).
+- **[26/02/2026 - 24:00]** **Navigation & Mobile:** Menu Desktop implementado com coleções estratégicas (Frutas de Época, Cestas, Colheita do Dia). Drawer Mobile fixado com efeito glassmorphism Apple. Progress 85%.
 - **[26/02/2026 - 18:15]** Criação da pasta "Documentos de Aplicacao". Mapeado Fluxo de Engenharia (Best Practices) no DOC-000 e inicialização deste LOG-001.
 
 ### [Sprint 1] — Setup & Design System
@@ -47,6 +47,10 @@
 - **[26/02/2026 - 20:20]** Bootstrapp da Sprint 3: Criados os 3 pilares da nova Página de Produto -> `templates/product.json`, `sections/main-product.liquid`, e `assets/product-page.css`. 
 - **[26/02/2026 - 20:20]** Arquitetado o Seletor de Variantes (Grama vs Unidade) usando um Web Component nativo `<variant-selects>` em Vanilla JS, desenhado no layout _Segmented Control_ da Apple para fluidez máxima, alterando o preço sem reloads da página.
 - **[26/02/2026 - 20:20]** Blocos OS 2.0 liberados na página (`price`, `title`, `description`, `buy_buttons`, `trust_badge`).
+- **[27/02/2026 - 00:30]** **Flagship Carousel Architecture:** Unificação das vitrines (Home e Recomendados) com o padrão "Netflix Flagship". Implementada rolagem horizontal full-bleed, primeiro item alinhado ao grid e setas de navegação inteligentes (hidden on mobile, hover-only on desktop).
+- **[27/02/2026 - 00:45]** **Mathematical Logo Centering:** Migração do Header para CSS Grid com slots laterais fixos (70px). Garante que a logo Raminho esteja sempre no centro absoluto geométrico da tela, eliminando desvios causados por ícones ou menus.
+- **[27/02/2026 - 01:00]** **UX Polish & Bug Fixes:** Resolvido bug crítico de overlap no mobile (títulos cortados pelo header fixo). Corrigida lógica de pedido mínimo (R$ 129,90) e frete grátis (R$ 497,00) no Drawer Cart para conformidade com DOC-004.
+- **[27/02/2026 - 01:10]** **Card Cleanup:** Removida a 2ª imagem (hover) dos product cards para priorizar a estética "Clean Apple" e evitar instabilidades em conexões mobile.
 
 ---
 

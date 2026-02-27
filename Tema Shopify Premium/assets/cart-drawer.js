@@ -180,18 +180,7 @@ class CartDrawer {
     }
 
     getSmartQuantityText(titleText, quantity) {
-        const title = (titleText || "").toLowerCase();
-        let gMatch = title.match(/(\d+)\s*g/);
-        if (gMatch && !title.includes('kg')) {
-            let totalGrams = parseInt(gMatch[1], 10) * quantity;
-            return totalGrams >= 1000 ? (totalGrams / 1000).toString().replace('.', ',') + 'kg' : totalGrams + 'g';
-        }
-        let kgMatch = title.match(/([\d.,]+)\s*kg/);
-        if (kgMatch) {
-            let totalKg = parseFloat(kgMatch[1].replace(',', '.')) * quantity;
-            return totalKg.toString().replace('.', ',') + 'kg';
-        }
-        return quantity + ' un';
+        return window.RaminhoUtils.getSmartQuantityText(titleText, quantity);
     }
 
     updateHeaderCount(count) {

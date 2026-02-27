@@ -1,7 +1,23 @@
-/* 
+/*
   Header Premium Styling
   Minimalist, sticky, auto-hiding on scroll down
 */
+
+/* Announcement Bar */
+.announcement-bar {
+    background-color: var(--color-background, #F7F3EB);
+    text-align: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.announcement-bar-text {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-primary-dark);
+    letter-spacing: 0.03em;
+    margin: 0;
+}
 
 .header-premium {
     position: fixed;
