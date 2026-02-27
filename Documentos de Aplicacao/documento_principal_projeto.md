@@ -38,9 +38,9 @@ Construção de um **e-commerce premium completamente customizado** para a Ramin
 
 | Camada | Plataforma | Função | Docs |
 |---|---|---|---|
-| **Hospedagem & CMS** | Shopify | Loja, catálogo, tema 100% custom em Liquid | [DOC-006](./guia_shopify_liquid.md) |
-| **Checkout** | Yampi | Checkout transparente | [DOC-007](./guia_yampi_checkout.md) |
-| **Gateway** | Appmax | Processamento de pagamentos | [DOC-008](./guia_appmax_gateway.md) |
+| **Hospedagem & CMS** | Shopify | Loja, catálogo, tema 100% custom em Liquid | [DOC-006](../Estudos e Plano de Acao/guia_shopify_liquid.md) |
+| **Checkout** | Yampi | Checkout transparente | [DOC-007](../Estudos e Plano de Acao/guia_yampi_checkout.md) |
+| **Gateway** | Appmax | Processamento de pagamentos | [DOC-008](../Estudos e Plano de Acao/guia_appmax_gateway.md) |
 | **Entrega** | Motoboys próprios | Entrega D+1 com seguro de qualidade | — |
 | **Fotos (Fase 1)** | Freepik Premium | Fotos de produto em alta resolução | — |
 | **Fotos (Fase 2)** | Sessão profissional | Mercado Municipal, lifestyle, equipe | — |
@@ -64,7 +64,7 @@ Construção de um **e-commerce premium completamente customizado** para a Ramin
 - **Área:** Grande São Paulo (Capital, ABC, Guarulhos, Santana de Parnaíba)
 
 ### Features Especiais
-- **Compra por Grama ou Unidade** em produtos específicos (ver [DOC-010](./feature_grama_unidade.md))
+- **Compra por Grama ou Unidade** em produtos específicos (ver [DOC-010](../Estudos e Plano de Acao/feature_grama_unidade.md))
 
 ---
 
@@ -76,7 +76,7 @@ Construção de um **e-commerce premium completamente customizado** para a Ramin
 - Disney → Encantamento, atenção ao detalhe, emoção
 - Netflix → Fluidez, personalização, categorização inteligente
 
-> Detalhes completos em [DOC-011 — Direção Criativa](./direcao_criativa_referencias.md)
+> Detalhes completos em [DOC-011 — Direção Criativa](../Estudos e Plano de Acao/direcao_criativa_referencias.md)
 
 ---
 
@@ -84,27 +84,30 @@ Construção de um **e-commerce premium completamente customizado** para a Ramin
 
 | Nº | Documento | Descrição |
 |---|---|---|
-| **DOC-001** | [Persona & Público-Alvo](./persona_publico_alvo.md) | Personas, público-alvo, marketing |
-| **DOC-002** | [Identidade Visual & Rebranding](./identidade_visual_rebranding.md) | Paleta, tipografia, implementação |
-| **DOC-003** | [Análise E-commerce Atual](./analise_ecommerce_atual.md) | Auditoria do site atual (referência) |
+| **DOC-001** | [Persona & Público-Alvo](../Estudos e Plano de Acao/persona_publico_alvo.md) | Personas, público-alvo, marketing |
+| **DOC-002** | [Identidade Visual & Rebranding](../Estudos e Plano de Acao/identidade_visual_rebranding.md) | Paleta, tipografia, implementação |
+| **DOC-003** | [Análise E-commerce Atual](../Estudos e Plano de Acao/analise_ecommerce_atual.md) | Auditoria do site atual (referência) |
 | **DOC-004** | **Este documento** | Visão geral para qualquer agente |
-| **DOC-005** | [Plano de Ação & Sprints](./plano_de_acao_sprints.md) | Plano completo com sprints |
-| **DOC-006** | [Guia Shopify / Liquid](./guia_shopify_liquid.md) | Guia técnico da plataforma |
-| **DOC-007** | [Guia Yampi Checkout](./guia_yampi_checkout.md) | Guia do checkout |
-| **DOC-008** | [Guia Appmax Gateway](./guia_appmax_gateway.md) | Guia do gateway |
+| **DOC-005** | [Plano de Ação & Sprints](../Estudos e Plano de Acao/plano_de_acao_sprints.md) | Plano completo com sprints |
+| **DOC-006** | [Guia Shopify / Liquid](../Estudos e Plano de Acao/guia_shopify_liquid.md) | Guia técnico da plataforma |
+| **DOC-007** | [Guia Yampi Checkout](../Estudos e Plano de Acao/guia_yampi_checkout.md) | Guia do checkout |
+| **DOC-008** | [Guia Appmax Gateway](../Estudos e Plano de Acao/guia_appmax_gateway.md) | Guia do gateway |
 | **DOC-009** | [Sprint Todolist](./sprint_todolist.md) | Checklist vivo |
-| **DOC-010** | [Feature Grama/Unidade](./feature_grama_unidade.md) | Spec da feature de compra por peso |
-| **DOC-011** | [Direção Criativa](./direcao_criativa_referencias.md) | Referências Apple/Disney/Netflix |
+| **DOC-010** | [Feature Grama/Unidade](../Estudos e Plano de Acao/feature_grama_unidade.md) | Spec da feature de compra por peso |
+| **DOC-011** | [Direção Criativa](../Estudos e Plano de Acao/direcao_criativa_referencias.md) | Referências Apple/Disney/Netflix |
+| **DOC-013** | [Plano de Assinatura](./DOC-013_Plano_de_Assinatura.md) | Arquitetura recorrência Clube Raminho |
+| **DOC-014** | [Governança Documental & Processo](./DOC-014_Governanca_Documental_e_Processo_Operacional.md) | Fonte de verdade e fluxo oficial |
 
 ---
 
 ## 7. Para Novos Agentes/Desenvolvedores
 
 1. **Leia este documento** para entender o contexto geral
-2. **Leia DOC-011** para entender a direção criativa (Apple/Disney/Netflix)
-3. **Leia DOC-005** para ver o plano de ação e sprints
-4. **Consulte DOC-009** para ver tasks pendentes
-5. **Leia o guia da plataforma** (DOC-006/007/008) antes de tocar em código
+2. **Leia DOC-014** para seguir a governança e o fluxo operacional oficial
+3. **Leia DOC-011** para entender a direção criativa (Apple/Disney/Netflix)
+4. **Leia DOC-005** para ver o plano de ação e sprints
+5. **Consulte DOC-009** para ver tasks pendentes
+6. **Leia o guia da plataforma** (DOC-006/007/008) antes de tocar em código
 
 ### Regras:
 - ⚠️ **Build custom** — não mexer no tema Vision, construir do zero

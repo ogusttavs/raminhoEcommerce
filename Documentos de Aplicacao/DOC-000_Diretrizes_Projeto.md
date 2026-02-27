@@ -9,7 +9,7 @@
 Este é o **Documento Mestre** que rege 100% da forma como a engenharia, design e processos de negócio deverão ser conduzidos no e-commerce da Raminho Importadora. Todo Agente de IA ou Desenvolvedor Humano que entrar no projeto **deve** ler este documento PRIMEIRO e seguir estas regras estritamente.
 
 > 🔴 **REGRA DE OURO PARA AGENTES AVULSOS:**
-> Se você é um novo Agente de IA assumindo este projeto agora, sua primeira ação obrigatória é abrir o arquivo `Documentos de Aplicacao/LOG-001_Registro_de_Acoes.md` e o `Documentos de Aplicacao/sprint_todolist.md`. Lá você entenderá exatamente onde o projeto parou e qual é a sua próxima micro-tarefa. Não tome ações destrutivas sem ler o log.
+> Se você é um novo Agente de IA assumindo este projeto agora, sua primeira ação obrigatória é abrir os arquivos `Documentos de Aplicacao/DOC-014_Governanca_Documental_e_Processo_Operacional.md`, `Documentos de Aplicacao/LOG-001_Registro_de_Acoes.md` e `Documentos de Aplicacao/sprint_todolist.md`. Lá você entenderá exatamente onde o projeto parou e qual é a sua próxima micro-tarefa. Não tome ações destrutivas sem ler o log.
 
 ---
 

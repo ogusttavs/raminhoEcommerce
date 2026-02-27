@@ -7,7 +7,7 @@
 | **Data de criação** | 26/02/2026 |
 | **Última atualização** | 26/02/2026 |
 | **Plano Shopify** | **Basic** |
-| **Documentos relacionados** | [DOC-004 — Documento Principal](./documento_principal_projeto.md) |
+| **Documentos relacionados** | [DOC-004 — Documento Principal](../Documentos de Aplicacao/documento_principal_projeto.md) |
 
 ---
 

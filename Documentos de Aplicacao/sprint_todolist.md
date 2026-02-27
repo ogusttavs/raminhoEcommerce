@@ -9,7 +9,7 @@
 | **Status geral** | 🔄 Em andamento |
 | **Plano Shopify** | Basic |
 | **Workflow** | Código feito localmente → Upload para Shopify → Produtos editados via browser |
-| **Docs relacionados** | [DOC-005 — Plano de Ação](./plano_de_acao_sprints.md) · [DOC-004 — Documento Principal](./documento_principal_projeto.md) |
+| **Docs relacionados** | [DOC-005 — Plano de Ação](../Estudos e Plano de Acao/plano_de_acao_sprints.md) · [DOC-004 — Documento Principal](./documento_principal_projeto.md) |
 
 > ⚠️ Este documento é **vivo** — deve ser atualizado ao final de cada tarefa/sprint.
 
@@ -164,6 +164,9 @@
 
 > [!NOTE]
 > **Workflow de desenvolvimento:** Todo o código Liquid é escrito localmente nesta workspace. Depois de pronto, o tema é empacotado e enviado para a Shopify. A edição de produtos (fotos, descrições, variantes) é feita via browser no admin da Shopify.
+
+> [!NOTE]
+> **Governança documental ativa (27/02/2026):** A partir desta data, a ordem oficial de leitura e atualização está no [DOC-014 — Governança Documental & Processo Operacional](./DOC-014_Governanca_Documental_e_Processo_Operacional.md). Em caso de conflito entre documentos, seguir o DOC-014.
 
 > [!WARNING]
 > **Rollback Arquitetural (27/02/2026):** Uma refatoração recente inseriu graves bugs (Carrinho quebrando e CSS de produtos apagados). A pedido do usuário, o código do `Tema Shopify Premium` foi 100% revertido para o commit seguro `393480a`, porém a documentação (estudos frete, novas revisões e este todolist) foi mantida para histórico. A branch do código descartado é a `refatoracao-codigo-rejeitada`.

@@ -6,7 +6,7 @@
 | **Versão** | 1.0 |
 | **Data de criação** | 26/02/2026 |
 | **Última atualização** | 26/02/2026 |
-| **Documentos relacionados** | [DOC-004 — Documento Principal](./documento_principal_projeto.md) · [DOC-008 — Appmax Gateway](./guia_appmax_gateway.md) |
+| **Documentos relacionados** | [DOC-004 — Documento Principal](../Documentos de Aplicacao/documento_principal_projeto.md) · [DOC-008 — Appmax Gateway](./guia_appmax_gateway.md) |
 
 ---
 

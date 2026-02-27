@@ -52,6 +52,7 @@
 - **[27/02/2026 - 01:00]** **UX Polish & Bug Fixes:** Resolvido bug crítico de overlap no mobile (títulos cortados pelo header fixo). Corrigida lógica de pedido mínimo (R$ 129,90) e frete grátis (R$ 497,00) no Drawer Cart para conformidade com DOC-004.
 - **[27/02/2026 - 01:10]** **Card Cleanup:** Removida a 2ª imagem (hover) dos product cards para priorizar a estética "Clean Apple" e evitar instabilidades em conexões mobile.
 - **[27/02/2026 - 02:00]** ⚠️ **ROLLBACK ARQUITETURAL (REVISÃO 002):** Após uma série de implementações que introduziram bugs gravíssimos de escopo JS e carregamento de assets (quebrando o carrinho em páginas secundárias e removendo o CSS de vitrines inteiras), o código fonte do tema foi **revertido 100% para o estado estável pré-refatoração** (commit `393480a`). A documentação (arquivos MD, análise de fretes, logos novos) gerada durante esse período foi preservada para histórico contínuo da operação, garantindo que nenhum conhecimento seja perdido.
+- **[27/02/2026 - 02:13]** **Governança Documental v1:** Estrutura de documentação organizada sem perda de histórico. Criados `Documentos de Aplicacao/README.md` (índice central) e `DOC-014_Governanca_Documental_e_Processo_Operacional.md` (hierarquia de fonte de verdade + fluxo operacional único). Também foram corrigidos links cruzados quebrados entre `Documentos de Aplicacao`, `Estudos e Plano de Acao` e `Imagens de Produto IA` para tornar a documentação navegável e consistente.
 
 ---
 

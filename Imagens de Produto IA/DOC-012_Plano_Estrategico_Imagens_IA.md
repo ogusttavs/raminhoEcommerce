@@ -6,13 +6,13 @@
 | **Versão** | 1.0 |
 | **Data de criação** | 26/02/2026 |
 | **Autor** | Antigravity (IA Estrategista) |
-| **Documentos relacionados** | [DOC-003 — Análise E-commerce](./analise_ecommerce_atual.md) · [DOC-011 — Direção Criativa](./direcao_criativa_referencias.md) |
+| **Documentos relacionados** | [DOC-003 — Análise E-commerce](../Estudos e Plano de Acao/analise_ecommerce_atual.md) · [DOC-011 — Direção Criativa](../Estudos e Plano de Acao/direcao_criativa_referencias.md) |
 
 ---
 
 ## 1. O Desafio: IA vs. Confiança Premium
 
-A documentação atual do projeto ([DOC-003](./analise_ecommerce_atual.md) e [DOC-011](./direcao_criativa_referencias.md)) aponta que **as fotos atuais geradas por IA diminuem a confiança do consumidor** por parecerem artificiais. A diretriz original sugere substituir por Freepik Premium (imediato) e fotógrafo profissional (futuro) para manter o padrão "Apple/Disney/Netflix".
+A documentação atual do projeto ([DOC-003](../Estudos e Plano de Acao/analise_ecommerce_atual.md) e [DOC-011](../Estudos e Plano de Acao/direcao_criativa_referencias.md)) aponta que **as fotos atuais geradas por IA diminuem a confiança do consumidor** por parecerem artificiais. A diretriz original sugere substituir por Freepik Premium (imediato) e fotógrafo profissional (futuro) para manter o padrão "Apple/Disney/Netflix".
 
 **O Objetivo Atual:** Atender ao pedido de maximizar a automação com IA, mas **sem violar o pacto de excelência e naturalidade do projeto**.
 

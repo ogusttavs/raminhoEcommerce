@@ -6,7 +6,7 @@
 | **Versão** | 2.0 — Full Custom Build |
 | **Data de criação** | 26/02/2026 |
 | **Última atualização** | 26/02/2026 |
-| **Documentos relacionados** | [DOC-004](./documento_principal_projeto.md) · [DOC-009 — Sprint Todolist](./sprint_todolist.md) · [DOC-011 — Direção Criativa](./direcao_criativa_referencias.md) |
+| **Documentos relacionados** | [DOC-004](../Documentos de Aplicacao/documento_principal_projeto.md) · [DOC-009 — Sprint Todolist](../Documentos de Aplicacao/sprint_todolist.md) · [DOC-011 — Direção Criativa](./direcao_criativa_referencias.md) |
 
 > [!IMPORTANT]
 > **Este plano foi atualizado.** O projeto mudou de "otimizar tema existente" para **construir experiência 100% customizada do zero** — nível Apple/Disney/Netflix. O tema Vision original serve apenas como referência de funcionalidades.
