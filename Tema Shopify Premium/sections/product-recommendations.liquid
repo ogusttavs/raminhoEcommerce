@@ -14,7 +14,7 @@
       {%- if recommendations.performed and recommendations.products_count > 0 -%}
         <div class="product-grid-netflix">
           {%- for recommended_product in recommendations.products -%}
-            {% render 'product-card', product: recommended_product, section: section %}
+            {% render 'product-card-premium', product: recommended_product, section: section %}
           {%- endfor -%}
         </div>
       {%- endif -%}
