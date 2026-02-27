@@ -4,7 +4,7 @@
   /* Slider Horizontal Netflix Base */
   .netflix-slider-section {
     padding: 4rem 0 5rem 0;
-    overflow: hidden; /* Prevent horizontal scrollbar on body */
+    overflow: hidden;
   }
 
   .netflix-slider-header {
@@ -22,52 +22,43 @@
     margin-top: 0.5rem;
   }
 
-  /* O container principal que tem overflow scroll */
   .netflix-track-container {
     width: 100%;
-    margin: 0 auto;
     position: relative;
+    padding-left: max(1.5rem, calc((100vw - 1440px) / 2 + 1.5rem));
   }
 
-  /* O trilho invisivel onde os cards deslizam */
   .netflix-track {
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     gap: 1.5rem;
-    padding: 0 0 2.5rem 0; /* Space for box-shadow hover */
+    padding: 0 1.5rem 2.5rem 0;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    /* Allow bleed to the right on large screens */
-    margin-right: calc(-50vw + 50%);
-  }
-
-  /* Limit the bleed on ultrawide to prevent the "broken" look */
-  @media (min-width: 2000px) {
-    .netflix-track {
-        margin-right: -400px;
-    }
   }
 
   .netflix-track::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
+    display: none;
   }
 
-  /* Os itens individuais (cards) */
   .netflix-slide {
     flex: 0 0 280px; 
     scroll-snap-align: start;
+    transition: transform 0.3s ease;
   }
 
   @media (max-width: 768px) {
-    .netflix-slide {
-      flex: 0 0 75vw;
-      max-width: 280px;
-      scroll-snap-align: center;
+    .netflix-track-container {
+      padding-left: 1rem;
     }
     .netflix-track {
-       padding-left: 1rem;
-       margin-right: -1.5rem; /* Standard mobile bleed */
+      gap: 1rem;
+      padding-right: 1.5rem;
+    }
+    .netflix-slide {
+      flex: 0 0 240px;
+      scroll-snap-align: center;
     }
   }
 
