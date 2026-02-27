@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" width="400" height="250">
+  <style>
+    .font-serif { font-family: 'Playfair Display', 'Georgia', serif; }
+    .font-sans { font-family: 'Inter', 'Helvetica Neue', 'Arial', sans-serif; }
+  </style>
+  
+  <!-- Outer Ring -->
+  <ellipse cx="200" cy="125" rx="180" ry="115" fill="none" stroke="#12492D" stroke-width="2.5" />
+  
+  <!-- Inner Badge Fill -->
+  <ellipse cx="200" cy="125" rx="170" ry="105" fill="#F4EFE6" stroke="#12492D" stroke-width="0.5" />
+  
+  <!-- Typography -->
+  <text class="font-serif" x="200" y="140" font-size="56" fill="#12492D" text-anchor="middle" font-weight="600" letter-spacing="1">RAMINHO</text>
+  <text class="font-sans" x="200" y="168" font-size="13" fill="#12492D" text-anchor="middle" font-weight="500" letter-spacing="2">DESDE 1984</text>
+</svg>
