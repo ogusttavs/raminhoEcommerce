@@ -154,7 +154,54 @@
       </div>
     </div>
   </div>
+
+  <!-- Barra de Compra Sticky (Apple Style) -->
+  <div id="sticky-add-to-cart" class="sticky-buy-bar">
+    <div class="container flex justify-between items-center">
+      <div class="sticky-product-info flex items-center gap-4">
+        <img src="{{ product.featured_image | image_url: width: 100 }}" alt="{{ product.title }}" width="50" height="50" class="sticky-thumb">
+        <div class="sticky-text-group">
+          <span class="sticky-title font-heading">{{ product.title }}</span>
+          <span class="sticky-price font-body price-current">{{ cheapest_variant.price | money }}</span>
+        </div>
+      </div>
+      
+      <div class="sticky-actions">
+        <button type="button" class="btn-primary-apple sticky-submit" onclick="document.querySelector('#{{ product_form_id }} [name=add]').click()">
+          <span class="btn-text">Adicionar</span>
+          <span class="btn-price-divider"></span>
+          <span class="btn-price sticky-current-price">{{ cheapest_variant.price | money }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
 </section>
+
+<script>
+  window.addEventListener('scroll', function() {
+    const mainBtn = document.querySelector('.product-add-to-cart');
+    const stickyBar = document.getElementById('sticky-add-to-cart');
+    if(!mainBtn || !stickyBar) return;
+    
+    const mainBtnRect = mainBtn.getBoundingClientRect();
+    if (mainBtnRect.bottom < 0) {
+      stickyBar.classList.add('is-active');
+    } else {
+      stickyBar.classList.remove('is-active');
+    }
+  });
+
+  // Sincronizar preços e variantes entre o form principal e o sticky
+  document.addEventListener('change', function(e) {
+     if(e.target.classList.contains('variant-radio')) {
+        setTimeout(() => {
+           const newPrice = document.querySelector('.product-price.price-current').textContent;
+           document.querySelectorAll('.btn-price').forEach(el => el.textContent = newPrice);
+           document.querySelector('.sticky-price').textContent = newPrice;
+        }, 50);
+     }
+  });
+</script>
 
 <!-- Unified Component loaded below -->
 <script src="{{ 'smart-add-to-cart.js' | asset_url }}" defer="defer"></script>

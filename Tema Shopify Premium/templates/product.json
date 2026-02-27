@@ -37,9 +37,14 @@
                 "trust_badge"
             ],
             "settings": {}
+        },
+        "recommendations": {
+            "type": "product-recommendations",
+            "settings": {}
         }
     },
     "order": [
-        "main"
+        "main",
+        "recommendations"
     ]
 }

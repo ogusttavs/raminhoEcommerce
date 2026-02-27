@@ -1,0 +1,62 @@
+<section class="product-recommendations-section section-padding" style="background: var(--color-background-alt); padding: 6rem 0;">
+  <div class="container">
+    <div class="section-header flex justify-between items-end" style="margin-bottom: 3rem;">
+      <div class="header-text">
+        <span class="product-eyebrow font-body">Continue sua colheita</span>
+        <h2 class="font-heading" style="font-size: 2.8rem; line-height: 1;">Recomendados para você</h2>
+      </div>
+      <div class="header-nav hidden-mobile">
+         <!-- Setas se houver muitos produtos -->
+      </div>
+    </div>
+
+    <div class="product-recommendations" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=4">
+      {%- if recommendations.performed and recommendations.products_count > 0 -%}
+        <div class="product-grid-netflix">
+          {%- for recommended_product in recommendations.products -%}
+            {% render 'product-card', product: recommended_product, section: section %}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  const handleIntersection = (entries, observer) => {
+    if (!entries[0].isIntersecting) return;
+    observer.unobserve(entries[0].target);
+
+    const url = entries[0].target.dataset.url;
+
+    fetch(url)
+      .then(response => response.text())
+      .then(text => {
+        const html = new DOMParser().parseFromString(text, 'text/html');
+        const recommendations = html.querySelector('.product-recommendations');
+
+        if (recommendations && recommendations.innerHTML.trim().length > 0) {
+          entries[0].target.innerHTML = recommendations.innerHTML;
+        }
+      })
+      .catch(e => {
+        console.error(e);
+      });
+  };
+
+  const observer = new IntersectionObserver(handleIntersection, {rootMargin: '0px 0px 200px 0px'});
+  const recommendationsSection = document.querySelector('.product-recommendations');
+  if(recommendationsSection) observer.observe(recommendationsSection);
+</script>
+
+{% schema %}
+{
+  "name": "Recomendações de Produto",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Recomendações de Produto"
+    }
+  ]
+}
+{% endschema %}
