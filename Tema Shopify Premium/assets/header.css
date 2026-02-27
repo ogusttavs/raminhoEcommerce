@@ -167,7 +167,7 @@
 .header-left,
 .header-right {
     flex: 1;
-    gap: 1rem;
+    gap: 0.5rem;
 }
 
 .header-right {
@@ -175,22 +175,23 @@
 }
 
 .header-center {
-    flex: 3;
+    flex: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    min-width: 0;
 }
 
 .header-logo {
     display: flex;
     justify-content: center;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.5rem;
 }
 
 .header-logo img {
-    max-width: 130px;
-    /* Force consistent size on desktop with nav */
+    max-width: 140px;
+    width: 100%;
     height: auto;
     transition: filter 0.3s ease;
 }
@@ -200,7 +201,8 @@
     padding: 0;
     margin: 0;
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
+    white-space: nowrap;
 }
 
 .header-nav li {
@@ -212,19 +214,35 @@
 .header-nav a {
     text-decoration: none !important;
     color: var(--color-primary-dark) !important;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    /* Standardized small uppercase font */
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     transition: opacity 0.2s;
 }
 
 .header-nav a:hover {
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
 .header-premium:not(.is-scrolled):not(.is-on-product) .header-nav a {
     color: #F7F3EB !important;
+}
+
+@media (max-width: 1024px) {
+    .header-nav {
+        display: none !important;
+        /* Hide nav earlier to prevent squashing */
+    }
+
+    .header-center {
+        flex: 1;
+    }
+
+    .header-logo img {
+        max-width: 110px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -237,7 +255,7 @@
     }
 
     .header-inner {
-        padding: 0 1rem;
+        padding: 0 0.8rem;
     }
 
     .header-premium.is-sticky .header-inner {
@@ -426,19 +444,26 @@
 }
 
 .menu-drawer-links li {
-    margin-bottom: 1.5rem;
+    list-style: none !important;
+    margin-bottom: 1.2rem;
+    padding: 0;
 }
 
 .menu-drawer-links a {
-    font-size: 1.3rem;
-    font-weight: 500;
+    font-size: 1.25rem;
+    /* Standardized menu font */
+    font-weight: 600;
     color: var(--color-primary-dark);
     text-decoration: none;
-    transition: color 0.2s;
+    transition: opacity 0.2s;
+}
+
+.menu-drawer-links a.font-heading {
+    font-size: 1.4rem;
 }
 
 .menu-drawer-links a:hover {
-    color: var(--color-primary);
+    opacity: 0.6;
 }
 
 .menu-drawer-footer {
