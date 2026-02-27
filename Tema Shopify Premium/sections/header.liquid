@@ -26,15 +26,17 @@
         {% if section.settings.logo != blank %}
           <img src="{{ section.settings.logo | image_url: width: 300 }}" 
                alt="{{ shop.name }}" 
-               width="{{ section.settings.logo_width }}" 
+               width="{{ section.settings.logo_width | divided_by: 1.2 }}" 
                height="auto" 
-               loading="eager">
+               loading="eager"
+               class="header-logo-img">
         {% else %}
           <img src="{{ 'logo_raminho_oficial.svg' | asset_url }}" 
                alt="{{ shop.name }}" 
-               width="{{ section.settings.logo_width | default: 130 }}" 
+               width="{{ section.settings.logo_width | default: 110 | divided_by: 1.2 }}" 
                height="auto" 
                loading="eager"
+               class="header-logo-img header--white"
                style="border-radius: 4px;">
         {% endif %}
       </a>
@@ -120,9 +122,19 @@
     let lastScrollY = window.scrollY;
 
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
+      // Toggle color based on scroll (out of hero)
+      if (window.scrollY > 100) {
+        header.classList.add('is-scrolled');
+      } else {
+        header.classList.remove('is-scrolled');
+      }
+
+      // Sticky floating logic: appears when leaving hero, stays until back to top
+      if (window.scrollY > 400) {
         header.classList.add('is-sticky');
-        if (window.scrollY > lastScrollY) {
+        
+        // Hide only if scrolling deep, otherwise stay
+        if (window.scrollY > lastScrollY && window.scrollY > 800) {
           header.classList.add('is-hidden');
         } else {
           header.classList.remove('is-hidden');

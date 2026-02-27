@@ -52,6 +52,13 @@
     max-width: 100%;
     display: block;
     margin: 0 auto;
+    transition: filter 0.3s ease;
+}
+
+/* White mode for Green Section */
+.header-premium:not(.is-scrolled) .header-logo-img.header--white,
+.header-premium:not(.is-scrolled) .header-icon-btn {
+    filter: brightness(0) invert(1);
 }
 
 .header-logo-text {
@@ -70,7 +77,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: color var(--transition-fast), transform var(--transition-fast);
+    transition: color var(--transition-fast), transform var(--transition-fast), filter 0.3s ease;
     text-decoration: none;
 }
 
