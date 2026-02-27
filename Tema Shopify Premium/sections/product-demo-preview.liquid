@@ -1,0 +1,130 @@
+{{ 'product-page.css' | asset_url | stylesheet_tag }}
+
+<section class="product-section demo-mode" style="border-top: 10px solid var(--color-primary); margin-top: 4rem; position: relative;">
+  <div style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--color-primary); color: #fff; padding: 5px 20px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; z-index: 10; letter-spacing: 0.1em;">
+    DEMO PREVIEW (POC)
+  </div>
+
+  <div class="container" style="padding-top: 5rem; padding-bottom: 5rem;">
+    <div class="product-grid">
+      
+      <!-- Lado Esquerdo: Mock Gallery -->
+      <div class="product-gallery">
+         <div style="background: #f0f0f0; border-radius: 16px; aspect-ratio: 1/1; display:flex; align-items:center; justify-content:center; margin-bottom: 1.5rem; border: 1px solid rgba(0,0,0,0.05); overflow: hidden;">
+            <img src="https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_800x.png?v=1530129081" alt="Placeholder" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.3;">
+            <div style="position: absolute; text-align: center;">
+               <span style="font-size: 4rem;">🍓</span>
+               <p class="font-heading" style="margin-top: 1rem; color: #999;">Imagem do Produto (Mock)</p>
+            </div>
+         </div>
+      </div>
+
+      <!-- Lado Direito: Info -->
+      <div class="product-form-container">
+        <h1 class="product-title font-heading">Morango Hidropônico Raminho</h1>
+        
+        <div class="product-price-wrapper" style="margin-bottom: 2rem;">
+          <span class="product-price" id="demo-price">R$ 24,90</span>
+        </div>
+
+        <div class="variant-selector-wrapper" style="margin-bottom: 1.5rem;">
+          <label class="variant-label font-body">Peso (Venda por Grama)</label>
+          <div class="segmented-control" style="background: rgba(0,0,0,0.04); padding: 4px; border-radius: 12px; display: flex;">
+            <input type="radio" id="demo-500g" class="variant-radio" name="demo-weight" value="24.90" checked onchange="updateDemoPrice('R$ 24,90', 'R$ 24,90')">
+            <label class="segmented-btn" for="demo-500g" style="flex:1; text-align:center;">500g</label>
+
+            <input type="radio" id="demo-1kg" class="variant-radio" name="demo-weight" value="48.00" onchange="updateDemoPrice('R$ 48,00', 'R$ 48,00')">
+            <label class="segmented-btn" for="demo-1kg" style="flex:1; text-align:center;">1kg</label>
+
+            <input type="radio" id="demo-15kg" class="variant-radio" name="demo-weight" value="70.00" onchange="updateDemoPrice('R$ 70,00', 'R$ 70,00')">
+            <label class="segmented-btn" for="demo-15kg" style="flex:1; text-align:center;">1.5kg</label>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 2rem;">
+            <div class="product-qty-stepper flex items-center justify-between" style="background: #fff; padding: 0.5rem; border-radius: 12px; margin-bottom: 1rem; border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+                <button type="button" class="stepper-btn" style="width: 50px; height: 50px; border:none; background:transparent; font-size:1.8rem; cursor:pointer;" onclick="handleDemoStep(-1)">
+                &minus;
+                </button>
+                <div style="flex:1; display:flex; justify-content:center; align-items:center;">
+                <span id="demo-qty-text" class="font-body" style="font-weight: 600; font-size: 1.2rem;">1 un</span>
+                </div>
+                <button type="button" class="stepper-btn" style="width: 50px; height: 50px; border:none; background:transparent; font-size:1.8rem; cursor:pointer;" onclick="handleDemoStep(1)">
+                &plus;
+                </button>
+            </div>
+
+            <button type="button" class="product-add-to-cart font-body" style="width: 100%; border:none; display:flex; justify-content: space-between; align-items:center;" onclick="mockAddToCart()">
+                <span id="demo-btn-text">Adicionar ao Carrinho</span>
+                <span id="demo-btn-price" style="font-weight: 800; font-size: 1.2rem;">R$ 24,90</span>
+            </button>
+        </div>
+
+        <div class="product-description" style="margin-top: 2rem; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 2rem;">
+          <p>Colhido hoje pela manhã em nossa estufa controlada. Sabor intenso, doçura equilibrada e textura firme. Perfeito para consumo imediato ou receitas sofisticadas.</p>
+        </div>
+
+        <div class="trust-badge flex items-center" style="gap: 1rem; margin-top: 2rem; opacity: 0.8;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-primary);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span class="font-body" style="font-size: 0.9rem;">Entrega D+1 Cuidadosa. Frescor Garantido Raminho.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  let currentDemoPrice = 24.90;
+  let currentDemoQty = 1;
+
+  function updateDemoPrice(displayPrice, btnPrice) {
+    document.getElementById('demo-price').innerText = displayPrice;
+    currentDemoPrice = parseFloat(btnPrice.replace('R$ ', '').replace(',', '.'));
+    updateDemoButton();
+  }
+
+  function handleDemoStep(dir) {
+    currentDemoQty = Math.max(1, currentDemoQty + dir);
+    document.getElementById('demo-qty-text').innerText = currentDemoQty + " un";
+    updateDemoButton();
+  }
+
+  function updateDemoButton() {
+    const total = (currentDemoPrice * currentDemoQty).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    document.getElementById('demo-btn-price').innerText = total;
+  }
+
+  function mockAddToCart() {
+    const btn = document.querySelector('.product-add-to-cart');
+    const text = document.getElementById('demo-btn-text');
+    const price = document.getElementById('demo-btn-price');
+    
+    const originalText = text.innerText;
+    const originalPrice = price.innerText;
+
+    btn.style.backgroundColor = '#073D24';
+    btn.style.pointerEvents = 'none';
+    text.innerText = "Adicionado!";
+    price.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6L9 17L4 12"/></svg>';
+
+    setTimeout(() => {
+        btn.style.backgroundColor = '';
+        btn.style.pointerEvents = '';
+        text.innerText = originalText;
+        price.innerText = originalPrice;
+    }, 2000);
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Demo Product Preview",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Demo Product Preview"
+    }
+  ]
+}
+{% endschema %}

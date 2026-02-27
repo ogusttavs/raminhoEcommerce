@@ -14,6 +14,10 @@
                 "description": "O frescor absoluto, colhido hoje pela manhã."
             }
         },
+        "product_preview": {
+            "type": "product-demo-preview",
+            "settings": {}
+        },
         "delivery_policy": {
             "type": "delivery-guarantee",
             "settings": {}
@@ -29,6 +33,7 @@
     },
     "order": [
         "hero",
+        "product_preview",
         "frutas_da_estacao",
         "delivery_policy",
         "subscription_teaser",
