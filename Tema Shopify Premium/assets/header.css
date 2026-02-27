@@ -55,10 +55,10 @@
     transition: filter 0.3s ease;
 }
 
-/* White mode for Green Section */
+/* Heritage Color Mode for Green Section (Cream/Beige) */
 .header-premium:not(.is-scrolled) .header-logo-img.header--white,
 .header-premium:not(.is-scrolled) .header-icon-btn {
-    filter: brightness(0) invert(1);
+    filter: invert(93%) sepia(5%) saturate(543%) hue-rotate(345deg) brightness(101%) contrast(94%);
 }
 
 .header-logo-text {
@@ -94,7 +94,7 @@
     position: absolute;
     top: 0px;
     right: -2px;
-    background-color: var(--color-accent);
+    background-color: var(--color-primary);
     color: #fff;
     font-size: 0.65rem;
     font-weight: 700;
