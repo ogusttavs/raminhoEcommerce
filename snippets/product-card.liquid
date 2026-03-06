@@ -1,0 +1,55 @@
+{% liquid
+  assign active_variant = card_product.selected_or_first_available_variant
+  assign card_badge = blank
+
+  if card_product.available == false
+    assign card_badge = 'Esgotado'
+  elsif active_variant.compare_at_price > active_variant.price
+    assign card_badge = 'Seleção especial'
+  endif
+%}
+
+<article class="product-card" data-product-root>
+  <a class="product-card__media" href="{{ card_product.url }}">
+    {% if card_badge != blank %}
+      <span class="product-card__badge">{{ card_badge }}</span>
+    {% endif %}
+
+    {% if card_product.featured_media != blank %}
+      {{ card_product.featured_media | image_url: width: 900 | image_tag: loading: 'lazy', alt: card_product.title, widths: '400, 600, 900' }}
+    {% else %}
+      <div class="product-card__media"></div>
+    {% endif %}
+  </a>
+
+  <div class="product-card__content">
+    <div class="stack">
+      <h3 class="product-card__title">
+        <a href="{{ card_product.url }}">{{ card_product.title }}</a>
+      </h3>
+    </div>
+
+    <div class="price-row">
+      <strong class="price-current" data-product-price>{{ active_variant.price | money }}</strong>
+      {% if active_variant.compare_at_price > active_variant.price %}
+        <span class="price-compare" data-product-compare-price>{{ active_variant.compare_at_price | money }}</span>
+      {% else %}
+        <span class="price-compare" data-product-compare-price hidden></span>
+      {% endif %}
+    </div>
+
+    {% if card_product.available %}
+      {% render 'product-purchase-form',
+        purchase_product: card_product,
+        purchase_variant: active_variant,
+        purchase_context: 'card',
+        purchase_variant_label: 'Escolha como deseja receber',
+        purchase_unique_id: card_product.id
+      %}
+    {% else %}
+      <a class="button button--outline button--block" href="{{ card_product.url }}">
+        Ver produto
+      </a>
+    {% endif %}
+  </div>
+</article>

@@ -1,0 +1,273 @@
+<section class="section collection-tabs-section" data-tabs-root>
+  <div class="container">
+    <div class="stack collection-tabs-section__intro">
+      <div class="eyebrow">{{ section.settings.eyebrow }}</div>
+      <h2 class="section-heading collection-tabs-section__title">{{ section.settings.title }}</h2>
+      <p class="section-copy" style="max-width: 46rem;">{{ section.settings.copy }}</p>
+    </div>
+
+    <div class="collection-tabs">
+      <div class="collection-tabs__nav" role="tablist" aria-label="Colecoes em destaque">
+        {% for block in section.blocks %}
+          {% liquid
+            assign linked_collection = block.settings.collection
+            assign tab_title = block.settings.tab_label
+
+            if tab_title == blank and linked_collection != blank
+              assign tab_title = linked_collection.title
+            endif
+
+            if tab_title == blank
+              assign tab_title = 'Colecao'
+            endif
+          %}
+
+          <button
+            class="collection-tabs__trigger{% if forloop.first %} is-active{% endif %}"
+            type="button"
+            role="tab"
+            id="CollectionTab-{{ section.id }}-{{ block.id }}"
+            aria-controls="CollectionPanel-{{ section.id }}-{{ block.id }}"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            data-tab-trigger
+            data-tab-target="{{ block.id }}"
+            {{ block.shopify_attributes }}
+          >
+            {{ tab_title }}
+          </button>
+        {% endfor %}
+      </div>
+
+      <div class="collection-tabs__panels">
+        {% for block in section.blocks %}
+          {% liquid
+            assign linked_collection = block.settings.collection
+            assign panel_title = block.settings.panel_title
+            assign panel_copy = block.settings.panel_copy
+            assign panel_url = block.settings.link
+            assign panel_label = block.settings.button_label
+            assign panel_image = block.settings.image
+            assign panel_eyebrow = 'Selecao de:'
+
+            if panel_title == blank and linked_collection != blank
+              assign panel_title = linked_collection.title
+            endif
+
+            if panel_title == blank
+              assign panel_title = 'Selecao em destaque'
+            endif
+
+            if panel_copy == blank and linked_collection != blank and linked_collection.description != blank
+              assign panel_copy = linked_collection.description | strip_html | truncatewords: 20
+            endif
+
+            if panel_copy == blank
+              assign panel_copy = 'Uma selecao pensada para facilitar a compra do dia a dia com leitura simples e acesso rapido.'
+            endif
+
+            if panel_url == blank and linked_collection != blank
+              assign panel_url = linked_collection.url
+            endif
+
+            if panel_url == blank
+              assign panel_url = routes.all_products_collection_url
+            endif
+
+            if panel_label == blank
+              assign panel_label = 'Explorar colecao'
+            endif
+
+            if panel_image == blank and linked_collection != blank and linked_collection.featured_image != blank
+              assign panel_image = linked_collection.featured_image
+            endif
+          %}
+
+          <article
+            class="collection-panel{% if forloop.first %} is-active{% endif %}"
+            id="CollectionPanel-{{ section.id }}-{{ block.id }}"
+            role="tabpanel"
+            aria-labelledby="CollectionTab-{{ section.id }}-{{ block.id }}"
+            {% unless forloop.first %}hidden{% endunless %}
+            data-tab-panel
+            data-tab-id="{{ block.id }}"
+          >
+            <div class="collection-panel__media">
+              {% if panel_image != blank %}
+                {{ panel_image | image_url: width: 1600 | image_tag: widths: '640, 900, 1200, 1600', alt: panel_title, loading: 'lazy' }}
+              {% else %}
+                {% assign fallback_asset = 'lp-frutas-estacao.png' %}
+                {% if forloop.index == 1 %}
+                  {% assign fallback_asset = 'lp-frutas-importadas.png' %}
+                {% elsif forloop.index == 2 %}
+                  {% assign fallback_asset = 'lp-frutas-estacao.png' %}
+                {% elsif forloop.index == 3 %}
+                  {% assign fallback_asset = 'placeholder-category-importadas.png' %}
+                {% elsif forloop.index == 4 %}
+                  {% assign fallback_asset = 'lp-frutas-exoticas.png' %}
+                {% endif %}
+                <img src="{{ fallback_asset | asset_url }}" alt="{{ panel_title }}" width="1600" height="1200" loading="lazy">
+              {% endif %}
+            </div>
+
+            <div class="collection-panel__content">
+              <div class="eyebrow">{{ panel_eyebrow }}</div>
+              <h3 class="collection-panel__title">{{ panel_title }}</h3>
+              <p class="collection-panel__copy">{{ panel_copy }}</p>
+
+              {% if linked_collection != blank and linked_collection.products_count > 0 %}
+                <div class="collection-panel__tags" aria-label="Exemplos da coleção">
+                  {% for product in linked_collection.products limit: 4 %}
+                    <span class="collection-panel__tag">{{ product.title }}</span>
+                  {% endfor %}
+                </div>
+              {% elsif block.settings.tags != blank %}
+                {% assign tag_items = block.settings.tags | split: ',' %}
+                <div class="collection-panel__tags" aria-label="Categorias relacionadas">
+                  {% for tag in tag_items limit: 4 %}
+                    <span class="collection-panel__tag">{{ tag | strip }}</span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              <div class="collection-panel__actions">
+                <a class="button button--secondary" href="{{ panel_url }}">{{ panel_label }}</a>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Abas de colecoes",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Selecoes por categoria"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titulo",
+      "default": "Escolhas para receber bem, presentear e ter sempre por perto."
+    },
+    {
+      "type": "textarea",
+      "id": "copy",
+      "label": "Texto",
+      "default": "Explore por categoria e encontre a selecao certa com mais rapidez. A leitura fica simples e a navegacao acompanha o ritmo da compra."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_tab",
+      "name": "Colecao",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Colecao"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagem"
+        },
+        {
+          "type": "text",
+          "id": "tab_label",
+          "label": "Nome da aba",
+          "default": "Frutas"
+        },
+        {
+          "type": "text",
+          "id": "panel_title",
+          "label": "Titulo do painel",
+          "default": "Frutas"
+        },
+        {
+          "type": "textarea",
+          "id": "panel_copy",
+          "label": "Texto do painel",
+          "default": "Selecoes para consumo diario, presentes e mesas que pedem cor, frescor e presenca."
+        },
+        {
+          "type": "textarea",
+          "id": "tags",
+          "label": "Tags de apoio (separadas por virgula)",
+          "default": "Importadas, Estacao, Exoticas, Premium"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link alternativo"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Texto do botao",
+          "default": "Explorar colecao"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Abas de colecoes",
+      "blocks": [
+        {
+          "type": "collection_tab",
+          "settings": {
+            "tab_label": "Frutas",
+            "panel_title": "Frutas",
+            "panel_copy": "Frutas escolhidas para ter beleza, frescor e presenca na rotina ou em momentos de mesa posta.",
+            "tags": "Importadas, Estacao, Exoticas, Premium"
+          }
+        },
+        {
+          "type": "collection_tab",
+          "settings": {
+            "tab_label": "Verduras e legumes",
+            "panel_title": "Verduras e legumes",
+            "panel_copy": "Folhas, legumes e basicos do dia a dia organizados de forma clara para compras recorrentes.",
+            "tags": "Folhas, Legumes, Temperos, Frescos"
+          }
+        },
+        {
+          "type": "collection_tab",
+          "settings": {
+            "tab_label": "Frutas secas",
+            "panel_title": "Frutas secas, cristalizadas e desidratadas",
+            "panel_copy": "Uma colecao para consumo, presentes e composicoes com mais praticidade e vida util prolongada.",
+            "tags": "Desidratadas, Cristalizadas, Snacks, Selecoes"
+          }
+        },
+        {
+          "type": "collection_tab",
+          "settings": {
+            "tab_label": "Nozes e azeitonas",
+            "panel_title": "Nuts, sementes e azeitonas",
+            "panel_copy": "Itens de apoio para servir, cozinhar e montar mesas com mais variedade e sabor.",
+            "tags": "Nozes, Sementes, Azeitonas, Castanhas"
+          }
+        },
+        {
+          "type": "collection_tab",
+          "settings": {
+            "tab_label": "Azeites",
+            "panel_title": "Azeites",
+            "panel_copy": "Rótulos selecionados para quem gosta de ter bons itens de despensa sempre por perto.",
+            "tags": "Extra virgem, Temperos, Presentes, Emporio"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

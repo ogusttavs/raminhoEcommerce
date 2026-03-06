@@ -1,0 +1,135 @@
+<section class="section">
+  <div class="container">
+    <div class="collection-header">
+      <div class="eyebrow">{{ section.settings.eyebrow }}</div>
+      <h1 class="template-title section-heading">{{ collection.title }}</h1>
+      {% if collection.description != blank %}
+        <div class="collection-description">{{ collection.description }}</div>
+      {% endif %}
+    </div>
+
+    {% paginate collection.products by section.settings.products_per_page %}
+      <form class="filter-toolbar" method="get">
+        <div class="search-result-count">{{ collection.products_count }} produtos nesta curadoria.</div>
+
+        <div class="filter-card">
+          <label for="SortBy-{{ section.id }}"><strong>Ordenar por</strong></label>
+          <select class="select-field" id="SortBy-{{ section.id }}" name="sort_by" onchange="this.form.submit()">
+            {% for option in collection.sort_options %}
+              <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>
+                {{ option.name }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      </form>
+
+      <div class="filter-layout">
+        {% if collection.filters.size > 0 %}
+          <aside class="stack">
+            {% for filter in collection.filters %}
+              <div class="filter-card">
+                <h2 class="filter-card__title">{{ filter.label }}</h2>
+
+                {% case filter.type %}
+                  {% when 'price_range' %}
+                    <div class="filter-price-row">
+                      <input
+                        class="filter-price"
+                        name="{{ filter.min_value.param_name }}"
+                        type="number"
+                        placeholder="Min"
+                        value="{{ filter.min_value.value | money_without_currency | replace: ',', '.' }}"
+                      >
+                      <input
+                        class="filter-price"
+                        name="{{ filter.max_value.param_name }}"
+                        type="number"
+                        placeholder="Max"
+                        value="{{ filter.max_value.value | money_without_currency | replace: ',', '.' }}"
+                      >
+                    </div>
+                  {% else %}
+                    <ul class="filter-list">
+                      {% for value in filter.values %}
+                        <li>
+                          <label>
+                            <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %}>
+                            <span>{{ value.label }} ({{ value.count }})</span>
+                          </label>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                {% endcase %}
+              </div>
+            {% endfor %}
+
+            <div class="filter-form__actions">
+              <button class="button button--secondary button--block" type="submit">Aplicar filtros</button>
+              <a class="button button--outline button--block" href="{{ collection.url }}">Limpar</a>
+            </div>
+          </aside>
+        {% endif %}
+
+        <div>
+          {% if collection.products_count > 0 %}
+            <div class="collection-grid">
+              {% for product in collection.products %}
+                {% render 'product-card', card_product: product %}
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="template-empty">
+              <h2 class="section-heading" style="font-size: 2rem;">Nenhum produto encontrado</h2>
+              <p class="section-copy">Ajuste os filtros ou volte para a visão completa da coleção.</p>
+              <a class="button button--secondary" href="{{ collection.url }}">Ver tudo</a>
+            </div>
+          {% endif %}
+
+          {% if paginate.pages > 1 %}
+            <nav class="pagination" aria-label="Paginação da coleção">
+              {% if paginate.previous %}
+                <a href="{{ paginate.previous.url }}">Anterior</a>
+              {% endif %}
+
+              {% for part in paginate.parts %}
+                {% if part.is_link %}
+                  <a href="{{ part.url }}">{{ part.title }}</a>
+                {% else %}
+                  <span class="{% if part.title == paginate.current_page %}is-current{% endif %}">{{ part.title }}</span>
+                {% endif %}
+              {% endfor %}
+
+              {% if paginate.next %}
+                <a href="{{ paginate.next.url }}">Próxima</a>
+              {% endif %}
+            </nav>
+          {% endif %}
+        </div>
+      </div>
+    {% endpaginate %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Coleção principal",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Selecao da Raminho"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Produtos por página",
+      "min": 8,
+      "max": 24,
+      "step": 4,
+      "default": 12
+    }
+  ]
+}
+{% endschema %}

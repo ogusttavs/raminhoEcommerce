@@ -1,0 +1,8 @@
+{% case settings.checkout_provider %}
+  {% when 'yanq' %}
+    {% render 'YanqSnippet' %}
+  {% when 'yampi' %}
+    {% render 'YampiSnippet' %}
+  {% else %}
+    {% comment %}Checkout provider intentionally disabled while the final integration is defined.{% endcomment %}
+{% endcase %}

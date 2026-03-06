@@ -1,0 +1,94 @@
+{% liquid
+  assign item_product = purchase_product
+  assign active_variant = purchase_variant | default: item_product.selected_or_first_available_variant
+  assign context = purchase_context | default: 'card'
+  assign variant_label_text = purchase_variant_label | default: 'Escolha como deseja receber'
+  assign unique_id = purchase_unique_id | default: context | append: '-' | append: item_product.id
+  assign selection_label = '1 unidade'
+  assign helper_copy = 'Selecione a quantidade desejada.'
+  assign purchase_mode_label = 'Por unidade'
+
+  assign variant_title_downcase = active_variant.title | downcase
+
+  if variant_title_downcase contains 'kg' or variant_title_downcase contains 'quilo' or variant_title_downcase contains 'grama' or variant_title_downcase contains ' g' or variant_title_downcase contains '300g' or variant_title_downcase contains '500g' or variant_title_downcase contains '1kg'
+    assign selection_label = '300 g'
+    assign helper_copy = 'Em incrementos de 300 g.'
+    assign purchase_mode_label = 'Por quilo'
+  endif
+%}
+
+<script type="application/json" data-product-json>{{ item_product.variants | json }}</script>
+
+<form action="{{ routes.cart_add_url }}" method="post" data-product-form class="purchase-form purchase-form--{{ context }}">
+  {% if item_product.variants.size > 1 and context != 'card' %}
+    <div class="product-variant-picker product-variant-picker--{{ context }}">
+      {% unless context == 'card' %}
+        <label><strong>{{ variant_label_text }}</strong></label>
+      {% endunless %}
+      <div class="pill-option-grid pill-option-grid--{{ context }}">
+        {% for variant in item_product.variants %}
+          <label class="pill-option">
+            <input
+              type="radio"
+              name="id"
+              value="{{ variant.id }}"
+              {% if variant.id == active_variant.id %}checked{% endif %}
+              {% unless variant.available %}disabled{% endunless %}
+            >
+            <span>{{ variant.title }}</span>
+          </label>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <input type="hidden" name="id" value="{{ active_variant.id }}">
+  {% endif %}
+
+  <div class="purchase-mode-display{% if context == 'card' %} purchase-mode-display--compact{% endif %}" data-purchase-mode-display hidden>
+    <span class="purchase-mode-display__label" data-purchase-mode-label></span>
+  </div>
+
+  <div class="quantity-field{% if context == 'card' %} quantity-field--compact{% endif %}">
+    {% unless context == 'card' %}
+      <div class="quantity-field__head">
+        <label for="Quantity-{{ unique_id }}"><strong data-purchase-quantity-label>Quantidade</strong></label>
+        <span class="meta-copy" data-purchase-helper>{{ helper_copy }}</span>
+      </div>
+    {% endunless %}
+
+    <div class="quantity-stepper{% if context == 'card' %} quantity-stepper--compact{% endif %}" data-quantity-wrapper>
+      <button class="quantity-button" type="button" data-quantity-control="decrease" aria-label="Diminuir">
+        −
+      </button>
+      <input
+        id="Quantity-{{ unique_id }}"
+        type="hidden"
+        name="quantity"
+        min="1"
+        max="99"
+        value="1"
+        data-quantity-input
+        data-purchase-quantity-input
+      >
+      <span class="quantity-display{% if context == 'card' %} quantity-display--compact{% endif %}" data-purchase-quantity-display>{{ selection_label }}</span>
+      <button class="quantity-button" type="button" data-quantity-control="increase" aria-label="Aumentar">
+        +
+      </button>
+    </div>
+
+    {% unless context == 'card' %}
+      <div class="purchase-summary{% if context == 'card' %} purchase-summary--compact{% endif %}">
+        <span class="meta-copy" data-purchase-summary-label>{{ selection_label }} selecionada</span>
+        <strong class="purchase-summary__value" data-purchase-total>{{ active_variant.price | money }}</strong>
+      </div>
+    {% endunless %}
+  </div>
+
+  <input type="hidden" name="properties[Modalidade]" value="{{ purchase_mode_label }}" data-purchase-property-mode>
+  <input type="hidden" name="properties[Selecao]" value="{{ selection_label }}" data-purchase-property-selection>
+
+  <button class="button button--secondary button--block product-submit" type="submit" name="add" {% unless active_variant.available %}disabled{% endunless %}>
+    <span data-product-submit-label>{% if active_variant.available %}{% if context == 'card' %}Adicionar{% else %}Adicionar ao carrinho{% endif %}{% else %}Indisponível{% endif %}</span>
+    <span class="product-submit__price" data-product-submit-price>{{ active_variant.price | money }}</span>
+  </button>
+</form>

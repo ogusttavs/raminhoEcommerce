@@ -1,0 +1,133 @@
+<section class="section" id="historia">
+  <div class="container heritage-grid">
+    <div class="heritage-media">
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 1600 | image_tag: widths: '700, 1000, 1600', alt: section.settings.title, loading: 'lazy' }}
+      {% else %}
+        <img src="{{ 'founder-raminho.jpg' | asset_url }}" alt="{{ section.settings.title }}" width="1200" height="1600" loading="lazy">
+      {% endif %}
+    </div>
+
+    <div class="heritage-copy__panel card-surface">
+      <div class="eyebrow">{{ section.settings.eyebrow }}</div>
+      <h2 class="section-heading">{{ section.settings.title }}</h2>
+      <p class="rich-copy">{{ section.settings.copy }}</p>
+
+      <ul class="heritage-list">
+        {% if section.blocks.size > 0 %}
+          {% for block in section.blocks %}
+            <li {{ block.shopify_attributes }}>
+              <span class="heritage-list__marker">{{ forloop.index }}</span>
+              <div>
+                <strong>{{ block.settings.title }}</strong>
+                <p class="meta-copy">{{ block.settings.copy }}</p>
+              </div>
+            </li>
+          {% endfor %}
+        {% else %}
+          <li>
+            <span class="heritage-list__marker">1</span>
+            <div>
+              <strong>Uma história de escolha</strong>
+              <p class="meta-copy">A Raminho construiu sua reputacao observando o produto de perto, respeitando tempo, origem e apresentacao.</p>
+            </div>
+          </li>
+          <li>
+            <span class="heritage-list__marker">2</span>
+            <div>
+              <strong>Origem reconhecida</strong>
+              <p class="meta-copy">A confianca no varejo nasce da mesma base que consolidou a marca ao longo dos anos.</p>
+            </div>
+          </li>
+          <li>
+            <span class="heritage-list__marker">3</span>
+            <div>
+              <strong>Cuidado que permanece</strong>
+              <p class="meta-copy">Do momento da separacao ate a entrega, a experiencia precisa transmitir serenidade e confianca.</p>
+            </div>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Historia e heranca",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Tradicao com delicadeza"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titulo",
+      "default": "Uma historia de mercado traduzida para uma experiencia digital clara e elegante."
+    },
+    {
+      "type": "textarea",
+      "id": "copy",
+      "label": "Texto",
+      "default": "A historia da Raminho aparece aqui como prova de experiencia, criterio e continuidade."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagem"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Ponto",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titulo",
+          "default": "Origem reconhecida"
+        },
+        {
+          "type": "textarea",
+          "id": "copy",
+          "label": "Texto",
+          "default": "A marca nasce de uma origem forte, associada a variedade, frescor e confianca."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Historia e heranca",
+      "blocks": [
+        {
+          "type": "point",
+          "settings": {
+            "title": "Origem reconhecida",
+            "copy": "A narrativa parte de uma base solida, onde a qualidade sempre foi observada de perto."
+          }
+        },
+        {
+          "type": "point",
+          "settings": {
+            "title": "Cuidado humano",
+            "copy": "A qualidade percebida vem de uma operacao que olha o produto com atencao."
+          }
+        },
+        {
+          "type": "point",
+          "settings": {
+            "title": "Entrega cuidadosa",
+            "copy": "Cada etapa reforca a sensacao de escolha bem feita e de compra que vale repetir."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,208 @@
+{% liquid
+  assign hero_primary_url = section.settings.primary_url | default: routes.all_products_collection_url
+  assign hero_secondary_url = section.settings.secondary_url
+  assign highlighted_title = section.settings.title
+
+  assign highlighted_title = highlighted_title | replace: 'o melhor da natureza', '<span class="hero-title__marker">o melhor da natureza</span>'
+  assign highlighted_title = highlighted_title | replace: 'O melhor da natureza', '<span class="hero-title__marker">O melhor da natureza</span>'
+
+  if hero_secondary_url == blank
+    assign hero_secondary_url = '#historia'
+  endif
+%}
+
+<section class="hero-editorial">
+  <div class="hero-editorial__media">
+    {% if section.settings.background_image != blank %}
+      {{ section.settings.background_image | image_url: width: 2200 | image_tag: widths: '1200, 1600, 2200', alt: section.settings.title, loading: 'eager' }}
+    {% else %}
+      <img src="{{ 'lp-hero-bg.webp' | asset_url }}" alt="{{ section.settings.title }}" width="2070" height="1380" loading="eager">
+    {% endif %}
+    <div class="hero-editorial__overlay"></div>
+  </div>
+
+  <div class="container hero-editorial__layout">
+    <div class="stack">
+      <div class="eyebrow">{{ section.settings.eyebrow }}</div>
+      <h1 class="hero-title">
+        {{ highlighted_title }}
+      </h1>
+      <p class="hero-copy">{{ section.settings.copy }}</p>
+
+      <div class="hero-editorial__actions">
+        <a class="button button--secondary" href="{{ hero_primary_url }}">
+          {{ section.settings.primary_label | default: 'Explorar catalogo' }}
+        </a>
+
+        <a class="button button--ghost" href="{{ hero_secondary_url }}">
+          {{ section.settings.secondary_label | default: 'Conhecer a Raminho' }}
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-editorial__cards">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          <article class="hero-stat hero-stat--{{ forloop.index }}" {{ block.shopify_attributes }}>
+            <div class="hero-stat__icon" aria-hidden="true">
+              {% case forloop.index %}
+                {% when 1 %}
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 21s6-5.7 6-11a6 6 0 1 0-12 0c0 5.3 6 11 6 11Z"></path>
+                    <circle cx="12" cy="10" r="2.2"></circle>
+                  </svg>
+                {% when 2 %}
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10 17h4V5H2v12h3"></path>
+                    <path d="M14 9h4l4 4v4h-2"></path>
+                    <circle cx="7.5" cy="17.5" r="1.5"></circle>
+                    <circle cx="17.5" cy="17.5" r="1.5"></circle>
+                  </svg>
+                {% else %}
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m12 3 2.1 4.3 4.8.7-3.5 3.4.8 4.8-4.2-2.2-4.2 2.2.8-4.8L5.1 8l4.8-.7L12 3Z"></path>
+                  </svg>
+              {% endcase %}
+            </div>
+            <div class="hero-stat__value">{{ block.settings.value }}</div>
+            <div class="hero-stat__label">{{ block.settings.label }}</div>
+          </article>
+        {% endfor %}
+      {% else %}
+        <article class="hero-stat hero-stat--1">
+          <div class="hero-stat__icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 21s6-5.7 6-11a6 6 0 1 0-12 0c0 5.3 6 11 6 11Z"></path>
+              <circle cx="12" cy="10" r="2.2"></circle>
+            </svg>
+          </div>
+          <div class="hero-stat__value">40+ anos</div>
+          <div class="hero-stat__label">de experiencia escolhendo produtos com atencao a origem, ao ponto certo e a apresentacao.</div>
+        </article>
+        <article class="hero-stat hero-stat--2">
+          <div class="hero-stat__icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 17h4V5H2v12h3"></path>
+              <path d="M14 9h4l4 4v4h-2"></path>
+              <circle cx="7.5" cy="17.5" r="1.5"></circle>
+              <circle cx="17.5" cy="17.5" r="1.5"></circle>
+            </svg>
+          </div>
+          <div class="hero-stat__value">D+1</div>
+          <div class="hero-stat__label">para entregas cuidadosas na Grande Sao Paulo, com separacao atenta ate a saida.</div>
+        </article>
+        <article class="hero-stat hero-stat--3">
+          <div class="hero-stat__icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m12 3 2.1 4.3 4.8.7-3.5 3.4.8 4.8-4.2-2.2-4.2 2.2.8-4.8L5.1 8l4.8-.7L12 3Z"></path>
+            </svg>
+          </div>
+          <div class="hero-stat__value">Excelencia diaria</div>
+          <div class="hero-stat__label">para levar a sua casa produtos escolhidos com o mesmo criterio de uma compra feita pessoalmente.</div>
+        </article>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero editorial",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "E-commerce Raminho Importadora"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Titulo",
+      "default": "Aqui, o melhor da natureza."
+    },
+    {
+      "type": "textarea",
+      "id": "copy",
+      "label": "Texto",
+      "default": "Frutas e selecoes especiais escolhidas com cuidado, para que a sua casa receba o melhor da natureza com a assinatura da Raminho."
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Imagem de fundo"
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Label CTA principal",
+      "default": "Explorar catalogo"
+    },
+    {
+      "type": "url",
+      "id": "primary_url",
+      "label": "URL CTA principal"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Label CTA secundario",
+      "default": "Conhecer a Raminho"
+    },
+    {
+      "type": "url",
+      "id": "secondary_url",
+      "label": "URL CTA secundario"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Estatistica",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Valor",
+          "default": "40+ anos"
+        },
+        {
+          "type": "textarea",
+          "id": "label",
+          "label": "Descricao",
+          "default": "escolha atenta, experiencia e constancia em cada selecao."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Hero editorial",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "value": "D+1",
+            "label": "entregas cuidadosas, com atencao ao produto ate a chegada."
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "Excelencia diaria",
+            "label": "produtos escolhidos com o mesmo criterio de uma boa visita ao mercado."
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "O melhor da natureza",
+            "label": "um slogan que orienta cada escolha exibida no site."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

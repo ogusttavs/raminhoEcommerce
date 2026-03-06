@@ -1,0 +1,135 @@
+<section class="section section--dark">
+  <div class="container">
+    <div class="stack" style="margin-bottom: 2rem;">
+      <div class="eyebrow">{{ section.settings.eyebrow }}</div>
+      <h2 class="section-heading">{{ section.settings.title }}</h2>
+      <p class="section-copy" style="max-width: 40rem;">{{ section.settings.copy }}</p>
+    </div>
+
+    <div class="category-grid">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          <a class="category-card" href="{{ block.settings.link | default: routes.all_products_collection_url }}" {{ block.shopify_attributes }}>
+            <div class="category-card__media">
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | image_url: width: 1200 | image_tag: widths: '600, 900, 1200', alt: block.settings.title, loading: 'lazy' }}
+              {% else %}
+                {% assign fallback_asset = 'placeholder-category-importadas.png' %}
+                {% if forloop.index == 2 %}
+                  {% assign fallback_asset = 'lp-frutas-estacao.png' %}
+                {% elsif forloop.index == 3 %}
+                  {% assign fallback_asset = 'lp-frutas-exoticas.png' %}
+                {% else %}
+                  {% assign fallback_asset = 'lp-frutas-importadas.png' %}
+                {% endif %}
+                <img src="{{ fallback_asset | asset_url }}" alt="{{ block.settings.title }}" width="1200" height="1400" loading="lazy">
+              {% endif %}
+              <div class="category-card__overlay">
+                <div class="stack" style="gap: 0.75rem;">
+                  <h3 class="category-card__title">{{ block.settings.title }}</h3>
+                  <p class="category-card__copy">{{ block.settings.copy }}</p>
+                </div>
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      {% else %}
+        <a class="category-card" href="{{ routes.all_products_collection_url }}">
+          <div class="category-card__media">
+            <img src="{{ 'lp-frutas-importadas.png' | asset_url }}" alt="Frutas importadas" width="640" height="640" loading="lazy">
+            <div class="category-card__overlay">
+              <div class="stack" style="gap: 0.75rem;">
+                <h3 class="category-card__title">Frutas importadas</h3>
+                <p class="category-card__copy">Selecoes de origem especial, escolhidas para momentos que pedem beleza e sabor.</p>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a class="category-card" href="{{ routes.all_products_collection_url }}">
+          <div class="category-card__media">
+            <img src="{{ 'lp-frutas-estacao.png' | asset_url }}" alt="Safra da estação" width="640" height="640" loading="lazy">
+            <div class="category-card__overlay">
+              <div class="stack" style="gap: 0.75rem;">
+                <h3 class="category-card__title">Safra da estação</h3>
+                <p class="category-card__copy">O melhor momento do calendario, apresentado com simplicidade e o cuidado de uma boa escolha.</p>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a class="category-card" href="{{ routes.all_products_collection_url }}">
+          <div class="category-card__media">
+            <img src="{{ 'lp-frutas-exoticas.png' | asset_url }}" alt="Seleções exóticas" width="640" height="640" loading="lazy">
+            <div class="category-card__overlay">
+              <div class="stack" style="gap: 0.75rem;">
+                <h3 class="category-card__title">Seleções exóticas</h3>
+                <p class="category-card__copy">Produtos que surpreendem pela raridade, pelo sabor e pela presenca na mesa.</p>
+              </div>
+            </div>
+          </div>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Categorias editoriais",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Escolha por categoria"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titulo",
+      "default": "O catalogo convida a descobrir com calma."
+    },
+    {
+      "type": "textarea",
+      "id": "copy",
+      "label": "Texto",
+      "default": "Cada categoria organiza o melhor da natureza em uma navegacao simples, bonita e facil de entender."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Categoria editorial",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagem"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titulo",
+          "default": "Frutas importadas"
+        },
+        {
+          "type": "textarea",
+          "id": "copy",
+          "label": "Texto",
+          "default": "Itens raros, sazonais e apresentados com cuidado."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Categoria editorial"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,23 @@
+<aside
+  class="cart-drawer"
+  data-drawer="cart"
+  data-cart-drawer
+  data-minimum-order="{{ settings.minimum_order_value | default: '110.00' | replace: ',', '.' | plus: 0 | times: 100 }}"
+>
+  <button class="cart-drawer__backdrop" type="button" aria-label="Fechar carrinho" data-drawer-close></button>
+  <div class="cart-drawer__panel">
+    <div class="cart-drawer__head">
+      <div>
+        <p class="eyebrow">Seleção em andamento</p>
+        <h2 class="cart-drawer__title">Seu carrinho</h2>
+      </div>
+      <button class="drawer-close" type="button" aria-label="Fechar carrinho" data-drawer-close>
+        ×
+      </button>
+    </div>
+
+    <div class="cart-drawer__body" data-cart-items></div>
+    <div data-cart-meta></div>
+    <div class="drawer-actions" data-cart-actions></div>
+  </div>
+</aside>

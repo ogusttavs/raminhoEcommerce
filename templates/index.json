@@ -1,0 +1,142 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-editorial",
+      "settings": {
+        "eyebrow": "E-commerce Raminho Importadora"
+      },
+      "blocks": {
+        "delivery_regions": {
+          "type": "stat",
+          "settings": {
+            "value": "Entregamos na Grande Sao Paulo",
+            "label": "Capital, Guarulhos, Barueri, Osasco, Santana de Parnaiba, Alphaville e regioes proximas."
+          }
+        },
+        "delivery_time": {
+          "type": "stat",
+          "settings": {
+            "value": "D+1",
+            "label": "Entregas no proximo dia util. Aos domingos nao entregamos, e compras feitas aos sabados seguem na segunda-feira."
+          }
+        },
+        "daily_selection": {
+          "type": "stat",
+          "settings": {
+            "value": "Excelencia diaria",
+            "label": "para levar a sua casa produtos escolhidos com o mesmo criterio de uma compra feita pessoalmente."
+          }
+        }
+      },
+      "block_order": [
+        "delivery_regions",
+        "delivery_time",
+        "daily_selection"
+      ]
+    },
+    "pillars": {
+      "type": "collection-tabs",
+      "settings": {
+        "eyebrow": "Selecoes por categoria",
+        "copy": "Explore pelas principais selecoes da casa e encontre a escolha certa com mais clareza."
+      },
+      "blocks": {
+        "frutas": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "frutas",
+            "tab_label": "Frutas",
+            "panel_title": "Frutas",
+            "panel_copy": "Frutas escolhidas para ter beleza, frescor e presenca na rotina ou em momentos de mesa posta.",
+            "tags": "Importadas, Estacao, Exoticas, Premium",
+            "button_label": "Explorar colecao"
+          }
+        },
+        "verduras": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "verduras-e-legumes",
+            "tab_label": "Verduras e legumes",
+            "panel_title": "Verduras e legumes",
+            "panel_copy": "Folhas, legumes e basicos do dia a dia organizados de forma clara para compras recorrentes.",
+            "tags": "Folhas, Legumes, Temperos, Frescos",
+            "button_label": "Explorar colecao"
+          }
+        },
+        "secas": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "frutas-secas-cristalizadas-e-desidratadas",
+            "tab_label": "Frutas secas",
+            "panel_title": "Frutas secas, cristalizadas e desidratadas",
+            "panel_copy": "Uma colecao para consumo, presentes e composicoes com mais praticidade e vida util prolongada.",
+            "tags": "Desidratadas, Cristalizadas, Snacks, Selecoes",
+            "button_label": "Explorar colecao"
+          }
+        },
+        "nuts": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "nuts-sementes-e-azeitonas",
+            "tab_label": "Nozes e azeitonas",
+            "panel_title": "Nuts, sementes e azeitonas",
+            "panel_copy": "Itens de apoio para servir, cozinhar e montar mesas com mais variedade e sabor.",
+            "tags": "Nozes, Sementes, Azeitonas, Castanhas",
+            "button_label": "Explorar colecao"
+          }
+        },
+        "azeites": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "azeites",
+            "tab_label": "Azeites",
+            "panel_title": "Azeites",
+            "panel_copy": "Rotulos selecionados para quem gosta de ter bons itens de despensa sempre por perto.",
+            "tags": "Extra virgem, Temperos, Presentes, Emporio",
+            "button_label": "Explorar colecao"
+          }
+        }
+      },
+      "block_order": [
+        "frutas",
+        "verduras",
+        "secas",
+        "nuts",
+        "azeites"
+      ]
+    },
+    "featured_collection": {
+      "type": "featured-collection-editorial",
+      "settings": {
+        "eyebrow": "Selecao em destaque",
+        "title": "Produtos para escolher com rapidez e levar com clareza.",
+        "copy": "Uma vitrine direta, com leitura simples e compra imediata para o dia a dia."
+      }
+    },
+    "category_editorial": {
+      "type": "category-grid",
+      "settings": {}
+    },
+    "heritage_story": {
+      "type": "heritage-story",
+      "settings": {}
+    },
+    "testimonials": {
+      "type": "testimonials-premium",
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "newsletter-premium",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "pillars",
+    "featured_collection",
+    "category_editorial",
+    "heritage_story",
+    "testimonials",
+    "newsletter"
+  ]
+}

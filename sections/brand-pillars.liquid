@@ -1,0 +1,112 @@
+<section class="section">
+  <div class="container">
+    <div class="stack" style="margin-bottom: 2rem;">
+      <div class="eyebrow">{{ section.settings.eyebrow }}</div>
+      <h2 class="section-heading">{{ section.settings.title }}</h2>
+      <p class="section-copy" style="max-width: 42rem;">{{ section.settings.copy }}</p>
+    </div>
+
+    <div class="pillars-grid">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          <article class="pill-card" {{ block.shopify_attributes }}>
+            <div class="pill-card__index">{{ forloop.index }}</div>
+            <h3 class="pill-card__title">{{ block.settings.title }}</h3>
+            <p class="pill-card__copy">{{ block.settings.copy }}</p>
+          </article>
+        {% endfor %}
+      {% else %}
+        <article class="pill-card">
+          <div class="pill-card__index">1</div>
+          <h3 class="pill-card__title">Beleza com discrição</h3>
+          <p class="pill-card__copy">O produto fica em primeiro plano, com um site leve, claro e agradavel de navegar.</p>
+        </article>
+        <article class="pill-card">
+          <div class="pill-card__index">2</div>
+          <h3 class="pill-card__title">Marca com história</h3>
+          <p class="pill-card__copy">A mesma confiança do atacado aparece aqui em uma experiencia mais delicada, feita para a casa do cliente final.</p>
+        </article>
+        <article class="pill-card">
+          <div class="pill-card__index">3</div>
+          <h3 class="pill-card__title">Compra sem ruído</h3>
+          <p class="pill-card__copy">Catalogo, produto e carrinho seguem a mesma linguagem, para que a compra aconteca com naturalidade.</p>
+        </article>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Pilares de marca",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "A mesma marca, em uma nova experiencia"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titulo",
+      "default": "A solidez do atacado, agora pensada para a rotina do varejo."
+    },
+    {
+      "type": "textarea",
+      "id": "copy",
+      "label": "Texto",
+      "default": "O varejo da Raminho segue a mesma origem, o mesmo criterio de escolha e o mesmo cuidado com a apresentacao."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Pilar",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titulo",
+          "default": "Escolha visivel"
+        },
+        {
+          "type": "textarea",
+          "id": "copy",
+          "label": "Texto",
+          "default": "Cada produto deve transmitir a sensacao de uma escolha feita com calma e conhecimento."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Pilares de marca",
+      "blocks": [
+        {
+          "type": "pillar",
+          "settings": {
+            "title": "Escolha visivel",
+            "copy": "Imagem, texto e navegacao trabalham juntos para valorizar o produto sem exagero."
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "title": "Servico atento",
+            "copy": "A entrega e o pos-compra acompanham o mesmo cuidado presente na selecao."
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "title": "Fluxo sem atrito",
+            "copy": "A experiencia conduz para a compra com leveza, sem parecer apressada ou excessivamente promocional."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

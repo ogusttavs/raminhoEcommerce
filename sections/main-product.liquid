@@ -1,0 +1,190 @@
+{% liquid
+  assign selected_variant = product.selected_or_first_available_variant
+  assign related_collection = section.settings.related_collection
+
+  if related_collection == blank and product.collections.first != blank
+    assign related_collection = product.collections.first
+  endif
+%}
+
+<section class="section">
+  <div class="container">
+    <ul class="breadcrumbs">
+      <li><a href="{{ routes.root_url }}">Início</a></li>
+      {% if product.collections.first != blank %}
+        <li>/</li>
+        <li><a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a></li>
+      {% endif %}
+      <li>/</li>
+      <li>{{ product.title }}</li>
+    </ul>
+
+    <div class="product-template__grid" data-product-root>
+      <div class="product-gallery">
+        {% for media in product.media %}
+          <div class="product-gallery__item">
+            {{ media | image_url: width: 1400 | image_tag: widths: '700, 1000, 1400', alt: product.title, loading: 'lazy' }}
+          </div>
+        {% else %}
+          <div class="product-gallery__item"></div>
+        {% endfor %}
+      </div>
+
+      <div class="product-panel">
+        <div class="stack">
+          <div class="eyebrow">{{ section.settings.eyebrow }}</div>
+          <h1 class="product-title">{{ product.title }}</h1>
+          <div class="price-row">
+            <strong class="price-current" data-product-price>{{ selected_variant.price | money }}</strong>
+            <span class="price-compare" data-product-compare-price {% unless selected_variant.compare_at_price > selected_variant.price %}hidden{% endunless %}>
+              {% if selected_variant.compare_at_price > selected_variant.price %}
+                {{ selected_variant.compare_at_price | money }}
+              {% endif %}
+            </span>
+          </div>
+          <p class="meta-copy" data-product-price-note>Preço para 1 unidade.</p>
+          {% if product.description != blank %}
+            <p class="product-subtitle">{{ product.description | strip_html | truncatewords: 26 }}</p>
+          {% endif %}
+        </div>
+
+        {% render 'product-purchase-form',
+          purchase_product: product,
+          purchase_variant: selected_variant,
+          purchase_context: 'product',
+          purchase_variant_label: section.settings.variant_label,
+          purchase_unique_id: section.id
+        %}
+
+        <div class="product-guarantee">
+          <strong>{{ section.settings.guarantee_title }}</strong>
+          <p class="meta-copy">{{ section.settings.guarantee_copy }}</p>
+          <ul class="product-meta-list">
+            {% for block in section.blocks %}
+              <li>{{ block.settings.copy }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="accordion-list">
+          <details class="accordion" open>
+            <summary>{{ section.settings.description_title }}</summary>
+            <div class="accordion__content">
+              {{ product.description }}
+            </div>
+          </details>
+
+          <details class="accordion">
+            <summary>{{ section.settings.delivery_title }}</summary>
+            <div class="accordion__content">
+              <p>{{ section.settings.delivery_copy }}</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if related_collection != blank %}
+  <section class="section section--compact">
+    <div class="container">
+      <div class="stack" style="margin-bottom: 2rem;">
+        <div class="eyebrow">{{ section.settings.related_eyebrow }}</div>
+        <h2 class="section-heading">{{ section.settings.related_title }}</h2>
+      </div>
+
+      <div class="recommendation-grid">
+        {% assign related_count = 0 %}
+        {% for related_product in related_collection.products %}
+          {% if related_product.id != product.id and related_count < 4 %}
+            {% render 'product-card', card_product: related_product %}
+            {% assign related_count = related_count | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Produto principal",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "O melhor da natureza"
+    },
+    {
+      "type": "text",
+      "id": "variant_label",
+      "label": "Label de variantes",
+      "default": "Escolha como deseja receber"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_title",
+      "label": "Titulo da garantia",
+      "default": "Seleção cuidadosa do começo ao fim."
+    },
+    {
+      "type": "textarea",
+      "id": "guarantee_copy",
+      "label": "Texto da garantia",
+      "default": "Cada pedido segue com atenção na separação, conferência e entrega, para que a experiência mantenha o mesmo cuidado da escolha."
+    },
+    {
+      "type": "text",
+      "id": "description_title",
+      "label": "Titulo da descrição",
+      "default": "Sobre este produto"
+    },
+    {
+      "type": "text",
+      "id": "delivery_title",
+      "label": "Titulo da entrega",
+      "default": "Entrega"
+    },
+    {
+      "type": "textarea",
+      "id": "delivery_copy",
+      "label": "Texto da entrega",
+      "default": "As entregas seguem com conferência antes da saída e atenção à apresentação do produto até a chegada."
+    },
+    {
+      "type": "collection",
+      "id": "related_collection",
+      "label": "Coleção relacionada"
+    },
+    {
+      "type": "text",
+      "id": "related_eyebrow",
+      "label": "Eyebrow da vitrine relacionada",
+      "default": "Para a sua seleção"
+    },
+    {
+      "type": "text",
+      "id": "related_title",
+      "label": "Titulo da vitrine relacionada",
+      "default": "Outras escolhas para complementar a sua mesa."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefício",
+      "settings": [
+        {
+          "type": "text",
+          "id": "copy",
+          "label": "Texto",
+          "default": "Conferência visual antes da entrega."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4
+}
+{% endschema %}

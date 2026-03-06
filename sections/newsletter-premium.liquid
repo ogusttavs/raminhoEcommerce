@@ -1,0 +1,68 @@
+<section class="section section--compact">
+  <div class="container">
+    <div class="newsletter-panel card-surface">
+      <div class="stack">
+        <div class="eyebrow">{{ section.settings.eyebrow }}</div>
+        <h2 class="section-heading">{{ section.settings.title }}</h2>
+        <p class="section-copy">{{ section.settings.copy }}</p>
+      </div>
+
+      {% form 'customer', class: 'newsletter-form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <input
+          class="field"
+          type="email"
+          name="contact[email]"
+          placeholder="{{ section.settings.placeholder }}"
+          required
+        >
+        <button class="button button--secondary" type="submit">
+          {{ section.settings.button_label }}
+        </button>
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter premium",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Novidades da estacao"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titulo",
+      "default": "Receba novidades sazonais e selecoes especiais em primeira mao."
+    },
+    {
+      "type": "textarea",
+      "id": "copy",
+      "label": "Texto",
+      "default": "Uma forma simples de acompanhar chegadas, destaques e momentos especiais do catalogo."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Placeholder",
+      "default": "Seu melhor e-mail"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Label do botão",
+      "default": "Receber novidades"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter premium"
+    }
+  ]
+}
+{% endschema %}

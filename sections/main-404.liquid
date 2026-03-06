@@ -1,0 +1,20 @@
+<section class="section">
+  <div class="container">
+    <div class="template-empty">
+      <div class="eyebrow">Página não encontrada</div>
+      <h1 class="section-heading">A seleção que você buscou saiu desta rota.</h1>
+      <p class="section-copy">Volte para o catálogo principal e continue a descoberta a partir das nossas curadorias.</p>
+      <div class="hero-editorial__actions">
+        <a class="button button--secondary" href="{{ routes.root_url }}">Ir para a home</a>
+        <a class="button button--outline" href="{{ routes.all_products_collection_url }}">Explorar catálogo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "404 principal",
+  "settings": []
+}
+{% endschema %}

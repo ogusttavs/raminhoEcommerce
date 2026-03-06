@@ -1,0 +1,103 @@
+<footer class="site-footer section section--compact">
+  <div class="container site-footer__grid">
+    <div class="stack">
+      <div class="footer-brand">
+        <div class="site-header__logo">
+          {% if settings.brand_logo_inverted != blank %}
+            {{ settings.brand_logo_inverted | image_url: width: 300 | image_tag: widths: '160, 220, 300', alt: shop.name, loading: 'lazy' }}
+          {% elsif settings.brand_logo != blank %}
+            {{ settings.brand_logo | image_url: width: 300 | image_tag: widths: '160, 220, 300', alt: shop.name, loading: 'lazy' }}
+          {% else %}
+            <img src="{{ 'logo-ecommerce-varejo-light.png' | asset_url }}" alt="{{ shop.name }}" width="300" height="300" loading="lazy">
+          {% endif %}
+        </div>
+      </div>
+
+      <p class="footer-brand__copy">
+        {{ section.settings.brand_copy }}
+      </p>
+
+      <ul class="footer-contacts">
+        <li><span>{{ settings.business_address }}</span></li>
+        <li><a href="mailto:{{ settings.support_email }}">{{ settings.support_email }}</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-menu">
+      <h3 class="footer-menu__title">{{ section.settings.menu_one_title }}</h3>
+      <ul class="footer-menu__list">
+        {% if section.settings.menu_one != blank and section.settings.menu_one.links.size > 0 %}
+          {% for link in section.settings.menu_one.links %}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+        {% else %}
+          <li><a href="{{ routes.all_products_collection_url }}">Todos os produtos</a></li>
+          <li><a href="{{ routes.search_url }}">Buscar no catálogo</a></li>
+          <li><a href="#historia">Conheça a Raminho</a></li>
+        {% endif %}
+      </ul>
+    </div>
+
+    <div class="footer-menu">
+      <h3 class="footer-menu__title">{{ section.settings.menu_two_title }}</h3>
+      <ul class="footer-menu__list">
+        {% if section.settings.menu_two != blank and section.settings.menu_two.links.size > 0 %}
+          {% for link in section.settings.menu_two.links %}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+        {% else %}
+          <li><a href="#historia">Nossa história</a></li>
+          <li><a href="https://www.instagram.com/raminhoimportadoraoficial" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li><a href="mailto:{{ settings.support_email }}">Contato</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <span>{{ shop.name }} © {{ 'now' | date: '%Y' }}</span>
+    <span>{{ section.settings.bottom_note }}</span>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer premium",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "brand_copy",
+      "label": "Texto institucional",
+      "default": "A Raminho leva para a sua casa produtos escolhidos com criterio, cuidado e respeito ao momento certo de cada selecao."
+    },
+    {
+      "type": "text",
+      "id": "menu_one_title",
+      "label": "Titulo do menu 1",
+      "default": "Comprar"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_one",
+      "label": "Menu 1"
+    },
+    {
+      "type": "text",
+      "id": "menu_two_title",
+      "label": "Titulo do menu 2",
+      "default": "Institucional"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_two",
+      "label": "Menu 2"
+    },
+    {
+      "type": "textarea",
+      "id": "bottom_note",
+      "label": "Nota inferior",
+      "default": "O melhor da natureza, escolhido e entregue com atencao."
+    }
+  ]
+}
+{% endschema %}

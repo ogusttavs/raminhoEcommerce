@@ -1,0 +1,123 @@
+<link rel="preconnect" crossorigin href="https://api.dooki.com.br">
+
+<style>
+  .yampi-loader[hidden] {
+    display: none !important;
+  }
+
+  .yampi-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    background: rgba(249, 250, 251, 0.78);
+    backdrop-filter: blur(10px);
+  }
+
+  .yampi-loader__spinner {
+    width: 3rem;
+    height: 3rem;
+    border: 3px solid rgba(0, 40, 85, 0.16);
+    border-top-color: #002855;
+    border-radius: 50%;
+    animation: yampi-spin 0.8s linear infinite;
+  }
+
+  @keyframes yampi-spin {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+
+<div class="yampi-loader" data-yampi-loader hidden>
+  <div class="yampi-loader__spinner" aria-hidden="true"></div>
+</div>
+
+<script>
+  (() => {
+    const cartEndpoint = 'https://api.dooki.com.br/v2/public/shopify/cart';
+    const shopifyInternalDomain = '{{ shop.permanent_domain | escape }}';
+
+    function getLoader() {
+      return document.querySelector('[data-yampi-loader]');
+    }
+
+    function showLoader() {
+      const loader = getLoader();
+      if (!loader) return;
+      loader.hidden = false;
+    }
+
+    function hideLoader() {
+      const loader = getLoader();
+      if (!loader) return;
+      loader.hidden = true;
+    }
+
+    async function openCheckout() {
+      showLoader();
+
+      try {
+        const cartResponse = await fetch('/cart.js', {
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        });
+
+        if (!cartResponse.ok) {
+          throw new Error('Nao foi possivel carregar o carrinho.');
+        }
+
+        const cart = await cartResponse.json();
+        if (!cart.item_count) {
+          throw new Error('Seu carrinho está vazio.');
+        }
+
+        const checkoutResponse = await fetch(cartEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: JSON.stringify({
+            shop: window.location.host,
+            shopify_internal_domain: shopifyInternalDomain,
+            cart_payload: cart
+          })
+        });
+
+        if (!checkoutResponse.ok) {
+          throw new Error('O checkout externo esta indisponivel no momento.');
+        }
+
+        const payload = await checkoutResponse.json();
+        if (!payload.active || !payload.checkout_direct_url) {
+          throw new Error('O checkout Yampi esta indisponivel no momento.');
+        }
+
+        window.location.href = payload.checkout_direct_url;
+      } catch (error) {
+        hideLoader();
+        throw error;
+      }
+    }
+
+    window.RaminhoCheckout = {
+      provider: 'yampi',
+      open: openCheckout,
+      showLoader,
+      hideLoader
+    };
+
+    window.addEventListener('pageshow', hideLoader);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') hideLoader();
+    });
+  })();
+</script>

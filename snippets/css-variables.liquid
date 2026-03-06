@@ -1,0 +1,12 @@
+{% style %}
+  :root {
+    --color-brand: {{ settings.color_brand | default: '#002855' }};
+    --color-brand-alt: {{ settings.color_brand_alt | default: '#001E43' }};
+    --color-accent: {{ settings.color_accent | default: '#FFC107' }};
+    --color-canvas: {{ settings.color_canvas | default: '#F9FAFB' }};
+    --color-surface: {{ settings.color_surface | default: '#FFFFFF' }};
+    --color-text: {{ settings.color_text | default: '#1F2937' }};
+    --font-heading: "Playfair Display", Georgia, serif;
+    --font-body: "Inter", "Helvetica Neue", sans-serif;
+  }
+{% endstyle %}

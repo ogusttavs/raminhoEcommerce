@@ -1,0 +1,163 @@
+<section class="section">
+  <div class="container">
+    <div class="stack" style="margin-bottom: 2rem;">
+      <div class="eyebrow">{{ section.settings.eyebrow }}</div>
+      <h2 class="section-heading">{{ section.settings.title }}</h2>
+      <p class="section-copy" style="max-width: 38rem;">{{ section.settings.copy }}</p>
+    </div>
+
+    <div class="testimonial-grid">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          {% liquid
+            assign author_name = block.settings.author | strip
+            assign author_words = author_name | split: ' '
+            capture author_initials
+              for word in author_words limit: 2
+                assign trimmed_word = word | strip
+                if trimmed_word != blank
+                  echo trimmed_word | slice: 0 | upcase
+                endif
+              endfor
+            endcapture
+
+            if author_initials == blank
+              assign author_initials = 'R'
+            endif
+          %}
+          <article class="testimonial-card" {{ block.shopify_attributes }}>
+            <div class="testimonial-card__head">
+              <div class="testimonial-card__media">
+                {% if block.settings.photo != blank %}
+                  {{ block.settings.photo | image_url: width: 320 | image_tag: widths: '120, 220, 320', alt: author_name, loading: 'lazy' }}
+                {% else %}
+                  <span class="testimonial-card__placeholder">{{ author_initials }}</span>
+                {% endif %}
+              </div>
+
+              <div class="testimonial-card__meta">
+                {% if block.settings.context != blank %}
+                  <span class="testimonial-card__tag">{{ block.settings.context }}</span>
+                {% endif %}
+                <strong class="testimonial-card__author-name">{{ block.settings.author }}</strong>
+                {% if block.settings.detail != blank %}
+                  <span class="testimonial-card__author-detail">{{ block.settings.detail }}</span>
+                {% endif %}
+              </div>
+            </div>
+            <p class="testimonial-card__quote">“{{ block.settings.quote }}”</p>
+          </article>
+        {% endfor %}
+      {% else %}
+        <article class="testimonial-card">
+          <div class="testimonial-card__head">
+            <div class="testimonial-card__media">
+              <span class="testimonial-card__placeholder">CV</span>
+            </div>
+            <div class="testimonial-card__meta">
+              <span class="testimonial-card__tag">Cliente varejo</span>
+              <strong class="testimonial-card__author-name">Cliente real</strong>
+              <span class="testimonial-card__author-detail">Zona Sul · Sao Paulo</span>
+            </div>
+          </div>
+          <p class="testimonial-card__quote">“A primeira compra chamou a atenção pela apresentação. As seguintes confirmaram o cuidado em cada escolha.”</p>
+        </article>
+        <article class="testimonial-card">
+          <div class="testimonial-card__head">
+            <div class="testimonial-card__media">
+              <span class="testimonial-card__placeholder">CR</span>
+            </div>
+            <div class="testimonial-card__meta">
+              <span class="testimonial-card__tag">Cliente recorrente</span>
+              <strong class="testimonial-card__author-name">Cliente fiel</strong>
+              <span class="testimonial-card__author-detail">Alphaville</span>
+            </div>
+          </div>
+          <p class="testimonial-card__quote">“O site transmite tranquilidade. A compra parece natural, simples e muito bem cuidada.”</p>
+        </article>
+        <article class="testimonial-card">
+          <div class="testimonial-card__head">
+            <div class="testimonial-card__media">
+              <span class="testimonial-card__placeholder">EV</span>
+            </div>
+            <div class="testimonial-card__meta">
+              <span class="testimonial-card__tag">Compra para eventos</span>
+              <strong class="testimonial-card__author-name">Cliente corporativo</strong>
+              <span class="testimonial-card__author-detail">Sao Paulo</span>
+            </div>
+          </div>
+          <p class="testimonial-card__quote">“A Raminho conseguiu trazer para o digital a sensação de uma compra feita com criterio e bom gosto.”</p>
+        </article>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Depoimentos premium",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Confianca percebida"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titulo",
+      "default": "Quem compra percebe o cuidado logo nos primeiros detalhes."
+    },
+    {
+      "type": "textarea",
+      "id": "copy",
+      "label": "Texto",
+      "default": "A melhor prova de confianca esta na sensacao de consistencia, atencao e boa experiencia de compra."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Depoimento",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Depoimento",
+          "default": "As frutas chegaram lindas, com um cuidado que se percebe logo ao abrir o pedido."
+        },
+        {
+          "type": "image_picker",
+          "id": "photo",
+          "label": "Foto do cliente"
+        },
+        {
+          "type": "text",
+          "id": "context",
+          "label": "Selo",
+          "default": "Cliente recorrente"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Autor",
+          "default": "Nome do cliente"
+        },
+        {
+          "type": "text",
+          "id": "detail",
+          "label": "Regiao ou cidade",
+          "default": "Zona Sul de SP"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Depoimentos premium"
+    }
+  ]
+}
+{% endschema %}

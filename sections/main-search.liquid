@@ -1,0 +1,111 @@
+<section class="section">
+  <div class="container search-panel">
+    <div class="search-panel__hero">
+      <div class="eyebrow">{{ section.settings.eyebrow }}</div>
+      <h1 class="template-title section-heading">{{ section.settings.title }}</h1>
+      <p class="section-copy">{{ section.settings.copy }}</p>
+    </div>
+
+    <form action="{{ routes.search_url }}" method="get" class="search-panel__form" role="search">
+      <input class="search-input" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ section.settings.placeholder }}">
+      <input type="hidden" name="type" value="product,page,article">
+      <button class="button button--secondary" type="submit">Buscar</button>
+    </form>
+
+    {% if search.performed %}
+      {% paginate search.results by section.settings.results_per_page %}
+        <div class="search-result-count">
+          {{ search.results_count }} resultado(s) para “{{ search.terms }}”.
+        </div>
+
+        {% if search.results_count > 0 %}
+          <div class="results-grid">
+            {% for item in search.results %}
+              {% if item.object_type == 'product' %}
+                {% render 'product-card', card_product: item %}
+              {% else %}
+                <article class="generic-result-card">
+                  <div class="eyebrow">{{ item.object_type }}</div>
+                  <h2 class="generic-result-card__title">
+                    <a href="{{ item.url }}">{{ item.title }}</a>
+                  </h2>
+                  <p class="generic-result-card__copy">
+                    {{ item.content | strip_html | truncatewords: 24 }}
+                  </p>
+                  <a class="button button--outline" href="{{ item.url }}">Abrir</a>
+                </article>
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          {% if paginate.pages > 1 %}
+            <nav class="pagination" aria-label="Paginação da busca">
+              {% if paginate.previous %}
+                <a href="{{ paginate.previous.url }}">Anterior</a>
+              {% endif %}
+
+              {% for part in paginate.parts %}
+                {% if part.is_link %}
+                  <a href="{{ part.url }}">{{ part.title }}</a>
+                {% else %}
+                  <span class="{% if part.title == paginate.current_page %}is-current{% endif %}">{{ part.title }}</span>
+                {% endif %}
+              {% endfor %}
+
+              {% if paginate.next %}
+                <a href="{{ paginate.next.url }}">Próxima</a>
+              {% endif %}
+            </nav>
+          {% endif %}
+        {% else %}
+          <div class="template-empty">
+            <h2 class="section-heading" style="font-size: 2rem;">Nada encontrado por aqui</h2>
+            <p class="section-copy">Tente um termo mais amplo ou navegue pelas coleções principais.</p>
+            <a class="button button--secondary" href="{{ routes.all_products_collection_url }}">Ver catálogo</a>
+          </div>
+        {% endif %}
+      {% endpaginate %}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Busca principal",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Busca"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titulo",
+      "default": "Encontre a selecao certa para a sua casa."
+    },
+    {
+      "type": "textarea",
+      "id": "copy",
+      "label": "Texto",
+      "default": "Use nomes de produtos, categorias ou ocasioes para encontrar com rapidez o que deseja receber."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Placeholder",
+      "default": "Pesquise por cerejas, figo roxo, emporio..."
+    },
+    {
+      "type": "range",
+      "id": "results_per_page",
+      "label": "Resultados por página",
+      "min": 8,
+      "max": 24,
+      "step": 4,
+      "default": 12
+    }
+  ]
+}
+{% endschema %}

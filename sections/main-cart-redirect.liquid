@@ -1,0 +1,46 @@
+<section class="section">
+  <div class="container">
+    <div class="template-empty">
+      <div class="eyebrow">{{ section.settings.eyebrow }}</div>
+      <h1 class="section-heading">{{ section.settings.title }}</h1>
+      <p class="section-copy">{{ section.settings.copy }}</p>
+      <a class="button button--secondary" href="{{ routes.all_products_collection_url }}">{{ section.settings.button_label }}</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  window.location.replace('{{ routes.all_products_collection_url }}');
+</script>
+
+{% schema %}
+{
+  "name": "Redirecionar carrinho",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Carrinho rápido"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titulo",
+      "default": "Seu carrinho fica no painel lateral."
+    },
+    {
+      "type": "textarea",
+      "id": "copy",
+      "label": "Texto",
+      "default": "Use o ícone do carrinho para revisar os itens e seguir direto para o pagamento."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto do botão",
+      "default": "Voltar ao catálogo"
+    }
+  ]
+}
+{% endschema %}

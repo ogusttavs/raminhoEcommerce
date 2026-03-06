@@ -1,0 +1,107 @@
+[
+  {
+    "name": "Identidade",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "brand_logo",
+        "label": "Logo principal"
+      },
+      {
+        "type": "image_picker",
+        "id": "brand_logo_inverted",
+        "label": "Logo para fundos escuros"
+      },
+      {
+        "type": "color",
+        "id": "color_brand",
+        "label": "Azul principal",
+        "default": "#002855"
+      },
+      {
+        "type": "color",
+        "id": "color_brand_alt",
+        "label": "Azul profundo",
+        "default": "#001E43"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent neutro",
+        "default": "#FFC107"
+      },
+      {
+        "type": "color",
+        "id": "color_canvas",
+        "label": "Fundo principal",
+        "default": "#F9FAFB"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "Superfície clara",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Texto principal",
+        "default": "#1F2937"
+      }
+    ]
+  },
+  {
+    "name": "Operação",
+    "settings": [
+      {
+        "type": "text",
+        "id": "minimum_order_value",
+        "label": "Pedido mínimo (R$)",
+        "default": "110.00"
+      },
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Faixa de frete grátis (R$)",
+        "default": 497
+      },
+      {
+        "type": "text",
+        "id": "support_email",
+        "label": "E-mail de contato",
+        "default": "contato@raminhoimportadora.com.br"
+      },
+      {
+        "type": "textarea",
+        "id": "business_address",
+        "label": "Endereço",
+        "default": "R. da Cantareira, 306 - Box 16 - Mercado Municipal, Sao Paulo"
+      }
+    ]
+  },
+  {
+    "name": "Checkout",
+    "settings": [
+      {
+        "type": "select",
+        "id": "checkout_provider",
+        "label": "Provedor de checkout",
+        "default": "yampi",
+        "options": [
+          {
+            "value": "yampi",
+            "label": "Yampi"
+          },
+          {
+            "value": "yanq",
+            "label": "YANQ"
+          },
+          {
+            "value": "none",
+            "label": "Nenhum por enquanto"
+          }
+        ]
+      }
+    ]
+  }
+]

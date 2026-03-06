@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "newsletter-premium",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "newsletter"
+  ]
+}

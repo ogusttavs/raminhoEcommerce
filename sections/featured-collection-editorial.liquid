@@ -1,0 +1,83 @@
+{% liquid
+  assign featured_collection = section.settings.collection
+
+  if featured_collection == blank
+    assign featured_collection = collections.all
+  endif
+%}
+
+<section class="section">
+  <div class="container">
+    <div class="stack" style="margin-bottom: 2rem;">
+      <div class="eyebrow">{{ section.settings.eyebrow }}</div>
+      <div class="filter-toolbar">
+        <div class="stack" style="gap: 1rem;">
+          <h2 class="section-heading">{{ section.settings.title }}</h2>
+          <p class="section-copy" style="max-width: 40rem;">{{ section.settings.copy }}</p>
+        </div>
+
+        {% if featured_collection != blank %}
+          <a class="button button--outline" href="{{ featured_collection.url }}">Ver coleção</a>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if featured_collection != blank and featured_collection.products_count > 0 %}
+      <div class="product-rail">
+        {% for product in featured_collection.products limit: section.settings.products_limit %}
+          {% render 'product-card', card_product: product %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="template-empty">
+        <h3 class="section-heading" style="font-size: 2rem;">Coleção ainda não vinculada</h3>
+        <p class="section-copy">Selecione uma coleção no editor Shopify para preencher esta vitrine principal.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Colecao editorial",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Selecao da semana"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titulo",
+      "default": "Escolhas para receber bem, presentear e ter sempre por perto."
+    },
+    {
+      "type": "textarea",
+      "id": "copy",
+      "label": "Texto",
+      "default": "Uma vitrine clara, com leitura simples e compra direta, para que cada produto seja percebido com tranquilidade."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Colecao"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "label": "Quantidade de produtos",
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Colecao editorial"
+    }
+  ]
+}
+{% endschema %}
