@@ -1,0 +1,103 @@
+[
+  {
+    "name": "Tema",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      },
+      {
+        "type": "text",
+        "id": "support_phone",
+        "label": "Telefone de atendimento",
+        "default": "(11) 0000-0000"
+      },
+      {
+        "type": "text",
+        "id": "support_email",
+        "label": "Email de atendimento",
+        "default": "contato@raminhoimportadora.com.br"
+      },
+      {
+        "type": "url",
+        "id": "wholesale_url",
+        "label": "URL do atacado"
+      },
+      {
+        "type": "url",
+        "id": "whatsapp_url",
+        "label": "URL do WhatsApp"
+      },
+      {
+        "type": "textarea",
+        "id": "shipping_message",
+        "label": "Mensagem operacional",
+        "default": "Entrega cuidadosa na Grande SP, com janelas pensadas para preservar frescor e textura."
+      },
+      {
+        "type": "header",
+        "content": "Cores"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Fundo principal",
+        "default": "#f5f1e8"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "Fundo de cards",
+        "default": "#fffdf8"
+      },
+      {
+        "type": "color",
+        "id": "color_surface_strong",
+        "label": "Fundo forte",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_deep",
+        "label": "Azul profundo",
+        "default": "#0e2238"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Texto principal",
+        "default": "#17324d"
+      },
+      {
+        "type": "color",
+        "id": "color_muted",
+        "label": "Texto secundario",
+        "default": "#58708a"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Destaque dourado",
+        "default": "#f0b323"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_soft",
+        "label": "Dourado suave",
+        "default": "#f6dd91"
+      },
+      {
+        "type": "color",
+        "id": "color_line",
+        "label": "Linhas e contornos",
+        "default": "#d8deea"
+      }
+    ]
+  }
+]

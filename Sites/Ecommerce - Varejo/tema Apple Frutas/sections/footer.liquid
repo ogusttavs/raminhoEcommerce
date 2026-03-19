@@ -1,0 +1,42 @@
+<footer id="contact" class="site-footer">
+  <div class="page-width site-footer__grid">
+    <div class="site-footer__brand">
+      <p class="section-eyebrow">Raminho Importadora</p>
+      <h2>O melhor da natureza.</h2>
+      <p>{{ settings.shipping_message }}</p>
+    </div>
+
+    <div>
+      <h3>Navegacao</h3>
+      <ul class="site-footer__list">
+        <li><a href="{{ routes.root_url }}">Inicio</a></li>
+        <li><a href="{{ routes.collections_url }}/frutas">Frutas</a></li>
+        <li><a href="{{ routes.collections_url }}/verduras-e-legumes">Verduras</a></li>
+        <li><a href="{{ routes.search_url }}?type=product&q=">Buscar</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3>Operacao</h3>
+      <ul class="site-footer__list">
+        <li><a href="tel:{{ settings.support_phone | replace: ' ', '' }}">{{ settings.support_phone }}</a></li>
+        <li><a href="mailto:{{ settings.support_email }}">{{ settings.support_email }}</a></li>
+        {%- if settings.whatsapp_url != blank -%}
+          <li><a href="{{ settings.whatsapp_url }}">WhatsApp</a></li>
+        {%- endif -%}
+        <li><a href="{{ settings.wholesale_url | default: 'https://raminhoimportadora.com.br/' }}">Atacado</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="page-width site-footer__bottom">
+    <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. O melhor da natureza em cada detalhe.</p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Rodape",
+  "settings": []
+}
+{% endschema %}

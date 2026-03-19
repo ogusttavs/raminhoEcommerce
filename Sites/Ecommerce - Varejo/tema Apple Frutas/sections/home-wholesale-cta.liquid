@@ -1,0 +1,88 @@
+<section id="wholesale" class="section-block">
+  <div class="page-width dual-cta reveal">
+    <div class="dual-cta__card dual-cta__card--dark">
+      <p class="section-eyebrow">{{ section.settings.left_eyebrow }}</p>
+      <h2>{{ section.settings.left_heading }}</h2>
+      <p>{{ section.settings.left_text }}</p>
+      <a class="button button--light" href="{{ section.settings.left_link | default: '/collections/frutas' }}">{{ section.settings.left_button }}</a>
+    </div>
+
+    <div class="dual-cta__card dual-cta__card--soft">
+      <p class="section-eyebrow">{{ section.settings.right_eyebrow }}</p>
+      <h2>{{ section.settings.right_heading }}</h2>
+      <p>{{ section.settings.right_text }}</p>
+      <a class="button" href="{{ section.settings.right_link | default: settings.wholesale_url | default: 'https://raminhoimportadora.com.br/' }}">{{ section.settings.right_button }}</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CTA varejo e atacado",
+  "settings": [
+    {
+      "type": "text",
+      "id": "left_eyebrow",
+      "label": "Eyebrow esquerdo",
+      "default": "Varejo premium"
+    },
+    {
+      "type": "text",
+      "id": "left_heading",
+      "label": "Titulo esquerdo",
+      "default": "Comprar para casa ficou mais aspiracional."
+    },
+    {
+      "type": "textarea",
+      "id": "left_text",
+      "label": "Texto esquerdo",
+      "default": "A nova home chama para o produto cedo, mas sustenta a percepcao de qualidade com uma linguagem de marca mais sofisticada."
+    },
+    {
+      "type": "text",
+      "id": "left_button",
+      "label": "Botao esquerdo",
+      "default": "Comprar agora"
+    },
+    {
+      "type": "url",
+      "id": "left_link",
+      "label": "Link esquerdo"
+    },
+    {
+      "type": "text",
+      "id": "right_eyebrow",
+      "label": "Eyebrow direito",
+      "default": "Atacado"
+    },
+    {
+      "type": "text",
+      "id": "right_heading",
+      "label": "Titulo direito",
+      "default": "Quem compra em volume entra por outra narrativa."
+    },
+    {
+      "type": "textarea",
+      "id": "right_text",
+      "label": "Texto direito",
+      "default": "Mantemos a porta do atacado clara e valorizada, para que o ecommerce varejo nao precise carregar todos os argumentos institucionais sozinho."
+    },
+    {
+      "type": "text",
+      "id": "right_button",
+      "label": "Botao direito",
+      "default": "Conhecer atacado"
+    },
+    {
+      "type": "url",
+      "id": "right_link",
+      "label": "Link direito"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CTA varejo e atacado"
+    }
+  ]
+}
+{% endschema %}

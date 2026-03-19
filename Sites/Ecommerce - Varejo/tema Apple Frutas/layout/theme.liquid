@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code | default: 'pt-BR' }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_deep | default: '#0e2238' }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags -%}
+        {{ current_tags | join: ', ' }}
+      {%- endif -%}
+      {%- if current_page != 1 -%}
+        | Pagina {{ current_page }}
+      {%- endif -%}
+      {%- unless page_title contains shop.name -%}
+        | {{ shop.name }}
+      {%- endunless -%}
+    </title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- else -%}
+      <meta name="description" content="{{ shop.name }} seleciona frutas premium com curadoria, frescor e entrega cuidadosa na Grande SP.">
+    {%- endif -%}
+
+    {%- if settings.favicon -%}
+      <link rel="icon" href="{{ settings.favicon | image_url: width: 96 }}" type="image/png">
+    {%- endif -%}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    {{ content_for_header }}
+
+    <style>
+      :root {
+        --color-background: {{ settings.color_background | default: '#f5f1e8' }};
+        --color-surface: {{ settings.color_surface | default: '#fffdf8' }};
+        --color-surface-strong: {{ settings.color_surface_strong | default: '#ffffff' }};
+        --color-deep: {{ settings.color_deep | default: '#0e2238' }};
+        --color-text: {{ settings.color_text | default: '#17324d' }};
+        --color-muted: {{ settings.color_muted | default: '#58708a' }};
+        --color-accent: {{ settings.color_accent | default: '#f0b323' }};
+        --color-accent-soft: {{ settings.color_accent_soft | default: '#f6dd91' }};
+        --color-line: {{ settings.color_line | default: '#d8deea' }};
+        --page-width: 1920px;
+        --gutter: clamp(1rem, 1.8vw, 1.75rem);
+        --radius-sm: 18px;
+        --radius-md: 30px;
+        --radius-lg: 44px;
+        --shadow-soft: 0 22px 70px rgba(14, 34, 56, 0.08);
+        --shadow-card: 0 26px 78px rgba(7, 20, 35, 0.16);
+      }
+    </style>
+
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    <script>
+      window.raminhoTheme = {
+        moneyCurrency: {{ cart.currency.iso_code | default: shop.currency | json }},
+        routes: {
+          cartAdd: {{ routes.cart_add_url | json }},
+          cart: {{ routes.cart_url | json }},
+          predictiveSearch: {{ routes.predictive_search_url | json }}
+        }
+      };
+    </script>
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  </head>
+  <body class="template-{{ request.page_type | handle }}">
+    {% section 'announcement-bar' %}
+    {% section 'header' %}
+
+    <main id="MainContent" class="site-main" role="main">
+      {{ content_for_layout }}
+    </main>
+
+    {% section 'footer' %}
+  </body>
+</html>

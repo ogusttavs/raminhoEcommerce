@@ -1,0 +1,101 @@
+<section id="about" class="section-block section-block--surface">
+  <div class="page-width provenance-grid">
+    <div class="provenance-grid__visual reveal">
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 1200 | image_tag: class: 'provenance-grid__image', widths: '480, 720, 960, 1200', loading: 'lazy', alt: section.settings.heading }}
+      {%- else -%}
+        <img class="provenance-grid__image" src="{{ 'raminho-loja-mercadao.jpg' | asset_url }}" alt="{{ section.settings.heading }}" width="998" height="663">
+      {%- endif -%}
+    </div>
+
+    <div class="provenance-grid__content reveal">
+      <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2>{{ section.settings.heading }}</h2>
+      <div class="rte">{{ section.settings.text }}</div>
+
+      <div class="provenance-metrics">
+        {%- for block in section.blocks -%}
+          <div class="provenance-metric" {{ block.shopify_attributes }}>
+            <span>{{ block.settings.value }}</span>
+            <h3>{{ block.settings.title }}</h3>
+            <p>{{ block.settings.text }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Origem e confianca",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "DNA Raminho"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titulo",
+      "default": "A credibilidade do atacado, agora desenhada para o varejo premium."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Texto",
+      "default": "<p>O novo e-commerce traduz a solidez da Raminho em uma experiencia mais sofisticada: narrativa limpa, prova de origem, sinais de cuidado logistico e mais espaco para a fotografia do produto vender.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagem"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "metric",
+      "name": "Metrica",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Valor",
+          "default": "Selecao"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titulo",
+          "default": "Curadoria visual"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Texto",
+          "default": "Produtos aparecem como herois de categoria, nao como uma grade genérica."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Origem e confianca",
+      "blocks": [
+        {
+          "type": "metric"
+        },
+        {
+          "type": "metric"
+        },
+        {
+          "type": "metric"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

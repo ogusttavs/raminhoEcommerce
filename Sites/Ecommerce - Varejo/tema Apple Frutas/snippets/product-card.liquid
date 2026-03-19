@@ -1,0 +1,49 @@
+{%- liquid
+  assign featured_image = card_product.featured_media | default: card_product.featured_image
+  assign secondary_image = card_product.images[1]
+  assign first_variant = card_product.selected_or_first_available_variant
+-%}
+
+<article class="product-card reveal">
+  <a class="product-card__media" href="{{ card_product.url }}">
+    {%- if featured_image -%}
+      {{ featured_image | image_url: width: 900 | image_tag: class: 'product-card__image product-card__image--primary', loading: 'lazy', widths: '320, 480, 720, 900', alt: featured_image.alt | default: card_product.title }}
+    {%- else -%}
+      <div class="product-card__placeholder">Selecao do dia</div>
+    {%- endif -%}
+    {%- if secondary_image -%}
+      {{ secondary_image | image_url: width: 900 | image_tag: class: 'product-card__image product-card__image--secondary', loading: 'lazy', widths: '320, 480, 720, 900', alt: secondary_image.alt | default: card_product.title }}
+    {%- endif -%}
+
+    <div class="product-card__badges">
+      {%- if card_product.available -%}
+        <span class="badge">Fresco</span>
+      {%- else -%}
+        <span class="badge badge--muted">Esgotado</span>
+      {%- endif -%}
+      {%- if card_product.tags contains 'premium' -%}
+        <span class="badge badge--accent">Premium</span>
+      {%- endif -%}
+      {%- if first_variant and first_variant.title != 'Default Title' -%}
+        <span class="badge badge--soft">{{ first_variant.title }}</span>
+      {%- endif -%}
+    </div>
+  </a>
+
+  <div class="product-card__content">
+    <div class="product-card__meta">
+      <p class="product-card__eyebrow">{{ card_product.vendor | default: shop.name }}</p>
+      <h3 class="product-card__title">
+        <a href="{{ card_product.url }}">{{ card_product.title }}</a>
+      </h3>
+      {%- if card_product.type != blank -%}
+        <p class="product-card__type">{{ card_product.type }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="product-card__footer">
+      {% render 'price', product: card_product, use_variant: true %}
+      <a class="button button--ghost button--small" href="{{ card_product.url }}">Ver detalhes</a>
+    </div>
+  </div>
+</article>

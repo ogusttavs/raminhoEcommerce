@@ -1,0 +1,74 @@
+{%- assign catalog_collection = collections['all'] -%}
+
+<section id="catalogo" class="section-block section-block--surface">
+  <div class="page-width catalog-showcase">
+    <div class="catalog-showcase__header section-heading section-heading--split reveal">
+      <div>
+        <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+      <div class="catalog-showcase__meta">
+        <p>{{ section.settings.text }}</p>
+        {%- if catalog_collection != blank -%}
+          <div class="catalog-showcase__actions">
+            <span class="catalog-showcase__count">{{ catalog_collection.products_count }} produtos</span>
+            <a class="button" href="{{ catalog_collection.url }}">Ver catalogo completo</a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if catalog_collection != blank and catalog_collection.products_count > 0 -%}
+      <div class="product-grid product-grid--catalog">
+        {%- for product in catalog_collection.products limit: section.settings.products_to_show -%}
+          {% render 'product-card', card_product: product %}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="empty-state reveal">
+        <h3>O catalogo completo aparece aqui.</h3>
+        <p>Assim que os produtos estiverem disponiveis na loja, esta area exibe toda a selecao principal da Raminho.</p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Catalogo completo",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Catalogo completo"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titulo",
+      "default": "Todos os produtos da Raminho em um so lugar."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Texto",
+      "default": "Veja toda a selecao da loja em uma area dedicada, com acesso rapido aos produtos para a rotina, para presentear e para servir bem."
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Produtos exibidos na home",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "Catalogo completo"
+    }
+  ]
+}
+{% endschema %}

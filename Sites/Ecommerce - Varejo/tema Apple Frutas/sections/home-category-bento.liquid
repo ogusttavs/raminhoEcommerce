@@ -1,0 +1,141 @@
+<section id="retail" class="section-block">
+  <div class="page-width">
+    <div class="section-heading reveal">
+      <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2>{{ section.settings.heading }}</h2>
+      <p>{{ section.settings.text }}</p>
+    </div>
+
+    <div class="bento-grid">
+      {%- for block in section.blocks -%}
+        {%- assign current_collection = block.settings.collection -%}
+        {%- assign card_title = block.settings.title | default: current_collection.title -%}
+        {%- assign card_text = block.settings.text | default: current_collection.description | strip_html | truncate: 140 -%}
+        {%- assign card_link = block.settings.link -%}
+        {%- if card_link == blank and current_collection != blank -%}
+          {%- assign card_link = current_collection.url -%}
+        {%- endif -%}
+        {%- assign fallback_asset = '' -%}
+        {%- case forloop.index -%}
+          {%- when 1 -%}
+            {%- assign fallback_asset = 'raminho-hero-frutas.jpg' -%}
+          {%- when 2 -%}
+            {%- assign fallback_asset = 'raminho-vitrine-citricos.jpg' -%}
+          {%- when 3 -%}
+            {%- assign fallback_asset = 'raminho-vitrine-peras.jpg' -%}
+          {%- when 4 -%}
+            {%- assign fallback_asset = 'raminho-vitrine-romas.jpg' -%}
+        {%- endcase -%}
+        {%- assign card_image = block.settings.image | default: current_collection.featured_image -%}
+        <article class="bento-card reveal bento-card--{{ forloop.index }}" {{ block.shopify_attributes }}>
+          <div class="bento-card__media">
+            {%- if card_image != blank -%}
+              {{ card_image | image_url: width: 1200 | image_tag: class: 'bento-card__image', widths: '400, 640, 960, 1200', loading: 'lazy', alt: card_title }}
+            {%- elsif fallback_asset != blank -%}
+              <img class="bento-card__image" src="{{ fallback_asset | asset_url }}" alt="{{ card_title }}" width="2400" height="1350">
+            {%- else -%}
+              <img class="bento-card__image" src="{{ 'raminho-loja-mercadao.jpg' | asset_url }}" alt="{{ card_title }}" width="998" height="663">
+            {%- endif -%}
+          </div>
+          <div class="bento-card__content">
+            <p class="section-eyebrow">{{ block.settings.eyebrow }}</p>
+            <h3>{{ card_title }}</h3>
+            <p>{{ card_text }}</p>
+            <a class="button button--ghost button--small" href="{{ card_link | default: '/collections/all' }}">{{ block.settings.button_label | default: 'Explorar' }}</a>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Categorias bento",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Curadoria"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titulo",
+      "default": "Colecoes pensadas como lancamentos."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Texto",
+      "default": "O visual segue uma logica editorial: menos poluicao, mais destaque para categoria, cor, volume e textura."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Card de colecao",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Colecao"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "default": "Selecao"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titulo customizado"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Texto customizado"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagem customizada"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link customizado"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Texto do botao",
+          "default": "Explorar"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Categorias bento",
+      "blocks": [
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

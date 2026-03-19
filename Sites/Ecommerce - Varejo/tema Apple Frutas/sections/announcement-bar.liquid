@@ -1,0 +1,35 @@
+{%- if section.settings.text != blank -%}
+  <div class="announcement-bar">
+    <div class="page-width announcement-bar__inner">
+      <p>{{ section.settings.text }}</p>
+      {%- if section.settings.link_text != blank and section.settings.link_url != blank -%}
+        <a href="{{ section.settings.link_url }}">{{ section.settings.link_text }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Barra superior",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Texto",
+      "default": "Frutas premium com entrega cuidadosa e experiencia pensada para encantar."
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Texto do link",
+      "default": "Conheca o atacado"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "URL do link"
+    }
+  ]
+}
+{% endschema %}

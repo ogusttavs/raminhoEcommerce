@@ -1,0 +1,16 @@
+{%- liquid
+  assign price_target = product.selected_or_first_available_variant
+  if use_variant == false
+    assign price_target = product
+  endif
+
+  assign compare_at_price = price_target.compare_at_price
+  assign price = price_target.price | default: 0
+-%}
+
+<div class="price-block {% if compare_at_price > price %}price-block--sale{% endif %}">
+  <span class="price-block__current">{{ price | money }}</span>
+  {%- if compare_at_price > price -%}
+    <span class="price-block__compare">{{ compare_at_price | money }}</span>
+  {%- endif -%}
+</div>

@@ -1,0 +1,69 @@
+<section class="cart-page">
+  <div class="page-width">
+    <div class="section-heading reveal">
+      <p class="section-eyebrow">Carrinho</p>
+      <h1>Seu pedido, organizado como uma experiencia premium.</h1>
+      <p>{{ settings.shipping_message }}</p>
+    </div>
+
+    {%- if cart.item_count == 0 -%}
+      <div class="empty-state reveal">
+        <h2>Seu carrinho esta vazio.</h2>
+        <p>Escolha frutas, legumes e selecoes especiais para montar a sua proxima entrega.</p>
+        <a class="button" href="{{ routes.collections_url }}/frutas">Explorar frutas</a>
+      </div>
+    {%- else -%}
+      <form action="{{ routes.cart_url }}" method="post" class="cart-layout">
+        <div class="cart-items reveal">
+          {%- for item in cart.items -%}
+            <article class="cart-item">
+              <a class="cart-item__media" href="{{ item.url }}">
+                {%- if item.image -%}
+                  {{ item.image | image_url: width: 360 | image_tag: widths: '120, 180, 240, 360', loading: 'lazy', alt: item.product.title }}
+                {%- endif -%}
+              </a>
+              <div class="cart-item__content">
+                <div>
+                  <p class="section-eyebrow">{{ item.product.vendor | default: shop.name }}</p>
+                  <h2><a href="{{ item.url }}">{{ item.product.title }}</a></h2>
+                  {%- unless item.variant.title == 'Default Title' -%}
+                    <p>{{ item.variant.title }}</p>
+                  {%- endunless -%}
+                </div>
+
+                <div class="cart-item__controls">
+                  <label class="visually-hidden" for="Quantity-{{ item.index | plus: 1 }}">Quantidade</label>
+                  <input id="Quantity-{{ item.index | plus: 1 }}" type="number" name="updates[]" min="0" value="{{ item.quantity }}">
+                  <a class="text-link" href="{{ item.url_to_remove }}">Remover</a>
+                </div>
+              </div>
+              <div class="cart-item__price">
+                <span>{{ item.final_line_price | money }}</span>
+              </div>
+            </article>
+          {%- endfor -%}
+        </div>
+
+        <aside class="cart-summary reveal">
+          <div class="cart-summary__box">
+            <p class="section-eyebrow">Resumo</p>
+            <div class="cart-summary__line">
+              <span>Subtotal</span>
+              <strong>{{ cart.total_price | money }}</strong>
+            </div>
+            <p class="cart-summary__note">Frete e janela de entrega aparecem na etapa seguinte, conforme endereco e disponibilidade.</p>
+            <button class="button button--wide" type="submit" name="checkout">Finalizar pedido</button>
+            <button class="button button--ghost button--wide" type="submit">Atualizar carrinho</button>
+          </div>
+        </aside>
+      </form>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Carrinho principal",
+  "settings": []
+}
+{% endschema %}

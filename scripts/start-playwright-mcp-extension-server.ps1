@@ -1,0 +1,3 @@
+param()
+
+playwright-mcp --extension

@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "raminho-chrome-live": {
+      "command": "chrome-devtools-mcp",
+      "args": [
+        "--browserUrl",
+        "http://127.0.0.1:9222",
+        "--slim"
+      ]
+    },
+    "raminho-browser-persistent": {
+      "command": "playwright-mcp",
+      "args": [
+        "--browser",
+        "chrome",
+        "--user-data-dir",
+        "C:\\Users\\gusta\\AppData\\Local\\AIBrowserProfiles\\RaminhoChrome",
+        "--output-dir",
+        "C:\\Users\\gusta\\AppData\\Local\\AIBrowserProfiles\\RaminhoOutput",
+        "--save-session"
+      ]
+    }
+  }
+}

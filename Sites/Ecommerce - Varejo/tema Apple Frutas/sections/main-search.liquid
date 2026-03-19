@@ -1,0 +1,40 @@
+<section class="search-page">
+  <div class="page-width">
+    <div class="section-heading reveal">
+      <p class="section-eyebrow">Busca</p>
+      <h1>Encontre frutas, categorias e selecoes especiais.</h1>
+    </div>
+
+    <form action="{{ routes.search_url }}" method="get" class="search-form reveal">
+      <input type="hidden" name="type" value="product">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Busque por manga, morango, uva, kit..." aria-label="Buscar">
+      <button class="button" type="submit">Buscar</button>
+    </form>
+
+    {%- if search.performed -%}
+      {%- paginate search.results by 24 -%}
+        {%- if search.results_count > 0 -%}
+          <div class="product-grid">
+            {%- for item in search.results -%}
+              {%- if item.object_type == 'product' -%}
+                {% render 'product-card', card_product: item %}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- else -%}
+          <div class="empty-state reveal">
+            <h2>Nenhum resultado para "{{ search.terms }}".</h2>
+            <p>Tente buscar por nome do produto, categoria ou tipo de fruta.</p>
+          </div>
+        {%- endif -%}
+      {%- endpaginate -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Busca principal",
+  "settings": []
+}
+{% endschema %}

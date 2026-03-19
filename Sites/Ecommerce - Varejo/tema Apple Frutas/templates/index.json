@@ -1,0 +1,168 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-fruit-showcase",
+      "settings": {
+        "eyebrow": "O melhor da natureza",
+        "heading": "Frutas escolhidas com criterio para quem valoriza beleza, frescor e o prazer de servir bem.",
+        "text": "<p>Com a assinatura da Raminho, cada pedido une qualidade, apresentacao e confianca para a rotina da casa, para receber bem e para comprar com tranquilidade.</p>",
+        "primary_label": "Comprar frutas",
+        "secondary_label": "Ver atacado",
+        "metric_1_value": "40+",
+        "metric_1_label": "anos de tradicao",
+        "metric_2_value": "SP",
+        "metric_2_label": "entrega focada na Grande Sao Paulo",
+        "metric_3_value": "Criterio",
+        "metric_3_label": "o melhor da natureza, escolhido a dedo"
+      }
+    },
+    "categories": {
+      "type": "home-category-bento",
+      "blocks": {
+        "card-1": {
+          "type": "collection",
+          "settings": {
+            "eyebrow": "Selecao especial",
+            "title": "Frutas com protagonismo de vitrine",
+            "text": "Pecas lindas, frescas e bem apresentadas para encantar no olhar e na mesa."
+          }
+        },
+        "card-2": {
+          "type": "collection",
+          "settings": {
+            "eyebrow": "Presentear",
+            "title": "Cestas, kits e presentes",
+            "text": "Formatos pensados para surpreender com elegancia, carinho e boa apresentacao."
+          }
+        },
+        "card-3": {
+          "type": "collection",
+          "settings": {
+            "eyebrow": "Rotina",
+            "title": "Verduras e legumes",
+            "text": "O essencial da casa com mais organizacao, frescor e confianca na escolha."
+          }
+        },
+        "card-4": {
+          "type": "collection",
+          "settings": {
+            "eyebrow": "Chegadas do dia",
+            "title": "Novidades e safras especiais",
+            "text": "Descobertas para quem gosta de comprar com criterio e levar algo realmente especial."
+          }
+        }
+      },
+      "block_order": ["card-1", "card-2", "card-3", "card-4"],
+      "settings": {
+        "eyebrow": "Curadoria",
+        "heading": "Categorias desenhadas para quem compra com criterio.",
+        "text": "Cada categoria foi pensada para valorizar qualidade, frescor, beleza e a assinatura da Raminho em cada detalhe."
+      }
+    },
+    "featured": {
+      "type": "home-featured-collection",
+      "settings": {
+        "eyebrow": "Curadoria do dia",
+        "heading": "Produtos que fazem a compra parecer ainda mais especial.",
+        "text": "Cada card privilegia imagem, variedade e leitura rapida de valor, com mais elegancia e menos ruido visual.",
+        "products_to_show": 8
+      }
+    },
+    "catalog": {
+      "type": "home-catalog-complete",
+      "settings": {
+        "eyebrow": "Catalogo completo",
+        "heading": "Todos os produtos da Raminho em um so lugar.",
+        "text": "Uma area dedicada para navegar por toda a selecao da loja com mais clareza, rapidez e foco no que realmente importa: produto bonito, fresco e bem apresentado.",
+        "products_to_show": 12
+      }
+    },
+    "provenance": {
+      "type": "home-provenance",
+      "blocks": {
+        "metric-1": {
+          "type": "metric",
+          "settings": {
+            "value": "Selecao",
+            "title": "Beleza que convence",
+            "text": "A home comunica valor percebido antes mesmo do primeiro clique."
+          }
+        },
+        "metric-2": {
+          "type": "metric",
+          "settings": {
+            "value": "Confianca",
+            "title": "Escolha com tranquilidade",
+            "text": "O institucional aparece no ponto certo para transmitir seguranca e credibilidade."
+          }
+        },
+        "metric-3": {
+          "type": "metric",
+          "settings": {
+            "value": "Cuidado",
+            "title": "Operacao mais clara",
+            "text": "Entrega, origem e selecao aparecem como parte do valor da compra."
+          }
+        }
+      },
+      "block_order": ["metric-1", "metric-2", "metric-3"],
+      "settings": {
+        "eyebrow": "DNA Raminho",
+        "heading": "A autoridade do atacado traduzida para um varejo elegante.",
+        "text": "<p>O novo layout traduz o que a Raminho construiu ao longo do tempo: autoridade no produto, atendimento de confianca e uma curadoria que valoriza o melhor da natureza.</p>"
+      }
+    },
+    "story-panels": {
+      "type": "home-story-panels",
+      "blocks": {
+        "panel-1": {
+          "type": "panel",
+          "settings": {
+            "eyebrow": "Herois visuais",
+            "heading": "A vitrine fica mais calma e mais desejavel.",
+            "text": "Menos ruido visual, mais imagem bonita, leitura clara e sensacao de produto especial desde o primeiro olhar.",
+            "button_label": "Ver frutas",
+            "button_link": "shopify://collections/frutas"
+          }
+        },
+        "panel-2": {
+          "type": "panel",
+          "settings": {
+            "eyebrow": "Comprar bem",
+            "heading": "Escolher com seguranca fica mais simples.",
+            "text": "Cada modulo ajuda a explorar, comparar, confiar e decidir com mais leveza e menos pressa.",
+            "button_label": "Abrir colecoes",
+            "button_link": "shopify://collections"
+          }
+        },
+        "panel-3": {
+          "type": "panel",
+          "settings": {
+            "eyebrow": "Marca",
+            "heading": "Uma assinatura visual a altura da Raminho.",
+            "text": "Azul profundo, dourado, serif elegante e fotografia dominante constroem uma presenca forte, distinta e fiel ao DNA da marca.",
+            "button_label": "Conhecer a marca",
+            "button_link": "https://raminhoimportadora.com.br/"
+          }
+        }
+      },
+      "block_order": ["panel-1", "panel-2", "panel-3"]
+    },
+    "dual-cta": {
+      "type": "home-wholesale-cta",
+      "settings": {
+        "left_eyebrow": "Para sua casa",
+        "left_heading": "Uma experiencia elegante para comprar o melhor da natureza.",
+        "left_text": "Home, colecao, produto e carrinho foram redesenhados para valorizar frescor, origem e desejo de compra com a assinatura da Raminho.",
+        "left_button": "Comprar agora",
+        "left_link": "shopify://collections/frutas",
+        "right_eyebrow": "Atacado",
+        "right_heading": "O institucional forte continua com sua propria porta de entrada.",
+        "right_text": "A LP do atacado segue sendo um ativo de posicionamento e captacao para compradores em volume.",
+        "right_button": "Ver atacado",
+        "right_link": "https://raminhoimportadora.com.br/"
+      }
+    }
+  },
+  "order": ["hero", "categories", "featured", "catalog", "provenance", "story-panels", "dual-cta"]
+}
