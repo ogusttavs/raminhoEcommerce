@@ -61,8 +61,12 @@
       window.raminhoTheme = {
         moneyCurrency: {{ cart.currency.iso_code | default: shop.currency | json }},
         routes: {
-          cartAdd: {{ routes.cart_add_url | json }},
+          root: {{ routes.root_url | json }},
+          cartAdd: {{ routes.cart_add_url | append: '.js' | json }},
+          cartChange: {{ routes.cart_change_url | append: '.js' | json }},
           cart: {{ routes.cart_url | json }},
+          cartJson: {{ routes.cart_url | append: '.js' | json }},
+          checkout: {{ '/checkout' | json }},
           predictiveSearch: {{ routes.predictive_search_url | json }}
         }
       };
@@ -77,6 +81,7 @@
       {{ content_for_layout }}
     </main>
 
+    {% render 'cart-drawer' %}
     {% section 'footer' %}
   </body>
 </html>

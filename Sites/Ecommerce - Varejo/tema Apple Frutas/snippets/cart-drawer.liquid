@@ -1,0 +1,25 @@
+<div class="cart-drawer" data-cart-drawer aria-hidden="true">
+  <button class="cart-drawer__backdrop" type="button" aria-label="Fechar carrinho" data-cart-close></button>
+
+  <aside class="cart-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="CartDrawerTitle">
+    <header class="cart-drawer__header">
+      <div>
+        <p class="section-eyebrow">Carrinho</p>
+        <h2 id="CartDrawerTitle">Seu pedido</h2>
+      </div>
+
+      <div class="cart-drawer__header-actions">
+        <span class="cart-drawer__count" data-cart-drawer-count>{{ cart.item_count }} itens</span>
+        <button class="cart-drawer__close" type="button" aria-label="Fechar carrinho" data-cart-close>
+          <span aria-hidden="true">+</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="cart-drawer__body" data-cart-drawer-body></div>
+  </aside>
+</div>
+
+<script type="application/json" data-cart-initial-state>
+  {{ cart | json }}
+</script>

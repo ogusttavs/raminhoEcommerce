@@ -36,10 +36,10 @@
         </nav>
 
         <div class="site-header__actions">
-          <a class="site-header__action site-header__cart" href="{{ routes.cart_url }}">
-            <span class="site-header__cart-count">{{ cart.item_count }}</span>
+          <button class="site-header__action site-header__cart" type="button" data-cart-trigger>
+            <span class="site-header__cart-count" data-cart-count>{{ cart.item_count }}</span>
             <span class="site-header__cart-label">Carrinho</span>
-          </a>
+          </button>
           <a class="button site-header__cta" href="{{ contact_link }}">Fale Conosco</a>
           <details class="site-header__mobile">
             <summary>Menu</summary>
@@ -52,7 +52,9 @@
               <a href="{{ partners_link }}">Parceiros</a>
               <a href="{{ routes.search_url }}?type=product&q=">Buscar</a>
               <a href="{{ contact_link }}">Fale Conosco</a>
-              <a href="{{ routes.cart_url }}">Carrinho ({{ cart.item_count }})</a>
+              <button class="site-header__mobile-link" type="button" data-cart-trigger>
+                Carrinho (<span data-cart-count>{{ cart.item_count }}</span>)
+              </button>
             </div>
           </details>
         </div>
