@@ -19,7 +19,7 @@
     </div>
 
     {%- if catalog_collection != blank and catalog_collection.products_count > 0 -%}
-      <div class="product-grid product-grid--catalog">
+      <div class="product-grid product-grid--catalog product-grid--single-row">
         {%- for product in catalog_collection.products limit: section.settings.products_to_show -%}
           {% render 'product-card', card_product: product %}
         {%- endfor -%}

@@ -18,7 +18,7 @@
 
       <div class="hero-fruit__actions">
         {%- if section.settings.primary_label != blank -%}
-          <a class="button" href="{{ section.settings.primary_link | default: '/collections/frutas' }}">{{ section.settings.primary_label }}</a>
+          <a class="button button--purchase" href="{{ section.settings.primary_link | default: '/collections/frutas' }}">{{ section.settings.primary_label }}</a>
         {%- endif -%}
         {%- if section.settings.secondary_label != blank -%}
           <a class="button button--ghost" href="{{ section.settings.secondary_link | default: settings.wholesale_url | default: 'https://raminhoimportadora.com.br/' }}">{{ section.settings.secondary_label }}</a>
@@ -44,12 +44,12 @@
     <div class="hero-fruit__visual reveal">
       <div class="hero-fruit__glass">
         <p class="hero-fruit__glass-eyebrow">O melhor da natureza</p>
-        <h2>Frescor que se ve.</h2>
-        <p>Fotografia, narrativa e detalhes pensados para comunicar origem, selecao e confianca desde o primeiro scroll.</p>
+        <h2>Qualidade que se reconhece.</h2>
+        <p>Selecao, frescor e origem para comprar com mais seguranca.</p>
       </div>
       <div class="hero-fruit__floating-card">
-        <span>Qualidade em 1o lugar</span>
-        <p>Mais respiro editorial, mais leveza na navegacao e uma vitrine digital que valoriza a forca visual da marca.</p>
+        <span>Curadoria Raminho</span>
+        <p>Mais de 40 anos de experiencia para levar constancia e tranquilidade a cada pedido.</p>
       </div>
     </div>
   </div>
@@ -69,13 +69,13 @@
       "type": "text",
       "id": "heading",
       "label": "Titulo",
-      "default": "Frutas escolhidas com criterio para quem valoriza beleza, frescor e o prazer de servir bem."
+      "default": "A curadoria da Raminho na sua casa."
     },
     {
       "type": "richtext",
       "id": "text",
       "label": "Texto",
-      "default": "<p>Transformamos a vitrine da Raminho em uma loja editorial, clara e orientada a conversao, sem perder o DNA da marca construida no atacado.</p>"
+      "default": "<p>Frutas, legumes e presentes escolhidos com rigor para quem valoriza qualidade, frescor e confianca.</p>"
     },
     {
       "type": "text",
@@ -132,13 +132,13 @@
       "type": "text",
       "id": "metric_3_value",
       "label": "Metrica 3 valor",
-      "default": "Criterio"
+      "default": "Curadoria"
     },
     {
       "type": "text",
       "id": "metric_3_label",
       "label": "Metrica 3 legenda",
-      "default": "o melhor da natureza, escolhido a dedo"
+      "default": "criterio de selecao em cada pedido"
     }
   ],
   "presets": [

@@ -25,7 +25,7 @@
         <span class="badge badge--accent">Premium</span>
       {%- endif -%}
       <span class="badge badge--soft{% if first_variant == blank or first_variant.title == 'Default Title' %} is-hidden{% endif %}" data-card-variant-badge>
-        {%- if first_variant and first_variant.title != 'Default Title' -%}{{ first_variant.title }}{%- endif -%}
+        {%- if first_variant and first_variant.title != 'Default Title' -%}{{ first_variant.title | split: '/' | first | strip }}{%- endif -%}
       </span>
     </div>
   </a>
@@ -41,50 +41,30 @@
       {%- endif -%}
     </div>
 
-    <div class="product-card__footer">
-      <div data-card-price-wrap>
-        {% render 'price', product: card_product, use_variant: true %}
-      </div>
-      <a class="button button--ghost button--small" href="{{ card_product.url }}">Ver detalhes</a>
-    </div>
-
     <form class="product-card__quick-add" action="{{ routes.cart_add_url }}" method="post" data-card-product-form>
       <input type="hidden" name="id" value="{{ first_variant.id }}" data-card-variant-id>
 
-      <div class="product-card__purchase-meta">
-        <div>
-          <p class="product-card__purchase-label">Selecao rapida</p>
-          <p class="product-card__purchase-unit" data-card-unit-label>
+      <div class="product-card__purchase-controls">
+        <div class="quantity-picker quantity-picker--measure quantity-picker--card">
+          <button type="button" aria-label="Diminuir quantidade" data-qty-button="-1">-</button>
+          <span class="quantity-picker__display" data-qty-display aria-live="polite">
             {%- if first_variant and first_variant.title != 'Default Title' -%}
               {{ first_variant.title | split: '/' | first | strip }}
             {%- else -%}
-              Quantidade padrao
+              1 un
             {%- endif -%}
-          </p>
-        </div>
-        <p class="product-card__purchase-breakdown" data-card-breakdown>
-          {%- if first_variant and first_variant.title != 'Default Title' -%}
-            {{ first_variant.title | split: '/' | first | strip }}
-          {%- else -%}
-            1 item
-          {%- endif -%}
-        </p>
-      </div>
-
-      <div class="product-card__purchase-controls">
-        <div class="quantity-picker quantity-picker--card">
-          <button type="button" aria-label="Diminuir quantidade" data-qty-button="-1">-</button>
-          <input type="number" name="quantity" min="1" value="1" inputmode="numeric" data-qty-input>
+          </span>
+          <input type="hidden" name="quantity" min="1" value="1" data-qty-input>
           <button type="button" aria-label="Aumentar quantidade" data-qty-button="1">+</button>
         </div>
 
-        <button class="button" type="submit" data-card-add-to-cart {% unless card_product.available %}disabled{% endunless %}>
-          {% if card_product.available %}Adicionar ao carrinho{% else %}Indisponivel{% endif %}
+        <button class="button button--purchase" type="submit" data-card-add-to-cart {% unless card_product.available %}disabled{% endunless %}>
+          {% if card_product.available and first_variant %}Comprar por {{ first_variant.price | money }}{% else %}Indisponivel{% endif %}
         </button>
       </div>
 
       <p class="product-card__status" data-card-status>
-        {% if card_product.available %}Escolha a quantidade e adicione direto ao carrinho.{% else %}Produto indisponivel no momento.{% endif %}
+        {% if card_product.available %}Use + e - para ajustar a quantidade.{% else %}Produto indisponivel no momento.{% endif %}
       </p>
 
       <script type="application/json" data-card-variants>

@@ -3,6 +3,8 @@
     "support_phone": "(11) 2365-3538",
     "support_email": "contato@raminhoimportadora.com.br",
     "shipping_message": "Entrega cuidadosa na Grande SP, com janelas pensadas para preservar frescor e textura.",
+    "minimum_order_amount": "120",
+    "free_shipping_threshold": "599",
     "color_background": "#f5f1e8",
     "color_surface": "#fffdf8",
     "color_surface_strong": "#ffffff",

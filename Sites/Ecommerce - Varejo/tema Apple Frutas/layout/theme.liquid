@@ -60,6 +60,10 @@
     <script>
       window.raminhoTheme = {
         moneyCurrency: {{ cart.currency.iso_code | default: shop.currency | json }},
+        cartRules: {
+          minimumOrderCents: {{ settings.minimum_order_amount | default: 120 | times: 100 | json }},
+          freeShippingCents: {{ settings.free_shipping_threshold | default: 599 | times: 100 | json }}
+        },
         routes: {
           root: {{ routes.root_url | json }},
           cartAdd: {{ routes.cart_add_url | append: '.js' | json }},

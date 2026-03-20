@@ -42,6 +42,22 @@
       },
       {
         "type": "header",
+        "content": "Carrinho"
+      },
+      {
+        "type": "text",
+        "id": "minimum_order_amount",
+        "label": "Pedido minimo para checkout (em R$)",
+        "default": "120"
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_threshold",
+        "label": "Meta de frete gratis (em R$)",
+        "default": "599"
+      },
+      {
+        "type": "header",
         "content": "Cores"
       },
       {

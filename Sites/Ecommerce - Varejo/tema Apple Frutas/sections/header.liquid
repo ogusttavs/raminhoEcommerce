@@ -20,9 +20,9 @@
       <div class="site-header__inner">
         <a class="site-header__brand" href="{{ routes.root_url }}">
           {%- if settings.logo -%}
-            {{ settings.logo | image_url: width: 280 | image_tag: class: 'site-header__logo', widths: '140, 180, 220, 280', alt: shop.name }}
+            {{ settings.logo | image_url: width: 260 | image_tag: class: 'site-header__logo', widths: '120, 160, 220, 260', alt: shop.name }}
           {%- else -%}
-            <img class="site-header__logo" src="{{ 'raminho-logo.png' | asset_url }}" alt="{{ shop.name }}" width="176" height="57">
+            <img class="site-header__logo" src="{{ 'raminho-logo.png' | asset_url }}" alt="{{ shop.name }}" width="216" height="108">
           {%- endif -%}
         </a>
 

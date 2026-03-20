@@ -92,19 +92,26 @@
         {%- endunless -%}
 
         <div class="product-form__row">
-          <div class="quantity-picker">
+          <div class="quantity-picker quantity-picker--measure">
             <button type="button" data-qty-button="-1">-</button>
-            <input type="number" name="quantity" min="1" value="1" data-qty-input>
+            <span class="quantity-picker__display" data-qty-display aria-live="polite">
+              {%- if current_variant and current_variant.title != 'Default Title' -%}
+                {{ current_variant.title | split: '/' | first | strip }}
+              {%- else -%}
+                1 un
+              {%- endif -%}
+            </span>
+            <input type="hidden" name="quantity" min="1" value="1" data-qty-input>
             <button type="button" data-qty-button="1">+</button>
           </div>
 
-          <button class="button button--wide" type="submit" data-add-to-cart {% unless current_variant.available %}disabled{% endunless %}>
-            {% if current_variant.available %}Adicionar ao carrinho{% else %}Indisponivel{% endif %}
+          <button class="button button--purchase button--wide" type="submit" data-add-to-cart {% unless current_variant.available %}disabled{% endunless %}>
+            {% if current_variant.available %}Comprar por {{ current_variant.price | money }}{% else %}Indisponivel{% endif %}
           </button>
         </div>
 
         <p class="product-form__availability" data-product-status>
-          {% if current_variant.available %}Disponivel para entrega programada.{% else %}Produto indisponivel no momento.{% endif %}
+          {% if current_variant.available %}Use + e - para ajustar a quantidade.{% else %}Produto indisponivel no momento.{% endif %}
         </p>
       {%- endform -%}
 

@@ -18,13 +18,13 @@
         {%- assign fallback_asset = '' -%}
         {%- case forloop.index -%}
           {%- when 1 -%}
-            {%- assign fallback_asset = 'raminho-hero-frutas.jpg' -%}
+            {%- assign fallback_asset = 'raminho-bento-curadoria-1.jpg' -%}
           {%- when 2 -%}
-            {%- assign fallback_asset = 'raminho-vitrine-citricos.jpg' -%}
+            {%- assign fallback_asset = 'raminho-bento-curadoria-2.jpg' -%}
           {%- when 3 -%}
-            {%- assign fallback_asset = 'raminho-vitrine-peras.jpg' -%}
+            {%- assign fallback_asset = 'raminho-bento-curadoria-3.jpg' -%}
           {%- when 4 -%}
-            {%- assign fallback_asset = 'raminho-vitrine-romas.jpg' -%}
+            {%- assign fallback_asset = 'raminho-bento-curadoria-4.jpg' -%}
         {%- endcase -%}
         {%- assign card_image = block.settings.image | default: current_collection.featured_image -%}
         <article class="bento-card reveal bento-card--{{ forloop.index }}" {{ block.shopify_attributes }}>

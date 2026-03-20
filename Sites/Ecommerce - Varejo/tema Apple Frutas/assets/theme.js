@@ -169,6 +169,7 @@ function initProductForms(root) {
     const status = form.querySelector("[data-product-status]");
     const optionInputs = form.querySelectorAll("[data-option-input]");
     const quantityInput = form.querySelector("[data-qty-input]");
+    const quantityPicker = form.querySelector(".quantity-picker");
 
     const getSelectedOptions = () => {
       const selected = [];
@@ -206,17 +207,6 @@ function initProductForms(root) {
 
       variantIdInput.value = variant.id;
 
-      if (addButton) {
-        addButton.disabled = !variant.available;
-        addButton.textContent = variant.available ? "Adicionar ao carrinho" : "Indisponivel";
-      }
-
-      if (status) {
-        status.textContent = variant.available
-          ? "Disponivel para entrega programada."
-          : "Produto indisponivel no momento.";
-      }
-
       if (priceWrap) {
         priceWrap.innerHTML = buildPriceMarkup(variant.price, variant.compare_at_price);
       }
@@ -228,12 +218,38 @@ function initProductForms(root) {
       const nextUrl = new URL(window.location.href);
       nextUrl.searchParams.set("variant", variant.id);
       window.history.replaceState({}, "", nextUrl.toString());
+
+      syncPurchaseState(variant);
+    };
+
+    const syncPurchaseState = (variant) => {
+      if (!variant) return;
+
+      const quantity = quantityInput ? clampQuantityInput(quantityInput) : 1;
+      const purchaseState = buildPurchaseState(variant, quantity);
+
+      updateMeasurePicker(quantityPicker, purchaseState.totalLabel);
+
+      if (addButton) {
+        addButton.disabled = !variant.available;
+        addButton.textContent = variant.available ? `Comprar por ${formatMoney(purchaseState.totalPrice)}` : "Indisponivel";
+      }
+
+      if (status) {
+        status.textContent = variant.available
+          ? "Use + e - para ajustar a quantidade."
+          : "Produto indisponivel no momento.";
+      }
     };
 
     optionInputs.forEach((input) => {
       input.addEventListener("change", () => {
         renderVariant(findVariant());
       });
+    });
+
+    quantityInput?.addEventListener("change", () => {
+      syncPurchaseState(findVariant());
     });
 
     form.addEventListener("submit", async (event) => {
@@ -271,10 +287,8 @@ function initProductCardForms(root) {
     const addButton = form.querySelector("[data-card-add-to-cart]");
     const status = form.querySelector("[data-card-status]");
     const quantityInput = form.querySelector("[data-qty-input]");
+    const quantityPicker = form.querySelector(".quantity-picker");
     const badge = form.closest(".product-card")?.querySelector("[data-card-variant-badge]");
-    const priceWrap = form.closest(".product-card")?.querySelector("[data-card-price-wrap]");
-    const unitLabel = form.querySelector("[data-card-unit-label]");
-    const breakdown = form.querySelector("[data-card-breakdown]");
     const quickVariant = pickQuickAddVariant(variants);
 
     const renderCard = () => {
@@ -292,10 +306,7 @@ function initProductCardForms(root) {
         return;
       }
 
-      const measurement = parseVariantMeasurement(quickVariant);
-      const variantLabel = quickVariant.title && quickVariant.title !== "Default Title"
-        ? quickVariant.title
-        : measurement.label;
+      const purchaseState = buildPurchaseState(quickVariant, quantity);
 
       if (hiddenVariantInput) {
         hiddenVariantInput.value = quickVariant.id;
@@ -303,29 +314,19 @@ function initProductCardForms(root) {
 
       if (badge) {
         badge.classList.remove("is-hidden");
-        badge.textContent = variantLabel;
+        badge.textContent = purchaseState.stepLabel;
       }
 
-      if (unitLabel) {
-        unitLabel.textContent = measurement.label;
-      }
-
-      if (breakdown) {
-        breakdown.textContent = buildQuantityBreakdown(measurement, quantity);
-      }
-
-      if (priceWrap) {
-        priceWrap.innerHTML = buildPriceMarkup(quickVariant.price, quickVariant.compare_at_price);
-      }
+      updateMeasurePicker(quantityPicker, purchaseState.totalLabel);
 
       if (addButton) {
         addButton.disabled = !quickVariant.available;
-        addButton.textContent = quickVariant.available ? "Adicionar ao carrinho" : "Indisponivel";
+        addButton.textContent = quickVariant.available ? `Comprar por ${formatMoney(purchaseState.totalPrice)}` : "Indisponivel";
       }
 
       if (status) {
         status.textContent = quickVariant.available
-          ? `Adicao minima de ${measurement.label} por vez.`
+          ? "Use + e - para ajustar a quantidade."
           : "Produto indisponivel no momento.";
       }
     };
@@ -531,15 +532,54 @@ function renderCartItems(cart) {
       ${itemsMarkup}
     </div>
 
+    ${renderCartSummary(cart)}
+  `;
+}
+
+function renderCartSummary(cart) {
+  const subtotal = getCartSubtotal(cart);
+  const progressState = buildCartProgressState(subtotal);
+  const checkoutMarkup = progressState.canCheckout
+    ? `<a class="button button--purchase button--wide" href="${escapeHtml(window.raminhoTheme?.routes?.checkout || "/checkout")}">Finalizar pedido</a>`
+    : `<button class="button button--purchase button--wide" type="button" disabled>${escapeHtml(progressState.buttonLabel)}</button>`;
+
+  return `
     <div class="cart-drawer__summary">
       <div class="cart-drawer__summary-line">
         <span>Subtotal</span>
-        <strong>${formatMoney(cart.total_price)}</strong>
+        <strong>${formatMoney(subtotal)}</strong>
       </div>
-      <p class="cart-drawer__summary-note">Frete e janela de entrega aparecem na etapa seguinte, conforme endereco e disponibilidade.</p>
+      ${renderCartProgress(progressState, subtotal)}
+      <p class="cart-drawer__summary-note">${escapeHtml(progressState.message)}</p>
+      <p class="cart-drawer__summary-meta">${escapeHtml(progressState.helper)}</p>
       <div class="cart-drawer__summary-actions">
-        <a class="button button--wide" href="${escapeHtml(window.raminhoTheme?.routes?.checkout || "/checkout")}">Finalizar pedido</a>
+        ${checkoutMarkup}
         <button class="button button--ghost button--wide" type="button" data-cart-close>Continuar comprando</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderCartProgress(progressState, subtotal) {
+  return `
+    <div class="cart-progress cart-progress--${progressState.stage}" aria-label="${escapeHtml(progressState.eyebrow)}">
+      <div class="cart-progress__head">
+        <p class="cart-progress__eyebrow">${escapeHtml(progressState.eyebrow)}</p>
+        <p class="cart-progress__title">${escapeHtml(progressState.title)}</p>
+      </div>
+      <div
+        class="cart-progress__track"
+        role="progressbar"
+        aria-valuemin="0"
+        aria-valuemax="${progressState.progressMax}"
+        aria-valuenow="${progressState.progressValue}"
+        aria-valuetext="${escapeHtml(progressState.ariaText)}"
+      >
+        <span class="cart-progress__fill" style="width:${progressState.progressPercent}%"></span>
+      </div>
+      <div class="cart-progress__meta">
+        <span>Atual ${formatMoney(subtotal)}</span>
+        <span>Meta ${formatMoney(progressState.targetCents)}</span>
       </div>
     </div>
   `;
@@ -612,6 +652,97 @@ function pickQuickAddVariant(variants) {
   })[0] || null;
 }
 
+function getCartRules() {
+  const configuredRules = window.raminhoTheme?.cartRules || {};
+  const minimumOrderCents = Math.max(0, Number(configuredRules.minimumOrderCents) || 12000);
+  const freeShippingCents = Math.max(minimumOrderCents, Number(configuredRules.freeShippingCents) || 59900);
+
+  return {
+    minimumOrderCents,
+    freeShippingCents
+  };
+}
+
+function getCartSubtotal(cart) {
+  return Math.max(0, Number(cart?.total_price) || 0);
+}
+
+function buildCartProgressState(subtotal) {
+  const rules = getCartRules();
+
+  if (subtotal < rules.minimumOrderCents) {
+    const remaining = rules.minimumOrderCents - subtotal;
+    const progressPercent = clampPercent((subtotal / Math.max(rules.minimumOrderCents, 1)) * 100);
+
+    return {
+      stage: "minimum",
+      eyebrow: "Pedido minimo",
+      title: `Faltam ${formatMoney(remaining)} para liberar o checkout.`,
+      message: `Pedidos abaixo de ${formatMoney(rules.minimumOrderCents)} nao seguem para o checkout.`,
+      helper: "Assim que o minimo for atingido, a barra passa a acompanhar o frete gratis.",
+      buttonLabel: `Minimo de ${formatMoney(rules.minimumOrderCents)}`,
+      canCheckout: false,
+      targetCents: rules.minimumOrderCents,
+      progressPercent,
+      progressValue: subtotal,
+      progressMax: rules.minimumOrderCents,
+      ariaText: `${formatMoney(subtotal)} de ${formatMoney(rules.minimumOrderCents)} para liberar o checkout.`
+    };
+  }
+
+  if (subtotal < rules.freeShippingCents) {
+    const remaining = rules.freeShippingCents - subtotal;
+    const freeShippingRange = Math.max(rules.freeShippingCents - rules.minimumOrderCents, 1);
+    const progressValue = subtotal - rules.minimumOrderCents;
+    const progressPercent = clampPercent((progressValue / freeShippingRange) * 100);
+
+    return {
+      stage: "shipping",
+      eyebrow: "Frete gratis",
+      title: `Faltam ${formatMoney(remaining)} para bater a meta de frete gratis.`,
+      message: "Pedido minimo atingido. Seu carrinho ja pode seguir para o checkout.",
+      helper: "Agora a barra acompanha o valor necessario para liberar o frete gratis acima da faixa definida.",
+      buttonLabel: "Finalizar pedido",
+      canCheckout: true,
+      targetCents: rules.freeShippingCents,
+      progressPercent,
+      progressValue,
+      progressMax: freeShippingRange,
+      ariaText: `${formatMoney(subtotal)} no carrinho. Faltam ${formatMoney(remaining)} para o frete gratis.`
+    };
+  }
+
+  return {
+    stage: "shipping is-complete",
+    eyebrow: "Frete gratis liberado",
+    title: "Seu pedido ja entrou na faixa de frete gratis.",
+    message: "Pedido minimo atendido e frete gratis conquistado para esta compra.",
+    helper: "Revise os itens e siga para o checkout quando quiser.",
+    buttonLabel: "Finalizar pedido",
+    canCheckout: true,
+    targetCents: rules.freeShippingCents,
+    progressPercent: 100,
+    progressValue: rules.freeShippingCents,
+    progressMax: rules.freeShippingCents,
+    ariaText: `Frete gratis liberado com ${formatMoney(subtotal)} no carrinho.`
+  };
+}
+
+function buildPurchaseState(variant, quantity) {
+  const safeQuantity = Math.max(1, Number(quantity) || 1);
+  const measurement = parseVariantMeasurement(variant);
+  const totalLabel = buildTotalMeasurementLabel(measurement, safeQuantity);
+  const totalPrice = (Number(variant?.price) || 0) * safeQuantity;
+
+  return {
+    safeQuantity,
+    stepLabel: measurement.label,
+    totalLabel,
+    totalPrice,
+    buttonLabel: `Adicionar ${totalLabel} • ${formatMoney(totalPrice)}`
+  };
+}
+
 function parseVariantMeasurement(variant) {
   const candidates = [];
 
@@ -630,9 +761,9 @@ function parseVariantMeasurement(variant) {
   }
 
   return {
-    type: "item",
+    type: "unit",
     base: 1,
-    label: "1 item",
+    label: "1 un",
     rank: 99
   };
 }
@@ -671,49 +802,25 @@ function parseMeasurement(rawLabel) {
   return { type: "unit", base: amount, label: formatUnits(amount), rank: 2 };
 }
 
-function buildQuantityBreakdown(measurement, quantity) {
-  const stepLabel = measurement?.label || "1 item";
+function buildTotalMeasurementLabel(measurement, quantity) {
   const safeQuantity = Math.max(1, Number(quantity) || 1);
 
   if (measurement?.type === "weight") {
-    const totalWeight = formatWeight((measurement.base || 0) * safeQuantity);
-
-    if (safeQuantity === 1) {
-      return totalWeight;
-    }
-
-    if (safeQuantity <= 4) {
-      return `${Array(safeQuantity).fill(stepLabel).join(" + ")} = ${totalWeight}`;
-    }
-
-    return `${stepLabel} x ${safeQuantity} = ${totalWeight}`;
+    return formatWeight((measurement.base || 0) * safeQuantity);
   }
 
   if (measurement?.type === "volume") {
-    const totalVolume = formatVolume((measurement.base || 0) * safeQuantity);
-
-    if (safeQuantity === 1) {
-      return totalVolume;
-    }
-
-    if (safeQuantity <= 4) {
-      return `${Array(safeQuantity).fill(stepLabel).join(" + ")} = ${totalVolume}`;
-    }
-
-    return `${stepLabel} x ${safeQuantity} = ${totalVolume}`;
+    return formatVolume((measurement.base || 0) * safeQuantity);
   }
 
-  const totalUnits = formatUnits((measurement?.base || 1) * safeQuantity);
+  return formatUnits((measurement?.base || 1) * safeQuantity);
+}
 
-  if (safeQuantity === 1) {
-    return totalUnits;
+function updateMeasurePicker(picker, totalLabel) {
+  const display = picker?.querySelector("[data-qty-display]");
+  if (display) {
+    display.textContent = totalLabel;
   }
-
-  if (safeQuantity <= 4) {
-    return `${Array(safeQuantity).fill(stepLabel).join(" + ")} = ${totalUnits}`;
-  }
-
-  return `${stepLabel} x ${safeQuantity} = ${totalUnits}`;
 }
 
 function setActiveMedia(section, mediaId) {
@@ -784,6 +891,10 @@ function createEmptyCart() {
 
 function formatCartCount(count) {
   return `${count} ${count === 1 ? "item" : "itens"}`;
+}
+
+function clampPercent(value) {
+  return Math.max(0, Math.min(100, Number(value) || 0));
 }
 
 function formatWeight(grams) {
